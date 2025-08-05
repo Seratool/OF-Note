@@ -1,0 +1,101 @@
+
+nav.docs-navigation,
+aside.setting {
+    background: var(--color-block-1);
+    top: 2.85rem;
+    bottom: 0;
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
+    z-index: 3;
+    position: absolute;
+}
+
+nav.docs-navigation {
+    left: -400px;
+    transition: left .3s ease-in-out;
+}
+
+aside.setting {
+    right: -400px;
+    transition: right .3s ease-in-out;
+}
+
+nav.docs-navigation.open {
+    box-shadow: 2px 7px 7px var(--color-grey-1);
+    left: 0;
+}
+
+aside.setting.open {
+    box-shadow: -2px 7px 7px var(--color-grey-1);
+    right: 0;
+}
+
+
+/**
+ * docs history
+ */
+.docs-history h2 {
+    text-align: center;
+}
+
+.docs-history ul.docs-list {
+    margin-top: 1rem;
+    height: calc(100vh - 7.5rem);
+    overflow: auto;
+}
+
+.docs-history ul.docs-list li {
+    border-radius: var(--border-radius);
+    background-color: var(--color-block-2);
+    padding: 0.5rem 1rem;
+    position: relative;
+}
+
+.docs-history ul.docs-list li + li {
+    margin-top: 0.5rem;
+}
+
+.docs-history ul.docs-list li a.link {
+    display: block;
+}
+
+.docs-history ul.docs-list li a.link.active {
+    font-weight: 700;
+}
+
+.docs-history ul.docs-list li svg.icon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.docs-history ul.docs-list li button {
+    border-radius: 50%;
+    cursor: pointer;
+    top: 0.5rem;
+    right: 0.2rem;
+    height: 2.3rem;
+    width: 2.3rem;
+    padding: 0.2rem;
+    background: transparent;
+    transition: background-color .3s ease-in-out;
+    position: absolute;
+    display: inline-block;
+}
+
+.docs-history ul.docs-list li button:hover {
+    background-color: var(--color-block-3);
+}
+
+.docs-history ul.docs-list li button.delete {
+    right: 2.5rem;
+}
+
+.docs-history ul.docs-list li button.delete svg {
+    fill: var(--color-danger);
+}
+
+
+
+
+

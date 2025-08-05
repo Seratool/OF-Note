@@ -1,0 +1,56 @@
+/**
+ * activity animations
+ */
+.control {
+    top: 0;
+    right: 0;
+    position: relative;
+    display: flex
+}
+
+.control .sync {
+    left: -2.6rem;
+    position: absolute
+}
+
+.control .sync .icon {
+    cursor: pointer;
+    padding: 0.15rem;
+    width: 2.3rem;
+    height: 2.3rem;
+    display: none
+}
+
+.control .sync .edit {
+    fill: var(--color-text);
+    right: -0.5rem;
+    position: relative;
+}
+
+.control .sync .error {
+    fill: var(--color-danger);
+}
+
+.control .sync .sent {
+    fill: var(--color-success);
+}
+
+.control .sync.edit .edit,
+.control .sync.error .error,
+.control .sync.sent .sent {
+    display: block;
+}
+
+.control .sync .edit {
+    animation: write 1s cubic-bezier(0.3, 0.7, 0.3, 0.7) infinite;
+    transform-origin: 0 100%;
+    top: .5rem;
+    position: relative
+}
+
+
+@keyframes write{
+    0%{transform: rotate(-30deg)}
+    50%{transform: rotate(-20deg)}
+    100%{transform: rotate(-30deg)}
+}

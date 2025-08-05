@@ -1,0 +1,132 @@
+
+:root {
+    --app-color: #365d90;
+    --primary-font: "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --border-radius: 5px;
+
+    --color-success: #28a745;
+    --color-info: #17a2b8;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+
+    --color-text: #343a40;
+    --color-bg: #fefefe;
+    --color-link: #0052a3;
+    --color-block-1: #ebeff5;
+    --color-block-2: #e2e8f0;
+    --color-block-3: #d1d6de;
+    --color-grey-1: #a4acb5;
+    --color-grey-2: #88939e;
+}
+
+/*
+@media (prefers-color-scheme: light) {
+    :root {
+        --color-palette: #fbfdff;
+        --color-text:var(--color-palette-80);
+        --color-bg: var(--color-palette);
+    }
+}
+*/
+/* ToDO change color schema */
+@media (prefers-color-scheme: dark) {
+    :root {
+
+        --color-text: #fefefe;
+        --color-bg: #40464e;
+
+
+    }
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline
+}
+
+*::-webkit-scrollbar,
+*::-webkit-scrollbar:hover {
+    cursor: pointer;
+    width: .55rem;
+    height: .55rem;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--color-bg);
+}
+
+*::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    background: var(--color-grey-1);
+    background-clip: padding-box;
+    transition: border .3s ease-in-out,
+        background-color .3s ease-in-out
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--color-grey-2);
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    scroll-behavior: smooth;
+}
+
+body {
+    font: 15px/24px var(--primary-font), sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    overflow-x: hidden
+}
+
+html,
+body,
+main {
+    overflow: hidden
+}
+
+a,
+a.active,
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--color-link)
+}
+
+
+button {
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    user-select: none;
+    background: var(--app-color);
+    color: var(--color-bg);
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    padding: .5rem;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    text-decoration: none;
+    transition: color .3s ease-in-out,
+        background .3s ease-in-out,
+        border .3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+    z-index: 0;
+    position: relative;
+    display: inline-flex;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}

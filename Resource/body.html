@@ -1,0 +1,19 @@
+<body class="app">
+    {{ template }}
+    <script>
+        (function() {
+            "use strict";
+            const _ = {
+                'Do you want to delete the link to "%s"?': '{{ lang("Do you want to delete the link to "%s"?") }}',
+                'Give the note "%s" a new name': '{{ lang("Give the note "%s" a new name") }}',
+            };
+            {{ APP\Sources\Js::JSE }}
+            {{ APP\Sources\Js::aside }}
+            {{ APP\Sources\Js::editor }}
+            {{ APP\Sources\Js::note }}
+            {{ APP\Sources\Js::connector }}
+            {{ APP\Sources\Js::main }}
+        })();
+    </script>
+</body>
+</html>
