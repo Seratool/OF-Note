@@ -84,14 +84,20 @@ class Note
                 let note = notes[k],
                     href = '{{ baseUrl }}?note=' + k,
                     node = document.createElement("li"),
-                    cont = '<a class="link" href="' + href + '">' + note + '</a><span>' + k + '</span>'
-                        + '<button class="edit" type="button"><svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-pencil"/></svg></button>';
+                    cont = '<div>'
+                        + '<a class="link" href="' + href + '">' + note + '</a></div><div><span>' + k + '</span>'
+                        +'</div>',
+                    edit = '<button class="btn edit" type="button">'
+                        +'<svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-pencil"/></svg>'
+                        +'</button>';
 
-                node.innerHTML = cont + (
-                    this.#currentNote !== note
-                        ? '<button class="delete" type="button"><svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-trash"/></svg></button>'
-                        : ''
-                );
+                if (this.#currentNote !== note) {
+                    edit += '<button class="btn delete" type="button">'
+                        +'<svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-trash"/></svg>'
+                        +'</button>'
+                }
+
+                node.innerHTML = '<div>'+cont+'</div>'+'<div class="control-line">'+edit+'</div>';
 
                 if (this.#currentNote === note) {
                     JSE.q('.link', node).classList.add('active');

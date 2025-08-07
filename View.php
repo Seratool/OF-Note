@@ -59,6 +59,7 @@ class View {
         $ar = explode('->', $temp);
         return [$this->val[trim($ar[0])], trim($ar[1])];
     }
+
     private function getFuncElements($temp): array
     {
         return [

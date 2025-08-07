@@ -7,7 +7,7 @@ class Dictionary
     public static array $EN = [
         'LanguageIcon' => '🇬🇧',
         'LanguageTitle' => 'English',
-        'History' => 'History',
+        'Notes' => 'Notes',
         'Setting' => 'Setting',
         'Version' => 'Version',
         'Print' => 'Print',
@@ -22,11 +22,14 @@ class Dictionary
         'Fontsize' => 'Fontsize',
         'Font' => 'Font',
         'Language' => 'Language',
+        'Global' => 'Global',
+        'Document' => 'Document',
+        'Apply' => 'Apply',
     ];
     public static array $DE = [
         'LanguageIcon' => '🇩🇪',
         'LanguageTitle' => 'Deutsch',
-        'History' => 'Verlauf',
+        'Notes' => 'Notizen',
         'Setting' => 'Einstellungen',
         'Version' => 'Version',
         'Print' => 'Drucken',
@@ -41,11 +44,14 @@ class Dictionary
         'Fontsize' => 'Schriftgröße',
         'Font' => 'Schriftart',
         'Language' => 'Sprache',
+        'Global' => 'Allgemein',
+        'Document' => 'Dokument',
+        'Apply' => 'Anwenden',
     ];
     public static array $RU = [
         'LanguageIcon' => '🇷🇺',
         'LanguageTitle' => 'Русский',
-        'History' => 'История',
+        'Notes' => 'Записи',
         'Setting' => 'Настройки',
         'Version' => 'Версия',
         'Print' => 'Печатать',
@@ -60,5 +66,8 @@ class Dictionary
         'Fontsize' => 'Размер шрифта',
         'Font' => 'Шрифт',
         'Language' => 'Язык',
+        'Global' => 'Глобально',
+        'Document' => 'Документ',
+        'Apply' => 'Применить',
     ];
 }

@@ -7,7 +7,7 @@ use APP\Sources\Template;
 
 class Core
 {
-    public static string $version = '0.12.240513.1254';
+    public static string $version = '1.0';
     private Route $route;
     private View $view;
     private Lang $lang;
@@ -19,6 +19,11 @@ class Core
         $this->route = new Route();
         $this->lang = new Lang();
         $this->path = Config::Storage . DIRECTORY_SEPARATOR . '.n_' . $this->route->getParam('note');
+    }
+
+    public static function getVersion()
+    {
+        return self::$version.date(':ymd.Hi');
     }
 
     public function defineEnvironment(): void

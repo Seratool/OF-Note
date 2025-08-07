@@ -22,8 +22,4 @@ END;
     public static string $connector = <<<END
 SOURCE_REPLACER_CSS('APP/Resource/css/connector.css')
 END;
-
-    public static string $style = <<<END
-SOURCE_REPLACER_CSS('APP/Resource/css/style.css')
-END;
 }
