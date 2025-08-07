@@ -4,29 +4,28 @@ namespace APP\Core;
 
 use APP\Config;
 use APP\Exceptions\AppException;
-use APP\Sources\Template;
-use APP\View;
-use APP\View\Lang;
 
 class Core
 {
     public static string $version = '1.0';
+    public static string $storagePrefix = '.n_';
     private Route $route;
-    private View $view;
-    private Lang $lang;
     private string $path = '';
 
-    public function __construct()
+    public function __construct(Route $route)
     {
-        $this->view = new View();
-        $this->route = new Route();
-        $this->lang = new Lang();
-        $this->path = Config::Storage . DIRECTORY_SEPARATOR . '.n_' . $this->route->getParam('note');
+        $this->route = $route;
+        $this->path = Config::Storage . DIRECTORY_SEPARATOR . self::$storagePrefix . $this->route->getParam('note');
     }
 
     public static function getVersion()
     {
         return self::$version.date(':ymd.Hi');
+    }
+
+    public function getPath()
+    {
+        return $this->path;
     }
 
     public function defineEnvironment(): void
@@ -110,30 +109,13 @@ class Core
     public function checkPostRequest()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $text = isset($_POST['text']) ? $_POST['text'] : file_get_contents("php://input");
+            $text = $_POST['text'] ?? file_get_contents("php://input");
 
-            if (!strlen($text)) {
-                unlink($this->path);
-            } else {
-                file_put_contents($this->path, $text);
-            }
+            strlen($text)
+                ? file_put_contents($this->path, $text)
+                : unlink($this->path);
+
             die(json_encode(['status' => 'okay']));
         }
-    }
-
-    public function run(): string
-    {
-        $note = $this->route->getParam('note');
-
-        return $this->view->getContent([
-            'lang' => $this->lang,
-            'title' => ($note ? $note . ' - ' : '').'Note',
-            'url' => $this->route->getUrl(),
-            'baseUrl' => $this->route->getBaseUrl(),
-            'downloadUrl' => $this->route->getQueryUrl(['download' => true]),
-            'template' => Template::$content,
-            'note' => $this->route->getParam('note'),
-            'content' => is_file($this->path) ? nl2br(htmlspecialchars(file_get_contents($this->path), ENT_QUOTES, 'UTF-8'), false) : ''
-        ]);
     }
 }

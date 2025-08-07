@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>$title</title>
-    <style>
-        *, :after, :before {box-sizing: border-box}
-        html,body,div,h1,h2,main {margin: 0;padding: 0;vertical-align: baseline}
-        html {-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0, 0, 0)}
-
-        body {font-family: "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;background: #f7f7f7;color: #444;font-size: 15px;line-height: 1.2}
-        main {width: 100vw;height: 100vh;align-items: center;justify-content: center;display: flex}
-        .content {text-align: center;word-break:break-word;font-size: 1rem}
-        h1 {font-size:6rem;font-weight:700;line-height:1.5}
-        h2 {font-size:2.75rem;font-weight:400;line-height:1.5;color:#f63a3b}
-        @media (max-width: 720px) {
-            .content {padding: 1rem;}
-            h1 {font-size: 4rem;}
-            h2 {font-size: 1.5rem}
-        }
-    </style>
-</head>
-<body>
-<main>
-    <div class="content">
-        <h1>$headline</h1>
-        $subHeadline
-        <p>{$e->getMessage()}</p>
-    </div>
-</main>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{{ $title }}</title>
+        <style>
+            *, :after, :before {box-sizing: border-box}
+            html,body,div,h1,h2,main {margin: 0;padding: 0;vertical-align: baseline}
+            html {-webkit-text-size-adjust: 100%;-webkit-tap-highlight-color: rgba(0, 0, 0, 0)}
+            body {font-family: "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;background:#f7f7f7;color: #444;font-size: 15px;line-height: 1.2}
+            main {width: 100vw;height: 100vh;align-items: center;justify-content: center;display: flex}
+            .content {text-align: center;word-break:break-word;font-size: 1rem}
+            h1 {font-size:6rem;font-weight:700;line-height:1.5}
+            h2 {font-size:2.75rem;font-weight:400;line-height:1.5;color:#f63a3b}
+            @media (max-width: 720px) {
+                .content {padding: 1rem;}
+                h1 {font-size: 4rem;}
+                h2 {font-size: 1.5rem}
+            }
+        </style>
+    </head>
+    <body>
+    <main>
+        <div class="content">
+            <h1>{{ $headline }}</h1>
+            <div>{{ $subHeadline }}</div>
+            <p>{{ $exception->getMessage() }}</p>
+        </div>
+    </main>
+    </body>
 </html>

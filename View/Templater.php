@@ -2,19 +2,12 @@
 
 namespace APP\View;
 
+use APP\Exceptions\AppException;
+use APP\Sources\Assets;
+
 class Templater
 {
-    private string $rootPath = '';
-
     private string $code = '';
-
-    public function __construct(string $rootPath)
-    {
-      //  $this->rootPath = Templater . phprtrim($rootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-
-
-
-    }
 
     /**
      * view template content.
@@ -36,10 +29,21 @@ class Templater
 
     /**
      * include template content.
+     * @throws AppException
      */
-    private function includeFiles(string $file): string
+    private function includeFiles(string $template): string
     {
-        $code = file_get_contents($this->rootPath . $file);
+        $template = str_replace('.', '_', $template);
+
+        if (!property_exists('\APP\Sources\Assets', $template)) {
+            throw new AppException(
+                "Suurce $template in Assets not found!",
+                '500',
+                'Internal Server Error',
+                '500 Server Error'
+            );
+        }
+        $code = Assets::$$template;
 
         preg_match_all('/{% ?(extends|include) ?\'?(.*?)\'? ?%}/i', $code, $matches, PREG_SET_ORDER);
         foreach ($matches as $value) {

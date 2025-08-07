@@ -35,7 +35,7 @@ class Connector
         const formData = new FormData();
         formData.append('text', content);
 
-        fetch("{{ url }}", {
+        fetch("{{ $url }}", {
             method: "POST",
             headers: {"X-Requested-With": "XMLHttpRequest"},
             body: formData

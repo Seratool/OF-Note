@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="{{ $lang->lang }}">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ $title }}</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="{% extends 'favicon.svg' %}" type="image/svg+xml">
+        <link rel="icon" href="{% extends 'favicon.ico' %}" type="image/x-icon">
+        <style>
+            {% extends 'init.css' %}
+            {% extends 'header.css' %}
+            {% extends 'asides.css' %}
+            {% extends 'main.css' %}
+            {% extends 'connector.css' %}
+        </style>
+    </head>
+    <body class="app">
+    {% yield content %}
+    <script type="text/javascript">
+        (function() {
+            "use strict";
+            const _ = {
+                'Do you want to delete the link to "%s"?': '{{ $lang('Do you want to delete the link to "%s"?') }}',
+                'Give the note "%s" a new name': '{{ $lang('Give the note "%s" a new name') }}',
+            };
+            {% extends 'JSE.js' %}
+            {% extends 'aside.js' %}
+            {% extends 'editor.js' %}
+            {% extends 'note.js' %}
+            {% extends 'connector.js' %}
+            {% extends 'main.js' %}
+        })();
+    </script>
+    </body>
+</html>

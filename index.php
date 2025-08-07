@@ -2,28 +2,43 @@
 
 namespace APP;
 
+use APP\Core\Route;
 use APP\Exceptions\AppException;
 use APP\Core\Core;
+use APP\View\Lang;
+use APP\View\Templater;
+
+$templater = new Templater();
 
 try {
     // Disable caching.
     header('Cache-Control: no-store');
+    $router = new Route();
 
-    $core = new Core();
+    $core = new Core($router);
     $core->defineEnvironment();
     $core->checkVersion();
-
     $core->checkRequest();
     $core->checkPostRequest();
 
-    echo $core->run();
+    $contentFile = $core->getPath();
+    $note = $router->getParam('note');
+
+    echo $templater->view('editor.html', [
+        'lang' => new Lang(),
+        'title' => ($note ? $note . ' - ' : '').'Note',
+        'note' => $router->getParam('note'),
+        'url' => $router->getUrl(),
+        'baseUrl' => $router->getBaseUrl(),
+        'downloadUrl' => $router->getQueryUrl(['download' => true]),
+        'content' => is_file($contentFile) ? nl2br(htmlspecialchars(file_get_contents($contentFile), ENT_QUOTES, 'UTF-8'), false) : ''
+    ]);
 
 } catch (AppException|\Exception $e) {
-    $title = is_callable([$e, 'getTitle']) ? $e->getTitle() : 'Error occurred!';
-    $headline = is_callable([$e, 'getHeadline']) ? $e->getHeadline() : 'Warning!';
-    $subHeadline = is_callable([$e, 'getSubHeadline']) ? '<h2>'.$e->getSubHeadline().'</h2>' : '';
-
-    echo (<<<END
-SOURCE_REPLACER_HTML('APP/Assets/Tpl/error.html')
-END);
+    echo $templater->view('error.html', [
+        'title' => is_callable([$e, 'getTitle']) ? $e->getTitle() : 'Error occurred!',
+        'headline' => is_callable([$e, 'getHeadline']) ? $e->getHeadline() : 'Warning!',
+        'subHeadline' => is_callable([$e, 'getSubHeadline']) ? '<h2>'.$e->getSubHeadline().'</h2>' : '',
+        'exception' => $e,
+    ]);
 }
