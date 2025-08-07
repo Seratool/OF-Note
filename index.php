@@ -1,15 +1,15 @@
 <?php
 
 namespace APP;
-// APP start.
 
-use APP\AppException;
+use APP\Exceptions\AppException;
+use APP\Core\Core;
 
 try {
     // Disable caching.
     header('Cache-Control: no-store');
 
-    $core = new \APP\Core();
+    $core = new Core();
     $core->defineEnvironment();
     $core->checkVersion();
 
@@ -24,6 +24,6 @@ try {
     $subHeadline = is_callable([$e, 'getSubHeadline']) ? '<h2>'.$e->getSubHeadline().'</h2>' : '';
 
     echo (<<<END
-SOURCE_REPLACER_HTML('APP/Resource/error.html')
+SOURCE_REPLACER_HTML('APP/Assets/Tpl/error.html')
 END);
 }

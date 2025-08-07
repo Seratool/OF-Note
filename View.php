@@ -18,7 +18,12 @@ class View {
                 $temp = '';
 
                 if (strpos($match, '::')) {
-                    $match = str_replace('::', '::$', trim($match));
+                    list(, $value) = explode('::', $match);
+
+                    if (!strpos($value, '(') || !strpos($value, ')')) {
+                        $match = str_replace('::', '::$', trim($match));
+                    }
+
                     eval("\$temp = $match;");
 
                 } elseif (strpos($match, '->')) {
@@ -42,7 +47,6 @@ class View {
                     $temp = call_user_func_array($func, array_map(function($val) {
                         return trim($val, '\'"');
                     }, $params));
-
                 } else {
                     $temp = $this->val[trim($match)] ?? '';
                 }

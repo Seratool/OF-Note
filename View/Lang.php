@@ -1,6 +1,6 @@
 <?php
 
-namespace APP;
+namespace APP\View;
 
 use APP\Sources\Dictionary;
 

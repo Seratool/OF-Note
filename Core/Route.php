@@ -1,6 +1,6 @@
 <?php
 
-namespace APP;
+namespace APP\Core;
 
 class Route
 {

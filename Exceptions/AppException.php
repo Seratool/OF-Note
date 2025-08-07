@@ -1,6 +1,6 @@
 <?php
 
-namespace APP;
+namespace APP\Exceptions;
 
 class AppException extends \Exception
 {

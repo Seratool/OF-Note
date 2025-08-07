@@ -1,9 +1,12 @@
 <?php
 
-namespace APP;
+namespace APP\Core;
 
-use APP\AppException;
+use APP\Config;
+use APP\Exceptions\AppException;
 use APP\Sources\Template;
+use APP\View;
+use APP\View\Lang;
 
 class Core
 {

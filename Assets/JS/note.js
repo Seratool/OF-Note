@@ -112,7 +112,7 @@ class Note
 
                 JSE.ev('click', () => {
                     let n = document.createElement('span'),
-                        title = '';
+                        title;
 
                     n.innerHTML = window.prompt(_['Give the note "%s" a new name'].replace('%s', note), note);
                     title = n.innerText;
