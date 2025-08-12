@@ -2,6 +2,7 @@
 
 namespace APP;
 
+use APP\Core\Content;
 use APP\Core\Route;
 use APP\Exceptions\AppException;
 use APP\Core\Core;
@@ -10,28 +11,31 @@ use APP\View\Templater;
 
 $templater = new Templater();
 try {
+    $router = new Route();
+
     // Disable caching.
-    #header('Cache-Control', 'no-store');
+    # header('Cache-Control', 'no-store');
     #header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
     #header('Pragma', 'no-cache');
     #header('Expires', '0');
-
-    $router = new Route();
 
     $core = new Core($router);
     $core->defineEnvironment();
     $core->checkVersion();
     $core->checkRequest();
-    $core->checkPostRequest();
 
-    $contentFile = $core->getPath();
-    $note = $router->getParam('note');
+    $content = new Content($core->getPath());
+    if ($content->isPostRequest()) {
+        $content->setContent();
+
+        die(json_encode(['status' => 'okay']));
+    }
 
     echo $templater->view('editor.html', [
         'lang' => new Lang(),
         'router' => $router,
-        'title' => ($note ? $note . ' - ' : '').'Note',
-        'content' => is_file($contentFile) ? nl2br(htmlspecialchars(file_get_contents($contentFile), ENT_QUOTES, 'UTF-8'), false) : ''
+        'title' => implode(' - ', [$router->getParam('note'), 'Note']),
+        'content' => $content->getContent(),
     ]);
 
 } catch (AppException|\Exception $e) {

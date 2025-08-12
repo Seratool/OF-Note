@@ -15,7 +15,16 @@ class Core
     public function __construct(Route $route)
     {
         $this->route = $route;
-        $this->path = Config::Storage . DIRECTORY_SEPARATOR . self::$storagePrefix . $this->route->getParam('note');
+
+        $path = str_replace(['/', '\\'], DIRECTORY_SEPARATOR,Config::Storage);
+
+        $storage = [
+            realpath(__DIR__.DIRECTORY_SEPARATOR),
+            trim($path, DIRECTORY_SEPARATOR),
+            self::$storagePrefix . $route->getParam('note')
+        ];
+
+        $this->path = implode(DIRECTORY_SEPARATOR, $storage);
     }
 
     public static function getVersion()
@@ -77,7 +86,7 @@ class Core
         if (!$note || strlen($note) > 64 || !preg_match('/^[a-zA-Z0-9_-]+$/', $note)) {
             do {
                 $note = substr(str_shuffle('234579abcdefghjkmnpqrstwxyz'), -16);
-                $file = Config::Storage . DIRECTORY_SEPARATOR . '.n_' . $note;
+                $file = $this->path . $note;
             } while (is_file($file));
 
             $this->route->setParam('note', $note);
@@ -103,19 +112,6 @@ class Core
                     '404 Not Found!'
                 );
             }
-        }
-    }
-
-    public function checkPostRequest()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $text = $_POST['text'] ?? file_get_contents("php://input");
-
-            strlen($text)
-                ? file_put_contents($this->path, $text)
-                : unlink($this->path);
-
-            die(json_encode(['status' => 'okay']));
         }
     }
 }
