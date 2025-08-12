@@ -14,6 +14,8 @@ JSE.ready(() => {
     const aside = new Aside();
     const editor = new Editor(nEditorDoc);
 
+    aside.initialise();
+
     editor.onChange((content) => connection.send(content));
 
     note.addNote(currentNote);

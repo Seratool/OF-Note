@@ -31,10 +31,6 @@ aside.setting.open {
     right: 0;
 }
 
-
-/**
- * docs history + setting
- */
 aside.setting {
     gap: 2rem;
     justify-content: space-between;
@@ -106,6 +102,10 @@ aside.setting .control-line .btn,
     transform: scale(1);
     transition: all 0.15s ease-in-out;
     display: inline-block;
+}
+
+aside.setting .control-line .btn.hidden {
+    display: none;
 }
 
 aside.setting .control-line .btn:hover,
