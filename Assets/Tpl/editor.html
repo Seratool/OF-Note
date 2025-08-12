@@ -58,7 +58,7 @@
                 <label for="setting-language">{{ $lang('Language') }}</label>
                 <select class="setting-element" name="language" id="setting-language">
                     {% foreach ($lang->getAvailableLanguages() as $l => $title): %}
-                    <option value="{{ $l }}"{{ $lang->lang == $l ? ' selected' : '' }}>{{ $title }}<option>
+                    <option value="{{ $l }}"{{ $lang->lang == $l ? ' selected' : '' }}>{{ $title }}</option>
                     {% endforeach; %}
                 </select>
             </div>
@@ -66,22 +66,25 @@
             <div class="form-line">
                 <label for="setting-font">{{ $lang('Font') }}</label>
                 <select class="setting-element" name="font" id="setting-font">
-                    <option value="Arial">Arial</option>
-                    <option value="Monospace">Monospace</option>
+                    <option value="Sans">{{ $lang('Sans serif') }}</option>
+                    <option value="Serif">{{ $lang('Serif') }}</option>
+                    <option value="Monospace">{{ $lang('Monospace') }}</option>
                 </select>
             </div>
             <div class="form-line">
                 <label for="setting-background">{{ $lang('Background') }}</label>
                 <select class="setting-element" name="background" id="setting-background">
-                    <option value="blank">{{ $lang('Blank') }}</option>
+                    <option value="blank">{{ $lang('Simple') }}</option>
                     <option value="lined">{{ $lang('Lined') }}</option>
                 </select>
             </div>
             <div class="form-line">
                 <label for="setting-fontsize">{{ $lang('Fontsize') }}</label>
                 <select class="setting-element" name="fontsize" id="setting-fontsize">
-                    <option value="blank">{{ $lang('Blank') }}</option>
-                    <option value="lined">{{ $lang('Lined') }}</option>
+                    <option value="s">{{ $lang('Small') }}</option>
+                    <option value="m">{{ $lang('Medium') }}</option>
+                    <option value="l">{{ $lang('Large') }}</option>
+                    <option value="xl">{{ $lang('Extra large') }}</option>
                 </select>
             </div>
             <div class="control-line">
