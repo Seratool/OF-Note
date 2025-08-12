@@ -4,7 +4,7 @@ namespace APP\Sources;
 
 class Dictionary
 {
-    public static array $EN = [
+    public array $EN = [
         'LanguageIcon' => '🇬🇧',
         'LanguageTitle' => 'English',
         'Notes' => 'Notes',
@@ -26,7 +26,7 @@ class Dictionary
         'Document' => 'Document',
         'Apply' => 'Apply',
     ];
-    public static array $DE = [
+    public array $DE = [
         'LanguageIcon' => '🇩🇪',
         'LanguageTitle' => 'Deutsch',
         'Notes' => 'Notizen',
@@ -48,7 +48,7 @@ class Dictionary
         'Document' => 'Dokument',
         'Apply' => 'Anwenden',
     ];
-    public static array $RU = [
+    public array $RU = [
         'LanguageIcon' => '🇷🇺',
         'LanguageTitle' => 'Русский',
         'Notes' => 'Записи',
@@ -70,4 +70,9 @@ class Dictionary
         'Document' => 'Документ',
         'Apply' => 'Применить',
     ];
+
+    public function get($lang): array
+    {
+        return isset($this->{$lang}) ? array_merge($this->EN, $this->{$lang}) : $this->EN;
+    }
 }

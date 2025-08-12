@@ -8,7 +8,7 @@
             <ul class="docs-list"></ul>
         </div>
     </nav>
-    <main data-note="{{ $note }}">
+    <main data-note="{{ $router->getParam('note') }}">
         <header>
             <div class="head-line">
                 <div class="control">
@@ -17,7 +17,7 @@
                         <svg id="sidebar-close" viewBox="0 0 24 24"><use xlink:href="#ocno-i-sidebar-close"/></svg>
                     </button>
                 </div>
-                <a class="logo-element" href="{{ $url }}">
+                <a class="logo-element" href="{{ $router->getUrl() }}">
                     <figure class="logo">
                         <img src="{% extends 'favicon.svg' %}" alt="Note">
                         <figcaption>Note</figcaption>
@@ -45,7 +45,7 @@
                 <button class="btn print-btn" type="button" title="{{ $lang('Print') }}">
                     <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-print"/></svg>
                 </button>
-                <a class="btn download-btn" href="{{ $downloadUrl }}" title="{{ $lang('Download') }}">
+                <a class="btn download-btn" href="{{ $router->getQueryUrl(['download' => true]) }}" title="{{ $lang('Download') }}">
                     <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-download"/></svg>
                 </a>
                 <button class="btn hidden share-btn" type="button" title="{{ $lang('Share') }}">
@@ -57,6 +57,9 @@
             <div class="form-line">
                 <label for="setting-language">{{ $lang('Language') }}</label>
                 <select class="setting-element" name="language" id="setting-language">
+                    {% foreach ($lang->getAvailableLanguages() as $l => $title): %}
+                    <option value="{{ $l }}"{{ $lang->lang == $l ? ' selected' : '' }}>{{ $title }}<option>
+                    {% endforeach; %}
                 </select>
             </div>
             <h3 class="tab-link">{{ $lang('Document') }}</h3>

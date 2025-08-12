@@ -9,10 +9,13 @@ use APP\View\Lang;
 use APP\View\Templater;
 
 $templater = new Templater();
-
 try {
     // Disable caching.
-    header('Cache-Control: no-store');
+    #header('Cache-Control', 'no-store');
+    #header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    #header('Pragma', 'no-cache');
+    #header('Expires', '0');
+
     $router = new Route();
 
     $core = new Core($router);
@@ -26,11 +29,8 @@ try {
 
     echo $templater->view('editor.html', [
         'lang' => new Lang(),
+        'router' => $router,
         'title' => ($note ? $note . ' - ' : '').'Note',
-        'note' => $router->getParam('note'),
-        'url' => $router->getUrl(),
-        'baseUrl' => $router->getBaseUrl(),
-        'downloadUrl' => $router->getQueryUrl(['download' => true]),
         'content' => is_file($contentFile) ? nl2br(htmlspecialchars(file_get_contents($contentFile), ENT_QUOTES, 'UTF-8'), false) : ''
     ]);
 

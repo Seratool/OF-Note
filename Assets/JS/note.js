@@ -82,7 +82,7 @@ class Note
         for (let k in notes) {
             if (notes.hasOwnProperty(k)) {
                 let note = notes[k],
-                    href = '{{ $baseUrl }}?note=' + k,
+                    href = '{{ $router->getBaseUrl() }}?note=' + k,
                     node = document.createElement("li"),
                     cont = `<div><a class="link" href="${href}">${note}</a></div><div><span>${k}</span></div>`,
                     edit = `<button class="btn edit" type="button">

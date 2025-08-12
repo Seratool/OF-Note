@@ -8,20 +8,23 @@ class Lang
 {
     public array $dict = [];
     public string $lang = '';
-    private string $defLang = 'EN';
+    private Dictionary $dictionary;
 
     public function __construct()
     {
-        $lang = strtoupper(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2));
-        $defLang = $this->defLang;
+        $this->dictionary = new Dictionary();
 
-        if (isset(Dictionary::$$lang)) {
-            $this->lang = strtolower($lang);
-            $this->dict = array_merge(Dictionary::$$defLang, Dictionary::$$lang);
-        } else {
-            $this->lang = strtolower($defLang);
-            $this->dict = Dictionary::$$defLang;
-        }
+        $lang = strtoupper(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2));
+
+        $this->lang = $this->dictionary->{$lang} ? $lang : 'EN';
+        $this->dict = $this->dictionary->get($this->lang);
+    }
+
+    public function getAvailableLanguages(): array
+    {
+        return array_map(function ($item) {
+            return $item['LanguageIcon'] . ' ' . $item['LanguageTitle'];
+        }, get_object_vars($this->dictionary));
     }
 
     public function __invoke(string $term): string
