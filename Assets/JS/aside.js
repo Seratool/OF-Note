@@ -1,14 +1,17 @@
 /**
  * aside (doc-chooser and menu panel) manager
  */
+
 class Aside
 {
     #btnAside = JSE.q('button.aside-menu');
     #btnMenu = JSE.q('button.burger-menu');
     #asideNav = JSE.q('nav.docs-navigation');
     #asideMenu = JSE.q('aside.setting');
+    #btnLang = JSE.q('button.lang-btn', this.#asideMenu);
     #btnPrint = JSE.q('button.print-btn', this.#asideMenu);
     #btnShare = JSE.q('button.share-btn', this.#asideMenu);
+    #cookies = new cookies();
 
     initialise()
     {
@@ -28,6 +31,8 @@ class Aside
             this.#btnShare.classList.remove('hidden');
             JSE.ev('click', () => this.#pageShare(), this.#btnShare);
         }
+
+        this.#initLangChooser();
     }
 
     #pageShare()
@@ -40,8 +45,28 @@ class Aside
         }
     }
 
+    #initLangChooser()
+    {
+        const langChooser = JSE.q('.lang-chooser ul', this.#asideMenu),
+            choosers = JSE.qs('button', langChooser);
 
+        JSE.ev('click', () => langChooser.classList.toggle('hidden'), this.#btnLang);
 
+        choosers.forEach((o) => {
+            JSE.ev('click', () => {
+                let v = {};
 
+                try {
+                    v = JSON.parse(this.#cookies.get('setting') || '{}');
+                } catch(e) {
+                }
 
+                v['l'] = o.getAttribute('data-lang');
+                this.#cookies.set('setting', JSON.stringify(v));
+
+                langChooser.classList.add('hidden');
+                setTimeout(() => location.reload(), 300);
+            }, o);
+        });
+    }
 }

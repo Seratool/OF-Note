@@ -42,6 +42,18 @@
     <aside class="setting">
         <div class="setting-block">
             <div class="control-line">
+                <div class="lang-chooser">
+                    <button class="btn lang-btn" type="button" title="{{ $lang('Language') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-globus"/></svg>
+                    </button>
+                    <ul class="hidden">
+                        {% foreach ($lang->getAvailableLanguages() as $l => $title): %}
+                        <li>
+                            <button {{ $lang->lang == $l ? 'class="current" ' : '' }}type="button" data-lang="{{ $l }}">{{ $title }}</button>
+                        </li>
+                        {% endforeach; %}
+                    </ul>
+                </div>
                 <button class="btn print-btn" type="button" title="{{ $lang('Print') }}">
                     <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-print"/></svg>
                 </button>
@@ -53,16 +65,6 @@
                 </button>
             </div>
             <h2 class="tab-link">{{ $lang('Setting') }}</h2>
-            <h3 class="tab-link">{{ $lang('Global') }}</h3>
-            <div class="form-line">
-                <label for="setting-language">{{ $lang('Language') }}</label>
-                <select class="setting-element" name="language" id="setting-language">
-                    {% foreach ($lang->getAvailableLanguages() as $l => $title): %}
-                    <option value="{{ $l }}"{{ $lang->lang == $l ? ' selected' : '' }}>{{ $title }}</option>
-                    {% endforeach; %}
-                </select>
-            </div>
-            <h3 class="tab-link">{{ $lang('Document') }}</h3>
             <div class="form-line">
                 <label for="setting-font">{{ $lang('Font') }}</label>
                 <select class="setting-element" name="font" id="setting-font">

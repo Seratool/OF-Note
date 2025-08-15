@@ -11,6 +11,10 @@ aside.setting {
     position: absolute;
 }
 
+aside.setting .control-line .hidden {
+    display: none;
+}
+
 nav.docs-navigation {
     left: -400px;
     transition: left .3s ease-in-out;
@@ -47,6 +51,52 @@ aside.setting h3,
 .docs-history h2 {
     text-align: center;
     margin-bottom: 1.5rem;
+}
+
+aside.setting .lang-chooser {
+    position: relative;
+}
+
+aside.setting .lang-chooser ul {
+    border-radius: .5rem;
+    background-color: var(--color-block-2);
+    box-shadow: 0 2px 7px var(--color-grey-2);
+    list-style: none;
+    padding: 0.5rem;
+    top: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 0.25rem;
+    flex-direction: column;
+    position: absolute;
+    z-index: 10;
+    display: flex;
+}
+
+aside.setting .lang-chooser ul:before {
+    content: '';
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid var(--color-block-3);
+    top: -0.5rem;
+    left: calc(50% - 0.5rem);
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+aside.setting .lang-chooser button {
+    width: 100%;
+    background-color: transparent;
+    color: var(--color-text);
+}
+
+aside.setting .lang-chooser button.current {
+    background-color: var(--color-block-3);
+}
+
+aside.setting .lang-chooser button:hover {
+    background-color: var(--color-block-3);
 }
 
 .docs-history ul.docs-list {
@@ -102,10 +152,6 @@ aside.setting .control-line .btn,
     transform: scale(1);
     transition: all 0.15s ease-in-out;
     display: inline-block;
-}
-
-aside.setting .control-line .btn.hidden {
-    display: none;
 }
 
 aside.setting .control-line .btn:hover,
