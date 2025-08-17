@@ -35,7 +35,7 @@
                 </div>
             </div>
         </header>
-        <div class="doc lined">
+        <div class="doc         bg-lined   ">
             {{ $content }}
         </div>
     </main>
@@ -74,25 +74,25 @@
             <div class="form-line">
                 <label for="setting-font">{{ $lang('Font') }}</label>
                 <select class="setting-element" name="font" id="setting-font">
-                    <option value="Sans">{{ $lang('Sans serif') }}</option>
-                    <option value="Serif">{{ $lang('Serif') }}</option>
-                    <option value="Monospace">{{ $lang('Monospace') }}</option>
+                    <option value="font-sans">{{ $lang('Sans serif') }}</option>
+                    <option value="font-serif">{{ $lang('Serif') }}</option>
+                    <option value="font-monospace">{{ $lang('Monospace') }}</option>
                 </select>
             </div>
             <div class="form-line">
                 <label for="setting-background">{{ $lang('Background') }}</label>
                 <select class="setting-element" name="background" id="setting-background">
-                    <option value="blank">{{ $lang('Simple') }}</option>
-                    <option value="lined">{{ $lang('Lined') }}</option>
+                    <option value="bg-blank">{{ $lang('Simple') }}</option>
+                    <option value="bg-lined">{{ $lang('Lined') }}</option>
                 </select>
             </div>
             <div class="form-line">
                 <label for="setting-fontsize">{{ $lang('Fontsize') }}</label>
                 <select class="setting-element" name="fontsize" id="setting-fontsize">
-                    <option value="s">{{ $lang('Small') }}</option>
-                    <option value="m">{{ $lang('Medium') }}</option>
-                    <option value="l">{{ $lang('Large') }}</option>
-                    <option value="xl">{{ $lang('Extra large') }}</option>
+                    <option value="size-s">{{ $lang('Small') }}</option>
+                    <option value="size-m">{{ $lang('Medium') }}</option>
+                    <option value="size-l">{{ $lang('Large') }}</option>
+                    <option value="size-xl">{{ $lang('Extra large') }}</option>
                 </select>
             </div>
         </div>

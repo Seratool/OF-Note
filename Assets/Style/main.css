@@ -12,18 +12,62 @@ main {
     position: relative;
 }
 
-.doc {
-    outline: none;
-    resize: none;
-    padding: 4.5rem 1rem 1.4rem 1rem;
-    min-height: 100vh;
-}
-
-.doc.lined {
-    background: repeating-linear-gradient(var(--color-bg), var(--color-bg) 23px, var(--color-block-2) 23px, var(--color-block-2) 24px)
-}
-
 button.btn svg,
 a.btn svg {
     fill: var(--color-text);
+}
+
+.doc {
+    --font-size: 1rem;
+    --line-height: 1.5rem;
+    outline: none;
+    resize: none;
+    margin-top: 3rem;
+    padding: 1.4rem 1rem;
+    min-height: 100vh;
+    background: var(--color-bg);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+}
+
+.doc.font-sans {
+    font-family: sans-serif;
+}
+
+.doc.font-serif {
+    font-family: serif;
+}
+
+.doc.font-monospace {
+    font-family: monospace;
+}
+
+.doc.size-s {
+    --font-size: 0.75rem;
+    --line-height: 1.125rem;
+}
+
+.doc.size-m {
+    --font-size: 1rem;
+    --line-height: 1.5rem;
+}
+
+.doc.size-l {
+    --font-size: 1.5rem;
+    --line-height: 2.25rem;
+}
+
+.doc.size-xl {
+    --font-size: 1.8rem;
+    --line-height: 2.7rem;
+}
+
+.doc.bg-lined {
+    padding-top: var(--line-height);
+    background: repeating-linear-gradient(
+            var(--color-bg),
+            var(--color-bg) calc(var(--line-height) - 1px),
+            var(--color-block-2) calc(var(--line-height) - 1px),
+            var(--color-block-2) calc(var(--line-height))
+    );
 }

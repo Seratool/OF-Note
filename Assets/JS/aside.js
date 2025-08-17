@@ -35,6 +35,7 @@ class Aside
 
         this.#initLangChooser();
         this.#initThemeChooser();
+        this.#initSetting();
     }
 
     #pageShare()
@@ -73,6 +74,30 @@ class Aside
 
             this.#saveSettingToCookies('t', body.classList.contains('dark') ? 'd' : 'l');
         }, this.#btnTheme);
+    }
+
+    #initSetting()
+    {
+        const fields = JSE.qs('.setting-block .setting-element'),
+            doc = JSE.q('main div.doc');
+
+        fields.forEach((f) => {
+            JSE.ev('change', () => {
+                let cl = doc.classList,
+                    opt = f.options;
+
+                for (let i = 0, c = opt.length; i < c; i++) {
+                    cl.remove(opt[i].value);
+                }
+
+                cl.add(f.value);
+
+
+                // save doc setting
+
+
+            }, f);
+        });
     }
 
     #saveSettingToCookies(key, value)
