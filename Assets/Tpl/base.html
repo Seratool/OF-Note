@@ -15,7 +15,7 @@
             {% extends 'connector.css' %}
         </style>
     </head>
-    <body class="app">
+    <body class="app{{ ($setting['t'] ?? '') == 'd' ? ' dark' : '' }}">
     {% yield content %}
     <script type="text/javascript">
         (function() {

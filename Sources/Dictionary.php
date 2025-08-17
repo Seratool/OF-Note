@@ -25,11 +25,11 @@ class Dictionary
         'Serif' => 'Serif',
         'Monospace' => 'Monospace',
         'Language' => 'Language',
-        'Apply' => 'Apply',
         'Small' => 'Small',
         'Medium' => 'Medium',
         'Large' => 'Large',
         'Extra large' => 'Extra large',
+        'Theme' => 'Theme',
     ];
     public array $DE = [
         'LanguageIcon' => '🇩🇪',
@@ -52,11 +52,11 @@ class Dictionary
         'Serif' => 'Serifen',
         'Monospace' => 'Monospace',
         'Language' => 'Sprache',
-        'Apply' => 'Anwenden',
         'Small' => 'Klein',
         'Medium' => 'Mittel',
         'Large' => 'Groß',
         'Extra large' => 'Sehr groß',
+        'Theme' => 'Theme',
     ];
     public array $RU = [
         'LanguageIcon' => '🇷🇺',
@@ -79,11 +79,11 @@ class Dictionary
         'Serif' => 'С засечками',
         'Monospace' => 'Моноширинный',
         'Language' => 'Язык',
-        'Apply' => 'Применить',
         'Small' => 'Мелкий',
         'Medium' => 'Средний',
         'Large' => 'Большой',
         'Extra large' => 'Очень большой',
+        'Theme' => 'Тема',
     ];
 
     public function get($lang): array

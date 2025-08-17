@@ -31,10 +31,12 @@ try {
         die(json_encode(['status' => 'okay']));
     }
 
+    $setting = isset($_COOKIE['setting']) ? json_decode($_COOKIE['setting'], true) : [];
     echo $templater->view('editor.html', [
-        'lang' => new Lang(),
-        'router' => $router,
         'title' => implode(' - ', [$router->getParam('note'), 'Note']),
+        'lang' => new Lang(),
+        'setting' => $setting,
+        'router' => $router,
         'content' => $content->getContent(),
     ]);
 

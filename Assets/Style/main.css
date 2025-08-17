@@ -22,3 +22,8 @@ main {
 .doc.lined {
     background: repeating-linear-gradient(var(--color-bg), var(--color-bg) 23px, var(--color-block-2) 23px, var(--color-block-2) 24px)
 }
+
+button.btn svg,
+a.btn svg {
+    fill: var(--color-text);
+}

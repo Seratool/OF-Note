@@ -69,7 +69,8 @@ header button.aside-menu #sidebar-close {
 
 header button svg {
     width: 1.5rem;
-    height: 1.5rem
+    height: 1.5rem;
+    fill: var(--color-text);
 }
 
 header button.burger-menu span.ico,

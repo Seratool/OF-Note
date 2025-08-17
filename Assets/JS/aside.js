@@ -11,6 +11,7 @@ class Aside
     #btnLang = JSE.q('button.lang-btn', this.#asideMenu);
     #btnPrint = JSE.q('button.print-btn', this.#asideMenu);
     #btnShare = JSE.q('button.share-btn', this.#asideMenu);
+    #btnTheme = JSE.q('button.theme-btn', this.#asideMenu);
     #cookies = new cookies();
 
     initialise()
@@ -33,6 +34,7 @@ class Aside
         }
 
         this.#initLangChooser();
+        this.#initThemeChooser();
     }
 
     #pageShare()
@@ -54,19 +56,34 @@ class Aside
 
         choosers.forEach((o) => {
             JSE.ev('click', () => {
-                let v = {};
-
-                try {
-                    v = JSON.parse(this.#cookies.get('setting') || '{}');
-                } catch(e) {
-                }
-
-                v['l'] = o.getAttribute('data-lang');
-                this.#cookies.set('setting', JSON.stringify(v));
+                this.#saveSettingToCookies('l', o.getAttribute('data-lang'));
 
                 langChooser.classList.add('hidden');
                 setTimeout(() => location.reload(), 300);
             }, o);
         });
+    }
+
+    #initThemeChooser()
+    {
+        const body = JSE.q('body');
+
+        JSE.ev('click', () => {
+            body.classList.toggle('dark');
+
+            this.#saveSettingToCookies('t', body.classList.contains('dark') ? 'd' : 'l');
+        }, this.#btnTheme);
+    }
+
+    #saveSettingToCookies(key, value)
+    {
+        let v = {};
+
+        try {
+            v = JSON.parse(this.#cookies.get('setting') || '{}');
+        } catch(e) {}
+
+        v[key] = value;
+        this.#cookies.set('setting', JSON.stringify(v));
     }
 }

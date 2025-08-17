@@ -19,24 +19,18 @@
     --color-grey-2: #88939e;
 }
 
-/*
-@media (prefers-color-scheme: light) {
-    :root {
-        --color-palette: #fbfdff;
-        --color-text:var(--color-palette-80);
-        --color-bg: var(--color-palette);
-    }
-}
-*/
-/* ToDO change color schema */
-@media (prefers-color-scheme: dark) {
-    :root {
+/* dark theme */
+body.dark {
+    --color-text: #d0dce2;
+    --color-bg: #1d293b;
+    --color-link: #5b7dc8;
 
-        --color-text: #fefefe;
-        --color-bg: #40464e;
+    --color-block-1: #0e172a;
+    --color-block-2: #334255;
+    --color-block-3: #1d293b;
 
-
-    }
+    --color-grey-1: #121518;
+    --color-grey-2: #424957;
 }
 
 *, :after, :before {

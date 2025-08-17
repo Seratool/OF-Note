@@ -63,6 +63,12 @@
                 <button class="btn hidden share-btn" type="button" title="{{ $lang('Share') }}">
                     <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-share"/></svg>
                 </button>
+                <div class="theme-chooser">
+                    <button class="btn theme-btn" type="button" title="{{ $lang('Theme') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-moon"/></svg>
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-sun"/></svg>
+                    </button>
+                </div>
             </div>
             <h2 class="tab-link">{{ $lang('Setting') }}</h2>
             <div class="form-line">
@@ -88,9 +94,6 @@
                     <option value="l">{{ $lang('Large') }}</option>
                     <option value="xl">{{ $lang('Extra large') }}</option>
                 </select>
-            </div>
-            <div class="control-line">
-                <button type="button">✔ {{ $lang('Apply') }}</button>
             </div>
         </div>
         <div class="version">{{ $lang('Version') }}: {{ APP\Core\Core::getVersion() }}</div>
