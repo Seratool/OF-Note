@@ -14,29 +14,31 @@ try {
     $router = new Route();
 
     // Disable caching.
-    # header('Cache-Control', 'no-store');
+    #header('Cache-Control', 'no-store');
     #header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
     #header('Pragma', 'no-cache');
     #header('Expires', '0');
 
     $core = new Core($router);
+    $content = new Content($core->getPath());
+    $content->loadContent();
+
     $core->defineEnvironment();
     $core->checkVersion();
     $core->checkRequest();
+    $core->onDownload($content);
 
-    $content = new Content($core->getPath());
     if ($content->isPostRequest()) {
         $content->setContent();
-
         die(json_encode(['status' => 'okay']));
     }
 
-    $setting = isset($_COOKIE['setting']) ? json_decode($_COOKIE['setting'], true) : [];
     echo $templater->view('editor.html', [
         'title' => implode(' - ', [$router->getParam('note'), 'Note']),
         'lang' => new Lang(),
-        'setting' => $setting,
         'router' => $router,
+        'options' => isset($_COOKIE['setting']) ? json_decode($_COOKIE['setting'], true) : [],
+        'settings' => $content->getSetting(),
         'content' => $content->getContent(),
     ]);
 

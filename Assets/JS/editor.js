@@ -1,67 +1,64 @@
 class Editor {
     #editor;
 
-    #callback = () => {};
+    #connector;
 
     /**
      * init editor.
      * @param {Node} editor
+     * @param {Connector} connector
      */
-    constructor(editor) {
+    constructor(editor, connector) {
         this.#editor = editor;
+        this.#connector = connector;
 
-        JSE.ev("paste", (ev) => {
+        JSE.ev('paste', (ev) => {
             ev.preventDefault();
-            try {
-                const selection = document.getSelection();
-                let range;
 
-                if (selection.rangeCount) {
-                    selection.deleteFromDocument();
-                    range = selection.getRangeAt(0);
-                    range.collapse(true);
-
-                    this.#fromClipboard(ev)
-                        .then(text => {
-                            let html = document.createElement('span');
-                            html.innerHTML = text
-                                .replaceAll(/</ig, '&lt;')
-                                .replaceAll(/>/ig, '&gt;')
-                                .replaceAll(/\t/ig, '    ')
-                                .replaceAll(/\\n/ig, '<br>');
-                            range.insertNode(html);
-
-                            selection.collapseToEnd();
-                            this.#editor.dispatchEvent(new Event("input"));
-                        })
-                        .catch(() => {
-                            document.execCommand('paste', false, null);
-                        });
-                }
-            } catch {
-                document.execCommand("paste", false, null);
-            }
+            this.#onPaste(ev);
         }, this.#editor);
 
-
-        JSE.ev("input", (ev) => {
-            this.#callback(this.getContent());
-        }, this.#editor);
-
+        JSE.ev('input', () => this.#connector.send(), this.#editor);
 
         this.#editor.setAttribute('contenteditable', true);
         this.#editor.focus();
     }
 
-    onChange(callback) {
-        this.#callback = callback;
+    #onPaste(ev)
+    {
+        try {
+            const selection = document.getSelection();
+            let range;
+
+            if (selection.rangeCount) {
+                selection.deleteFromDocument();
+                range = selection.getRangeAt(0);
+                range.collapse(true);
+
+                this.#fromClipboard(ev)
+                    .then(text => {
+                        let html = document.createElement('span');
+                        html.innerHTML = text
+                            .replaceAll(/</ig, '&lt;')
+                            .replaceAll(/>/ig, '&gt;')
+                            .replaceAll(/\t/ig, '    ')
+                            .replaceAll(/\\n/ig, '<br>');
+                        range.insertNode(html);
+
+                        selection.collapseToEnd();
+                        this.#editor.dispatchEvent(new Event("input"));
+                    })
+                    .catch(() => {
+                        document.execCommand('paste', false, null);
+                    });
+            }
+        } catch {
+            document.execCommand("paste", false, null);
+        }
     }
 
-    getContent() {
-        return this.#editor.innerText;
-    };
-
-    #fromClipboard(ev) {
+    #fromClipboard(ev)
+    {
         return new Promise (function(resolve, reject) {
             let obj;
 

@@ -4,11 +4,43 @@ namespace APP\Core;
 
 class Content
 {
+    private string $divider = "\n".'~=~=~ ✄ ~=~=~  ✄ ~=~=~ ✄ ~=~=~ ✄ ~=~=~ ✄ ~=~=~ ✄ ~=~=~ ✄ ~=~=~ ✄ ~=~=~'."\n";
+
     private string $path = '';
 
-    public function __construct($path)
+    private string $content = '';
+
+    private array $settings = [
+        'font' => 'font-sans',
+        'bg' => 'bg-lined',
+        'size' => 'size-m',
+    ];
+
+    private array $settingsDefault = [
+        'font' => ['font-sans', 'font-serif', 'font-monospace'],
+        'bg' => ['bg-blank', 'bg-lined'],
+        'size' => ['size-s', 'size-m', 'size-l', 'size-xl'],
+    ];
+
+    public function __construct(string $path)
     {
         $this->path = $path;
+    }
+
+    public function loadContent(): void
+    {
+        $this->content = is_readable($this->path) ? file_get_contents($this->path) : '';
+        $parts = explode($this->divider, $this->content);
+
+        if (sizeof($parts) > 1) {
+            $this->settings = unserialize(trim($parts[0], '/'));
+            $this->content = $parts[1];
+        }
+    }
+
+    public function getSetting(): array
+    {
+        return $this->settings;
     }
 
     public function isPostRequest(): bool
@@ -16,23 +48,36 @@ class Content
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 
-    public function getContent(): string
+    public function getContent($raw = false): string
     {
-        if (!is_readable($this->path)) {
-            return '';
+        if ($raw) {
+            return $this->content;
         }
 
-        $content = htmlspecialchars(file_get_contents($this->path), ENT_QUOTES, 'UTF-8');
-        return nl2br($content, false);
+        return nl2br(htmlspecialchars($this->content, ENT_QUOTES, 'UTF-8'), false);
+    }
+
+    /**
+     * extract setting from array, validate and store in settings property.
+     */
+    public function extractSetting(array $opts): void
+    {
+        foreach ($this->settings as $key => $value) {
+            if (isset($opts[$key])) {
+                $this->settings[$key] = in_array($opts[$key], $this->settingsDefault[$key]) ? $opts[$key] : $value;
+            }
+        }
     }
 
     public function setContent(): void
     {
-        $text = $_POST['text'] ?? file_get_contents("php://input");
+        $text = strip_tags($_POST['text']);
 
         if (strlen($text)) {
+            $this->extractSetting($_POST);
             $this->mkDir(dirname($this->path), 0755);
-            file_put_contents($this->path, $text);
+
+            file_put_contents($this->path, '///'.serialize($this->settings).'///'.$this->divider.$text);
         } else {
             unlink($this->path);
         }

@@ -4,6 +4,7 @@
 
 class Aside
 {
+    #connector;
     #btnAside = JSE.q('button.aside-menu');
     #btnMenu = JSE.q('button.burger-menu');
     #asideNav = JSE.q('nav.docs-navigation');
@@ -13,6 +14,15 @@ class Aside
     #btnShare = JSE.q('button.share-btn', this.#asideMenu);
     #btnTheme = JSE.q('button.theme-btn', this.#asideMenu);
     #cookies = new cookies();
+
+    /**
+     * initialise.
+     * @param {Connector} connector
+     */
+    constructor(connector)
+    {
+        this.#connector = connector;
+    }
 
     initialise()
     {
@@ -92,10 +102,8 @@ class Aside
 
                 cl.add(f.value);
 
-
-                // save doc setting
-
-
+                // save doc with setting
+                this.#connector.save();
             }, f);
         });
     }

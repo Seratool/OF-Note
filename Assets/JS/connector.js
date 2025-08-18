@@ -2,38 +2,46 @@ class Connector
 {
     #sendDelay = 1000;
 
-    #icons = null;
+    #editorDoc;
+
+    #icons;
 
     #timer = null;
 
     /**
      * initialise connector.
      * @param {Node} icons
+     * @param {Node} editorDoc
      */
-    constructor(icons)
+    constructor(icons, editorDoc)
     {
         this.#icons = icons;
+        this.#editorDoc = editorDoc;
     }
 
     /**
      * show connection status.
-     * @param content
      */
-    send(content) {
+    send() {
         clearTimeout(this.#timer);
 
         this.#icon('edit');
-        this.#timer = setTimeout(() => this.#send(content), this.#sendDelay);
+        this.#timer = setTimeout(() => this.save(), this.#sendDelay);
     }
 
     /**
      * send routine.
-     * @param {string} content
      */
-    #send(content)
+    save()
     {
-        const formData = new FormData();
-        formData.append('text', content);
+        const formData = new FormData(),
+            fields = JSE.qs('.setting-block .setting-element');
+
+        formData.append('text', this.#editorDoc.innerText);
+
+        fields.forEach((f) => {
+            formData.append(f.name, f.value);
+        });
 
         fetch("{{ $router->getUrl() }}", {
             method: "POST",

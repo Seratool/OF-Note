@@ -79,17 +79,17 @@ class Note
         let notes = this.#getStoredNote();
         this.#menuDocs.innerText = '';
 
-        for (let k in notes) {
-            if (notes.hasOwnProperty(k)) {
-                let note = notes[k],
-                    href = '{{ $router->getBaseUrl() }}?note=' + k,
+        for (let key in notes) {
+            if (notes.hasOwnProperty(key)) {
+                let note = notes[key],
+                    href = '{{ $router->getBaseUrl() }}?note=' + key,
                     node = document.createElement("li"),
-                    cont = `<div><a class="link" href="${href}">${note}</a></div><div><span>${k}</span></div>`,
+                    cont = `<div><a class="link" href="${href}">${note}</a></div><div><span>${key}</span></div>`,
                     edit = `<button class="btn edit" type="button">
                             <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-pencil"/></svg>
                         </button>`;
 
-                if (this.#currentNote !== note) {
+                if (this.#currentNote !== key) {
                     edit += `<button class="btn delete" type="button">
                             <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-trash"/></svg>
                         </button>`;
@@ -97,13 +97,13 @@ class Note
 
                 node.innerHTML = `<div>${cont}</div><div class="control-line">${edit}</div>`;
 
-                if (this.#currentNote === note) {
+                if (this.#currentNote === key) {
                     JSE.q('.link', node).classList.add('active');
 
                 } else {
                     JSE.ev('click', () => {
                         if (window.confirm(_['Do you want to delete the link to "%s"?'].replace('%s', note))) {
-                            this.removeNotes(k);
+                            this.removeNotes(key);
                         }
                     }, JSE.q('.delete', node));
                 }
@@ -116,7 +116,7 @@ class Note
                     title = n.innerText;
 
                     if (title.toLowerCase() !== "") {
-                        this.#renameNotes(k, title);
+                        this.#renameNotes(key, title);
                     }
                 }, JSE.q('.edit', node));
 

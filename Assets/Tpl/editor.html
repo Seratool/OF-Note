@@ -35,7 +35,7 @@
                 </div>
             </div>
         </header>
-        <div class="doc         bg-lined   ">
+        <div class="doc {{ $settings['font'] }} {{ $settings['bg'] }} {{ $settings['size'] }}">
             {{ $content }}
         </div>
     </main>
@@ -74,25 +74,25 @@
             <div class="form-line">
                 <label for="setting-font">{{ $lang('Font') }}</label>
                 <select class="setting-element" name="font" id="setting-font">
-                    <option value="font-sans">{{ $lang('Sans serif') }}</option>
-                    <option value="font-serif">{{ $lang('Serif') }}</option>
-                    <option value="font-monospace">{{ $lang('Monospace') }}</option>
+                    <option value="font-sans"{{ $settings['font'] == 'font-sans' ? ' selected' : ''}}>{{ $lang('Sans serif') }}</option>
+                    <option value="font-serif"{{ $settings['font'] == 'font-serif' ? ' selected' : ''}}>{{ $lang('Serif') }}</option>
+                    <option value="font-monospace"{{ $settings['font'] == 'font-monospace' ? ' selected' : ''}}>{{ $lang('Monospace') }}</option>
                 </select>
             </div>
             <div class="form-line">
                 <label for="setting-background">{{ $lang('Background') }}</label>
-                <select class="setting-element" name="background" id="setting-background">
-                    <option value="bg-blank">{{ $lang('Simple') }}</option>
-                    <option value="bg-lined">{{ $lang('Lined') }}</option>
+                <select class="setting-element" name="bg" id="setting-background">
+                    <option value="bg-blank"{{ $settings['bg'] == 'bg-blank' ? ' selected' : ''}}>{{ $lang('Simple') }}</option>
+                    <option value="bg-lined"{{ $settings['bg'] == 'bg-lined' ? ' selected' : ''}}>{{ $lang('Lined') }}</option>
                 </select>
             </div>
             <div class="form-line">
                 <label for="setting-fontsize">{{ $lang('Fontsize') }}</label>
-                <select class="setting-element" name="fontsize" id="setting-fontsize">
-                    <option value="size-s">{{ $lang('Small') }}</option>
-                    <option value="size-m">{{ $lang('Medium') }}</option>
-                    <option value="size-l">{{ $lang('Large') }}</option>
-                    <option value="size-xl">{{ $lang('Extra large') }}</option>
+                <select class="setting-element" name="size" id="setting-fontsize">
+                    <option value="size-s"{{ $settings['size'] == 'size-s' ? ' selected' : ''}}>{{ $lang('Small') }}</option>
+                    <option value="size-m"{{ $settings['size'] == 'size-m' ? ' selected' : ''}}>{{ $lang('Medium') }}</option>
+                    <option value="size-l"{{ $settings['size'] == 'size-l' ? ' selected' : ''}}>{{ $lang('Large') }}</option>
+                    <option value="size-xl"{{ $settings['size'] == 'size-xl' ? ' selected' : ''}}>{{ $lang('Extra large') }}</option>
                 </select>
             </div>
         </div>

@@ -93,13 +93,24 @@ class Core
             header("Location: ".$this->route->getUrl());
             die;
         }
+    }
 
+    /**
+     * start download a file.
+     * @param Content $content
+     * @throws AppException
+     */
+    public function onDownload(Content $content): void
+    {
         if ($this->route->getParam('download')) {
+            $note = $this->route->getParam('note');
+            $cont = $content->getContent(true);
+
             if (is_file($this->path)) {
                 header("Content-Type: text/plain");
                 header("Content-Disposition: attachment; filename=".$note."_".date('Y-m-d_H-i').".txt");
-                header("Content-Length: ". filesize($this->path));
-                readfile($this->path);
+                header("Content-Length: ". mb_strlen($cont));
+                echo $cont;
                 die;
 
             } else {

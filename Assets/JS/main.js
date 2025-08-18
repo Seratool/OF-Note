@@ -7,16 +7,13 @@ JSE.ready(() => {
         nMenuDocs = JSE.q('.docs-list', nBbody),
         nEditorDoc = JSE.q('.doc', nMain),
         nStatusIcons = JSE.q('.control .sync', nMain),
-        currentNote = nMain.getAttribute('data-note');
-
-    const connection = new Connector(nStatusIcons);
-    const note = new Note(nMenuDocs, currentNote);
-    const aside = new Aside();
-    const editor = new Editor(nEditorDoc);
+        currentNote = nMain.getAttribute('data-note'),
+        connector = new Connector(nStatusIcons, nEditorDoc),
+        note = new Note(nMenuDocs, currentNote),
+        editor = new Editor(nEditorDoc, connector),
+        aside = new Aside(connector);
 
     aside.initialise();
-
-    editor.onChange((content) => connection.send(content));
 
     note.addNote(currentNote);
     note.showNotes();
