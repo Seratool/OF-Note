@@ -1,0 +1,14 @@
+@media print {
+    /* All your print styles go here */
+    nav.docs-navigation,
+    aside.setting,
+    header {
+        display: none !important;
+    }
+
+    main div.doc {
+        color: #343a40;
+        background: #fff;
+        height: auto !important;
+    }
+}

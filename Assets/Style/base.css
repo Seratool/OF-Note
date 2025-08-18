@@ -91,7 +91,6 @@ a:hover {
     color: var(--color-link)
 }
 
-
 button {
     border-radius: var(--border-radius);
     border: none;
@@ -120,6 +119,11 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+button.btn svg,
+a.btn svg {
+    fill: var(--color-text);
 }
 
 svg.icon {

@@ -19,6 +19,7 @@ class Assets
     public static string $asides_css = 'SOURCE_REPLACER_CSS("APP/Assets/Style/asides.css")';
     public static string $main_css = 'SOURCE_REPLACER_CSS("APP/Assets/Style/main.css")';
     public static string $connector_css = 'SOURCE_REPLACER_CSS("APP/Assets/Style/connector.css")';
+    public static string $print_css = 'SOURCE_REPLACER_CSS("APP/Assets/Style/print.css")';
 
     /**
      * define java script sources.
