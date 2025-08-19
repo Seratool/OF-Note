@@ -19,7 +19,7 @@ class Content
     private array $settingsDefault = [
         'font' => ['font-sans', 'font-serif', 'font-monospace'],
         'bg' => ['bg-blank', 'bg-lined'],
-        'size' => ['size-s', 'size-m', 'size-l', 'size-xl'],
+        'size' => ['size-xs', 'size-s', 'size-m', 'size-l', 'size-xl'],
     ];
 
     public function __construct(string $path)

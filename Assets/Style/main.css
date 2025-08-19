@@ -37,9 +37,14 @@ main {
     font-family: monospace;
 }
 
-.doc.size-s {
+.doc.size-xs {
     --font-size: 0.75rem;
     --line-height: 1.125rem;
+}
+
+.doc.size-s {
+    --font-size: 0.85rem;
+    --line-height: 1.1275rem;
 }
 
 .doc.size-m {
@@ -48,13 +53,13 @@ main {
 }
 
 .doc.size-l {
-    --font-size: 1.5rem;
-    --line-height: 2.25rem;
+    --font-size: 1.25rem;
+    --line-height: 1.875rem;
 }
 
 .doc.size-xl {
-    --font-size: 1.8rem;
-    --line-height: 2.7rem;
+    --font-size: 1.5rem;
+    --line-height: 2.25rem;
 }
 
 .doc.bg-lined {

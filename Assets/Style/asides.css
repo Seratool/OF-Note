@@ -15,35 +15,83 @@ aside.setting .control-line .hidden {
     display: none;
 }
 
+
+
+
+
+
+
+
+
+
+
 nav.docs-navigation {
     left: -400px;
-    transition: left .3s ease-in-out;
-}
-
-aside.setting {
-    right: -400px;
-    transition: right .3s ease-in-out;
+    position: absolute;
+    display: none;
 }
 
 nav.docs-navigation.open {
     box-shadow: 2px 7px 7px var(--color-grey-1);
     left: 0;
+    animation: openNavigation 300ms ease-in-out;
+    display: flex;
+}
+
+nav.docs-navigation.close {
+    box-shadow: none;
+    animation: closingNavigation 300ms ease-in-out;
+}
+
+@keyframes openNavigation {
+    0% {display: flex;left: -400px;}
+    100% {left: 0}
+}
+
+@keyframes closingNavigation {
+    0% {display: flex;left: 0}
+    99% {display: flex;left: -400px;}
+    100% {display: none;left: -400px;}
+}
+
+aside.setting {
+    right: -400px;
+    position: absolute;
+    display: none;
 }
 
 aside.setting.open {
     box-shadow: -2px 7px 7px var(--color-grey-1);
     right: 0;
-}
-
-aside.setting {
+    animation: openSetting 300ms ease-in-out;
     gap: 2rem;
     justify-content: space-between;
     flex-direction: column;
     display: flex;
 }
 
+aside.setting.close {
+    box-shadow: none;
+    animation: closingSetting 300ms ease-in-out;
+}
+
+@keyframes openSetting {
+    0% {display: flex;right:-400px;}
+    100% {right: 0}
+}
+
+@keyframes closingSetting {
+    0% {display: flex;right: 0}
+    99% {display: flex;right: -400px;}
+    100% {display: none;right: -400px;}
+}
+
 aside.setting .setting-block .control-line {
     margin-bottom: 2rem;
+}
+
+.docs-history {
+    width: 100%
 }
 
 aside.setting h2,
@@ -52,7 +100,6 @@ aside.setting h3,
     text-align: center;
     margin-bottom: 1.5rem;
 }
-
 aside.setting .lang-chooser {
     position: relative;
 }
@@ -118,12 +165,21 @@ aside.setting .lang-chooser button:hover {
     margin-top: 0.5rem;
 }
 
+.docs-history ul.docs-list a {
+    font-weight: bold;
+}
+
 .docs-history ul.docs-list a.link.active {
     font-weight: bold;
 }
 
 .docs-history ul.docs-list li a.link:hover {
     color: hsl(from currentColor h s calc(l - 20));
+}
+
+.docs-history ul.docs-list li a span {
+    font-size: 0.7rem;
+    font-weight: 400;
 }
 
 aside.setting .control-line,

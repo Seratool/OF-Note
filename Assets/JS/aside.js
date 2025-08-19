@@ -26,16 +26,8 @@ class Aside
 
     initialise()
     {
-        JSE.ev('click', () => {
-            this.#btnAside.classList.toggle('open');
-            this.#asideNav.classList.toggle('open');
-        }, this.#btnAside);
-
-        JSE.ev('click', () => {
-            this.#btnMenu.classList.toggle('open');
-            this.#asideMenu.classList.toggle('open');
-        }, this.#btnMenu);
-
+        JSE.ev('click', () => this.#togglePanel(this.#btnAside, this.#asideNav), this.#btnAside);
+        JSE.ev('click', () => this.#togglePanel(this.#btnMenu, this.#asideMenu), this.#btnMenu);
         JSE.ev('click', () => print(), this.#btnPrint);
 
         if (navigator.canShare) {
@@ -46,6 +38,26 @@ class Aside
         this.#initLangChooser();
         this.#initThemeChooser();
         this.#initSetting();
+    }
+
+    /**
+     * opening/closing of aside panel.
+     * @param {HTMLElement} btn
+     * @param {HTMLElement} panel
+     */
+    #togglePanel(btn, panel)
+    {
+        if (btn.classList.contains('open')) {
+            panel.classList.add('close');
+            panel.classList.remove('open');
+            setTimeout(() => {
+                btn.classList.remove('open');
+                panel.classList.remove('close');
+            },300);
+        } else {
+            btn.classList.add('open');
+            panel.classList.add('open');
+        }
     }
 
     #pageShare()

@@ -9,7 +9,7 @@ class Note
 
     /**
      * initialise.
-     * @param {Node} menuDoc
+     * @param {HTMLElement} menuDoc
      * @param {string} currentNote
      */
     constructor(menuDoc, currentNote)
@@ -83,8 +83,9 @@ class Note
             if (notes.hasOwnProperty(key)) {
                 let note = notes[key],
                     href = '{{ $router->getBaseUrl() }}?note=' + key,
+                    uri = '{{ $router->getRelativeBaseUrl() }}?note=' + key,
                     node = document.createElement("li"),
-                    cont = `<div><a class="link" href="${href}">${note}</a></div><div><span>${key}</span></div>`,
+                    cont = `<a class="link" href="${href}"><div>${note}</div><div><span>${uri}</span></div></a>`,
                     edit = `<button class="btn edit" type="button">
                             <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-pencil"/></svg>
                         </button>`;

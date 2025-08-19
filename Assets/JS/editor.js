@@ -5,7 +5,7 @@ class Editor {
 
     /**
      * init editor.
-     * @param {Node} editor
+     * @param {HTMLElement} editor
      * @param {Connector} connector
      */
     constructor(editor, connector) {

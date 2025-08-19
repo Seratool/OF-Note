@@ -27,6 +27,11 @@ class Route
         return $this->url['scheme'].'://'.$this->url['host'].$this->url['path'];
     }
 
+    public function getRelativeBaseUrl(): string
+    {
+        return $this->url['path'];
+    }
+
     public function getQueryUrl(array $get): string
     {
         return $this->generateUrl(array_merge($this->GET, $get));
@@ -36,6 +41,7 @@ class Route
     {
         return $this->generateUrl($this->GET);
     }
+
     private function generateUrl(array $query): string
     {
         $url = $this->url;

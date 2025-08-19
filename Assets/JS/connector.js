@@ -10,8 +10,8 @@ class Connector
 
     /**
      * initialise connector.
-     * @param {Node} icons
-     * @param {Node} editorDoc
+     * @param {HTMLElement} icons
+     * @param {HTMLElement} editorDoc
      */
     constructor(icons, editorDoc)
     {
@@ -34,22 +34,28 @@ class Connector
      */
     save()
     {
-        const formData = new FormData(),
-            fields = JSE.qs('.setting-block .setting-element');
+        fetch("{{ $router->getUrl() }}", {
+            method: "POST",
+            headers: {"X-Requested-With": "XMLHttpRequest"},
+            body: this.#getFormData()
+        }).then(
+            (response) => this.#icon(response.status === 200 ? 'sent' : 'error')
+        ).catch(() => this.#icon('error'));
+    }
 
-        formData.append('text', this.#editorDoc.innerText);
+    #getFormData()
+    {
+        const formData = new FormData(),
+            fields = JSE.qs('.setting-block .setting-element'),
+            text = this.#editorDoc.innerText;
+
+        formData.append('text', text === '\n' ? '' : this.#editorDoc.innerText);
 
         fields.forEach((f) => {
             formData.append(f.name, f.value);
         });
 
-        fetch("{{ $router->getUrl() }}", {
-            method: "POST",
-            headers: {"X-Requested-With": "XMLHttpRequest"},
-            body: formData
-        }).then(
-            (response) => this.#icon(response.status === 200 ? 'sent' : 'error')
-        ).catch(() => this.#icon('error'));
+        return formData;
     }
 
     /**
