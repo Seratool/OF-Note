@@ -26,8 +26,20 @@ class Aside
 
     initialise()
     {
-        JSE.ev('click', () => this.#togglePanel('aside-doc-open','aside-doc-close'), this.#btnAsideDoc);
-        JSE.ev('click', () => this.#togglePanel('aside-setting-open','aside-setting-close'), this.#btnAsideSetting);
+        JSE.ev('click', () => {
+            if (this.#body.offsetWidth < 800 && this.#body.classList.contains('aside-setting-open')) {
+                this.#togglePanel('aside-setting-open','aside-setting-close');
+            }
+
+            this.#togglePanel('aside-doc-open','aside-doc-close');
+        }, this.#btnAsideDoc);
+        JSE.ev('click', () => {
+            if (this.#body.offsetWidth < 800 && this.#body.classList.contains('aside-doc-open')) {
+                this.#togglePanel('aside-doc-open','aside-doc-close');
+            }
+
+            this.#togglePanel('aside-setting-open','aside-setting-close');
+        }, this.#btnAsideSetting);
         JSE.ev('click', () => print(), this.#btnPrint);
 
         if (navigator.canShare) {

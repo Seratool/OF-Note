@@ -84,7 +84,7 @@ class Note
                 let note = notes[key],
                     href = '{{ $router->getBaseUrl() }}?note=' + key,
                     uri = '{{ $router->getRelativeBaseUrl() }}?note=' + key,
-                    node = document.createElement("li"),
+                    node = document.createElement('li'),
                     cont = `<a class="link" href="${href}"><div>${note}</div><div><span>${uri}</span></div></a>`,
                     edit = `<button class="btn edit" type="button">
                             <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-pencil"/></svg>
@@ -99,8 +99,7 @@ class Note
                 node.innerHTML = `<div>${cont}</div><div class="control-line">${edit}</div>`;
 
                 if (this.#currentNote === key) {
-                    JSE.q('.link', node).classList.add('active');
-
+                    node.classList.add('active');
                 } else {
                     JSE.ev('click', () => {
                         if (window.confirm(_['Do you want to delete the link to "%s"?'].replace('%s', note))) {
