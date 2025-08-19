@@ -5,9 +5,9 @@
 class Aside
 {
     #connector;
-    #btnAside = JSE.q('button.aside-menu');
-    #btnMenu = JSE.q('button.burger-menu');
-    #asideNav = JSE.q('nav.docs-navigation');
+    #body = JSE.q('body');
+    #btnAsideDoc = JSE.q('button.aside-menu');
+    #btnAsideSetting = JSE.q('button.burger-menu');
     #asideMenu = JSE.q('aside.setting');
     #btnLang = JSE.q('button.lang-btn', this.#asideMenu);
     #btnPrint = JSE.q('button.print-btn', this.#asideMenu);
@@ -26,8 +26,8 @@ class Aside
 
     initialise()
     {
-        JSE.ev('click', () => this.#togglePanel(this.#btnAside, this.#asideNav), this.#btnAside);
-        JSE.ev('click', () => this.#togglePanel(this.#btnMenu, this.#asideMenu), this.#btnMenu);
+        JSE.ev('click', () => this.#togglePanel('aside-doc-open','aside-doc-close'), this.#btnAsideDoc);
+        JSE.ev('click', () => this.#togglePanel('aside-setting-open','aside-setting-close'), this.#btnAsideSetting);
         JSE.ev('click', () => print(), this.#btnPrint);
 
         if (navigator.canShare) {
@@ -42,21 +42,19 @@ class Aside
 
     /**
      * opening/closing of aside panel.
-     * @param {HTMLElement} btn
-     * @param {HTMLElement} panel
+     * @param {string} openClass
+     * @param {string} closeClass
      */
-    #togglePanel(btn, panel)
+    #togglePanel(openClass, closeClass)
     {
-        if (btn.classList.contains('open')) {
-            panel.classList.add('close');
-            panel.classList.remove('open');
+        if (this.#body.classList.contains(openClass)) {
+            this.#body.classList.add(closeClass);
+            this.#body.classList.remove(openClass);
             setTimeout(() => {
-                btn.classList.remove('open');
-                panel.classList.remove('close');
+                this.#body.classList.remove(closeClass);
             },300);
         } else {
-            btn.classList.add('open');
-            panel.classList.add('open');
+            this.#body.classList.add(openClass);
         }
     }
 

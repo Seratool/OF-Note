@@ -1,4 +1,11 @@
 
+body.aside-doc-open,
+body.aside-setting-open,
+body.aside-doc-close,
+body.aside-setting-close {
+    overflow: hidden;
+}
+
 nav.docs-navigation,
 aside.setting {
     background: var(--color-block-1);
@@ -15,30 +22,20 @@ aside.setting .control-line .hidden {
     display: none;
 }
 
-
-
-
-
-
-
-
-
-
-
 nav.docs-navigation {
     left: -400px;
     position: absolute;
     display: none;
 }
 
-nav.docs-navigation.open {
+body.aside-doc-open nav.docs-navigation {
     box-shadow: 2px 7px 7px var(--color-grey-1);
     left: 0;
     animation: openNavigation 300ms ease-in-out;
     display: flex;
 }
 
-nav.docs-navigation.close {
+body.aside-doc-close nav.docs-navigation {
     box-shadow: none;
     animation: closingNavigation 300ms ease-in-out;
 }
@@ -60,7 +57,7 @@ aside.setting {
     display: none;
 }
 
-aside.setting.open {
+body.aside-setting-open aside.setting {
     box-shadow: -2px 7px 7px var(--color-grey-1);
     right: 0;
     animation: openSetting 300ms ease-in-out;
@@ -70,7 +67,7 @@ aside.setting.open {
     display: flex;
 }
 
-aside.setting.close {
+body.aside-setting-close aside.setting {
     box-shadow: none;
     animation: closingSetting 300ms ease-in-out;
 }

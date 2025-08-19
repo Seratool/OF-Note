@@ -2,13 +2,13 @@
 
 {% block content %}
     @parent
-    <nav class="docs-navigation">
-        <div class="docs-history">
-            <h2>{{ $lang('Notes') }}</h2>
-            <ul class="docs-list"></ul>
-        </div>
-    </nav>
     <main data-note="{{ $router->getParam('note') }}">
+        <nav class="docs-navigation">
+            <div class="docs-history">
+                <h2>{{ $lang('Notes') }}</h2>
+                <ul class="docs-list"></ul>
+            </div>
+        </nav>
         <header>
             <div class="head-line">
                 <div class="control">
@@ -38,67 +38,66 @@
         <div class="doc {{ $settings['font'] }} {{ $settings['bg'] }} {{ $settings['size'] }}">
             {{ $content }}
         </div>
+        <aside class="setting">
+            <div class="setting-block">
+                <div class="control-line">
+                    <div class="lang-chooser">
+                        <button class="btn lang-btn" type="button" title="{{ $lang('Language') }}">
+                            <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-globus"/></svg>
+                        </button>
+                        <ul class="hidden">
+                            {% foreach ($lang->getAvailableLanguages() as $l => $title): %}
+                            <li>
+                                <button {{ $lang->lang == $l ? 'class="current" ' : '' }}type="button" data-lang="{{ $l }}">{{ $title }}</button>
+                            </li>
+                            {% endforeach; %}
+                        </ul>
+                    </div>
+                    <button class="btn print-btn" type="button" title="{{ $lang('Print') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-print"/></svg>
+                    </button>
+                    <a class="btn download-btn" href="{{ $router->getQueryUrl(['download' => true]) }}" title="{{ $lang('Download') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-download"/></svg>
+                    </a>
+                    <button class="btn hidden share-btn" type="button" title="{{ $lang('Share') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-share"/></svg>
+                    </button>
+                    <div class="theme-chooser">
+                        <button class="btn theme-btn" type="button" title="{{ $lang('Theme') }}">
+                            <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-moon"/></svg>
+                            <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-sun"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <h2 class="tab-link">{{ $lang('Setting') }}</h2>
+                <div class="form-line">
+                    <label for="setting-font">{{ $lang('Font') }}</label>
+                    <select class="setting-element" name="font" id="setting-font">
+                        <option value="font-sans"{{ $settings['font'] == 'font-sans' ? ' selected' : ''}}>{{ $lang('Sans serif') }}</option>
+                        <option value="font-serif"{{ $settings['font'] == 'font-serif' ? ' selected' : ''}}>{{ $lang('Serif') }}</option>
+                        <option value="font-monospace"{{ $settings['font'] == 'font-monospace' ? ' selected' : ''}}>{{ $lang('Monospace') }}</option>
+                    </select>
+                </div>
+                <div class="form-line">
+                    <label for="setting-background">{{ $lang('Background') }}</label>
+                    <select class="setting-element" name="bg" id="setting-background">
+                        <option value="bg-blank"{{ $settings['bg'] == 'bg-blank' ? ' selected' : ''}}>{{ $lang('Simple') }}</option>
+                        <option value="bg-lined"{{ $settings['bg'] == 'bg-lined' ? ' selected' : ''}}>{{ $lang('Lined') }}</option>
+                    </select>
+                </div>
+                <div class="form-line">
+                    <label for="setting-fontsize">{{ $lang('Fontsize') }}</label>
+                    <select class="setting-element" name="size" id="setting-fontsize">
+                        <option value="size-xs"{{ $settings['size'] == 'size-xs' ? ' selected' : ''}}>{{ $lang('Extra small') }}</option>
+                        <option value="size-s"{{ $settings['size'] == 'size-s' ? ' selected' : ''}}>{{ $lang('Small') }}</option>
+                        <option value="size-m"{{ $settings['size'] == 'size-m' ? ' selected' : ''}}>{{ $lang('Medium') }}</option>
+                        <option value="size-l"{{ $settings['size'] == 'size-l' ? ' selected' : ''}}>{{ $lang('Large') }}</option>
+                        <option value="size-xl"{{ $settings['size'] == 'size-xl' ? ' selected' : ''}}>{{ $lang('Extra large') }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="version">{{ $lang('Version') }}: {{ APP\Core\Core::getVersion() }}</div>
+        </aside>
     </main>
-    <aside class="setting">
-        <div class="setting-block">
-            <div class="control-line">
-                <div class="lang-chooser">
-                    <button class="btn lang-btn" type="button" title="{{ $lang('Language') }}">
-                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-globus"/></svg>
-                    </button>
-                    <ul class="hidden">
-                        {% foreach ($lang->getAvailableLanguages() as $l => $title): %}
-                        <li>
-                            <button {{ $lang->lang == $l ? 'class="current" ' : '' }}type="button" data-lang="{{ $l }}">{{ $title }}</button>
-                        </li>
-                        {% endforeach; %}
-                    </ul>
-                </div>
-                <button class="btn print-btn" type="button" title="{{ $lang('Print') }}">
-                    <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-print"/></svg>
-                </button>
-                <a class="btn download-btn" href="{{ $router->getQueryUrl(['download' => true]) }}" title="{{ $lang('Download') }}">
-                    <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-download"/></svg>
-                </a>
-                <button class="btn hidden share-btn" type="button" title="{{ $lang('Share') }}">
-                    <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-share"/></svg>
-                </button>
-                <div class="theme-chooser">
-                    <button class="btn theme-btn" type="button" title="{{ $lang('Theme') }}">
-                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-moon"/></svg>
-                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-sun"/></svg>
-                    </button>
-                </div>
-            </div>
-            <h2 class="tab-link">{{ $lang('Setting') }}</h2>
-            <div class="form-line">
-                <label for="setting-font">{{ $lang('Font') }}</label>
-                <select class="setting-element" name="font" id="setting-font">
-                    <option value="font-sans"{{ $settings['font'] == 'font-sans' ? ' selected' : ''}}>{{ $lang('Sans serif') }}</option>
-                    <option value="font-serif"{{ $settings['font'] == 'font-serif' ? ' selected' : ''}}>{{ $lang('Serif') }}</option>
-                    <option value="font-monospace"{{ $settings['font'] == 'font-monospace' ? ' selected' : ''}}>{{ $lang('Monospace') }}</option>
-                </select>
-            </div>
-            <div class="form-line">
-                <label for="setting-background">{{ $lang('Background') }}</label>
-                <select class="setting-element" name="bg" id="setting-background">
-                    <option value="bg-blank"{{ $settings['bg'] == 'bg-blank' ? ' selected' : ''}}>{{ $lang('Simple') }}</option>
-                    <option value="bg-lined"{{ $settings['bg'] == 'bg-lined' ? ' selected' : ''}}>{{ $lang('Lined') }}</option>
-                </select>
-            </div>
-            <div class="form-line">
-                <label for="setting-fontsize">{{ $lang('Fontsize') }}</label>
-                <select class="setting-element" name="size" id="setting-fontsize">
-                    <option value="size-xs"{{ $settings['size'] == 'size-xs' ? ' selected' : ''}}>{{ $lang('Extra small') }}</option>
-                    <option value="size-s"{{ $settings['size'] == 'size-s' ? ' selected' : ''}}>{{ $lang('Small') }}</option>
-                    <option value="size-m"{{ $settings['size'] == 'size-m' ? ' selected' : ''}}>{{ $lang('Medium') }}</option>
-                    <option value="size-l"{{ $settings['size'] == 'size-l' ? ' selected' : ''}}>{{ $lang('Large') }}</option>
-                    <option value="size-xl"{{ $settings['size'] == 'size-xl' ? ' selected' : ''}}>{{ $lang('Extra large') }}</option>
-                </select>
-            </div>
-        </div>
-        <div class="version">{{ $lang('Version') }}: {{ APP\Core\Core::getVersion() }}</div>
-    </aside>
-
     {% extends 'icons.svg' %}
 {% endblock %}

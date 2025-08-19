@@ -74,6 +74,7 @@ body {
     font: 15px/24px var(--primary-font), sans-serif;
     background: var(--color-bg);
     color: var(--color-text);
+    width: 100vw;
     overflow-x: hidden
 }
 

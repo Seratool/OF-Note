@@ -58,11 +58,11 @@ header button {
 }
 
 header button.aside-menu #sidebar-open,
-header button.aside-menu.open #sidebar-close {
+body.aside-doc-open button.aside-menu #sidebar-close {
     display: block;
 }
 
-header button.aside-menu.open #sidebar-open,
+body.aside-doc-open button.aside-menu #sidebar-open,
 header button.aside-menu #sidebar-close {
     display: none;
 }
@@ -105,21 +105,21 @@ header button.burger-menu span.ico::after {
     margin-top: .55rem
 }
 
-header button.burger-menu.open span.ico {
+body.aside-setting-open button.burger-menu span.ico {
     background-color: rgba(0, 0, 0, 0);
 }
 
-header button.burger-menu.open span.ico:after,
-header button.burger-menu.open span.ico:before {
+body.aside-setting-open button.burger-menu span.ico:after,
+body.aside-setting-open button.burger-menu span.ico:before {
     transition: transform .3s .3s, margin-top .3s;
 }
 
-header button.burger-menu.open span.ico:before {
+body.aside-setting-open button.burger-menu span.ico:before {
     margin-top: 0;
     transform: rotate(-45deg)
 }
 
-header button.burger-menu.open span.ico:after {
+body.aside-setting-open button.burger-menu span.ico:after {
     margin-top: 0;
     transform: rotate(45deg)
 }
