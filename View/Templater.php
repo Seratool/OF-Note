@@ -24,7 +24,10 @@ class Templater
         ob_start();
         extract($values, EXTR_SKIP);
         eval("?>$this->code");
-        return ob_get_clean();
+        $content = ob_get_clean();
+        flush();
+
+        return $content;
     }
 
     /**

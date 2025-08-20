@@ -142,7 +142,7 @@ aside.setting .lang-chooser button:hover {
 }
 
 .docs-history ul.docs-list {
-    height: calc(100vh - 7.5rem);
+    height: calc(100% - 3.5rem);
     overflow: auto;
 }
 
