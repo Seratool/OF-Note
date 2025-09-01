@@ -25,7 +25,7 @@ class Connector
     send() {
         clearTimeout(this.#timer);
 
-        this.#icon('edit');
+        this.#viewStatus('edit');
         this.#timer = setTimeout(() => this.save(), this.#sendDelay);
     }
 
@@ -39,19 +39,17 @@ class Connector
             headers: {"X-Requested-With": "XMLHttpRequest"},
             body: this.#getFormData()
         }).then(
-            (response) => this.#icon(response.status === 200 ? 'sent' : 'error')
-        ).catch(() => this.#icon('error'));
+            (response) => this.#viewStatus(response.status === 200 ? 'sent' : 'error')
+        ).catch(() => this.#viewStatus('error'));
     }
 
     #getFormData()
     {
-        const formData = new FormData(),
-            fields = JSE.qs('.setting-block .setting-element'),
-            text = this.#editorDoc.innerText;
+        const formData = new FormData();
 
-        formData.append('text', text === '\n' ? '' : this.#editorDoc.innerText);
+        formData.append('text', this.#fetchContent());
 
-        fields.forEach((f) => {
+        JSE.qs('.setting-block .setting-element').forEach((f) => {
             formData.append(f.name, f.value);
         });
 
@@ -59,10 +57,39 @@ class Connector
     }
 
     /**
+     * return filtered content.
+     */
+    #fetchContent()
+    {
+        let p = document.createElement('p'),
+            text;
+
+        p.innerHTML = this.#editorDoc.innerHTML
+            .replace(/\n/ig, '')
+            .replace(/<div><br><\/div>/ig, '<br>')
+            .replace(/<div[^>]+><br><\/div>/ig, '<br>')
+            .replace(/<div>/ig, '<br>')
+            .replace(/<div[^>]+>/ig, '<br>')
+            .replace(/<\/div>/ig, '')
+
+            .replace(/<p><br><\/p>/ig, '<br>')
+            .replace(/<p[^>]+><br><\/p>/ig, '<br>')
+            .replace(/<p>/ig, '<br>')
+            .replace(/<p[^>]+>/ig, '<br>')
+            .replace(/<\/p>/ig, '')
+
+            .replace(/<br>/ig, "<br>\n");
+
+        text = p.innerText;
+
+        return text === '\n' ? '' : text;
+    }
+
+    /**
      * activate icon
      * @param {string} status
      */
-    #icon(status)
+    #viewStatus(status)
     {
         let cl = this.#icons.classList;
         cl.remove("edit");
