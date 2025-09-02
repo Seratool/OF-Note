@@ -86,7 +86,7 @@ class Connector
     }
 
     /**
-     * activate icon
+     * view transfer status.
      * @param {string} status
      */
     #viewStatus(status)

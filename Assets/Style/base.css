@@ -9,28 +9,28 @@
     --color-warning: #ffc107;
     --color-danger: #dc3545;
 
-    --color-text: #343a40;
+    --color-text: #28456b; /* --color-text: hsl(from var(--app-color) h s calc(l - 10)); */
+    --color-link: #0b4188; /* --color-link: hsl(from var(--app-color) h calc(s + 10) calc(l - 10)); */
+    --color-box-shadow: #a5b5c9; /* --color-box-shadow: hsl(from var(--app-color) h calc(s - 20) calc(l + 33)); */
     --color-bg: #fefefe;
-    --color-link: #0052a3;
-    --color-block-1: #ebeff5;
-    --color-block-2: #e2e8f0;
-    --color-block-3: #d1d6de;
-    --color-grey-1: #a4acb5;
-    --color-grey-2: #88939e;
+
+    --color-palette-1: #f0f4f9; /* --color-palette-1: hsl(from var(--app-color) h s calc(l + 57)); */
+    --color-palette-2: #e1e9f4; /* --color-palette-2: hsl(from var(--app-color) h s calc(l + 53)); */
+    --color-palette-3: #d2deee; /* --color-palette-3: hsl(from var(--app-color) h s calc(l + 49)); */
+    --color-palette-4: #8ba0ba; /* --color-palette-4: hsl(from var(--app-color) h calc(s - 20) calc(l + 25)); */
 }
 
 /* dark theme */
 body.dark {
-    --color-text: #d0dce2;
+    --color-text: #d6e1ef; /* --color-text: hsl(from var(--app-color) h s calc(l + 50)); */
+    --color-link: #5c8ed0; /* --color-link: hsl(from var(--app-color) h calc(s + 10) calc(l + 20)); */
+    --color-box-shadow: #1e2733; /* --color-box-shadow: hsl(from var(--app-color) h calc(s - 20) calc(l - 23)); */
     --color-bg: #1d293b;
-    --color-link: #5b7dc8;
 
-    --color-block-1: #0e172a;
-    --color-block-2: #334255;
-    --color-block-3: #1d293b;
-
-    --color-grey-1: #121518;
-    --color-grey-2: #424957;
+    --color-palette-1: #132133; /* --color-palette-1: hsl(from var(--app-color) h s calc(l - 25)); */
+    --color-palette-2: #203755; /* --color-palette-2: hsl(from var(--app-color) h s calc(l - 16)); */
+    --color-palette-3: #2c4c76; /* --color-palette-3: hsl(from var(--app-color) h s calc(l - 7)); */
+    --color-palette-4: #365d90; /* --color-palette-3: hsl(from var(--app-color) h s calc(l + 0)); */
 }
 
 *, :after, :before {
@@ -54,14 +54,14 @@ body.dark {
 *::-webkit-scrollbar-thumb {
     border: 2px solid transparent;
     border-radius: var(--border-radius);
-    background: var(--color-grey-1);
+    background: var(--color-palette-4);
     background-clip: padding-box;
     transition: border .3s ease-in-out,
         background-color .3s ease-in-out
 }
 
 *::-webkit-scrollbar-thumb:hover {
-    background: var(--color-grey-2);
+    background: var(--color-palette-4);
 }
 
 html {
