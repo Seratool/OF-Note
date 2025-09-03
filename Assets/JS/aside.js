@@ -75,8 +75,8 @@ class Aside
         if (navigator.canShare) {
             navigator
                 .share({title:document.title,url:window.location.href})
-                .then(()=>console.log('Share was successful.'))
-                .catch((error)=>console.log('Sharing failed',error));
+                .then(() => {} /* console.log('Share was successful.') */ )
+                .catch(() => {} /* (er) => console.log('Sharing failed', er) */ );
         }
     }
 
