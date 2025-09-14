@@ -9,10 +9,11 @@ class Aside
     #btnAsideDoc = JSE.q('button.aside-menu');
     #btnAsideSetting = JSE.q('button.burger-menu');
     #asideMenu = JSE.q('aside.setting');
-    #btnLang = JSE.q('button.lang-btn', this.#asideMenu);
+    #btnAdd = JSE.q('button.add-btn', this.#asideMenu);
     #btnPrint = JSE.q('button.print-btn', this.#asideMenu);
     #btnShare = JSE.q('button.share-btn', this.#asideMenu);
     #btnTheme = JSE.q('button.theme-btn', this.#asideMenu);
+    #btnLang = JSE.q('button.lang-btn', this.#asideMenu);
     #cookies = new cookies();
 
     /**
@@ -26,6 +27,8 @@ class Aside
 
     initialise()
     {
+        JSE.ev('click', () => this.#addPage(), this.#btnAdd);
+
         JSE.ev('click', () => {
             if (this.#body.offsetWidth < 800 && this.#body.classList.contains('aside-setting-open')) {
                 this.#togglePanel('aside-setting-open','aside-setting-close');
@@ -140,5 +143,14 @@ class Aside
 
         v[key] = value;
         this.#cookies.set('setting', JSON.stringify(v));
+    }
+
+    #addPage()
+    {
+        let title = window.prompt(_['Give the note name']);
+
+        if (title) {
+            this.#connector.addNote(title);
+        }
     }
 }

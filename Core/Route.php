@@ -15,7 +15,7 @@ class Route
     }
 
     public function getParam(string $key) {
-        return isset($this->GET[$key]) ? $this->GET[$key] : null;
+        return $this->GET[$key] ?? null;
     }
 
     public function setParam(string $key, string $value) {

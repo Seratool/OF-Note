@@ -2,9 +2,11 @@ class Connector
 {
     #sendDelay = 1000;
 
-    #editorDoc;
+    #note;
 
     #icons;
+
+    #editorDoc;
 
     #timer = null;
 
@@ -12,9 +14,11 @@ class Connector
      * initialise connector.
      * @param {HTMLElement} icons
      * @param {HTMLElement} editorDoc
+     * @param {Note} note
      */
-    constructor(icons, editorDoc)
+    constructor(icons, editorDoc, note)
     {
+        this.#note = note;
         this.#icons = icons;
         this.#editorDoc = editorDoc;
     }
@@ -34,7 +38,7 @@ class Connector
      */
     save()
     {
-        fetch("{{ $router->getUrl() }}", {
+        fetch("{{ $router->getQueryUrl(['event' => 'save']) }}", {
             method: "POST",
             headers: {"X-Requested-With": "XMLHttpRequest"},
             body: this.#getFormData()
@@ -46,7 +50,6 @@ class Connector
     #getFormData()
     {
         const formData = new FormData();
-
         formData.append('text', this.#fetchContent());
 
         JSE.qs('.setting-block .setting-element').forEach((f) => {
@@ -54,6 +57,33 @@ class Connector
         });
 
         return formData;
+    }
+
+    /**
+     * create and rewrite to new note
+     * @param {string} title
+     */
+    addNote(title)
+    {
+        if (this.#note.isTitleExists(title)) {
+            alert(_['Note with title "%s" already exists!'].replace('%s', title));
+            return;
+        }
+
+        fetch("{{ $router->getQueryUrl(['event' => 'add']) }}", {
+            method: "POST",
+            headers: {"X-Requested-With": "XMLHttpRequest"},
+            body: this.#getFormData()
+        }).then((r) => {
+            if (!r.ok) {
+                throw new Error(`Response status: ${r.status}`);
+            }
+            return r.json();
+        }).then(d => {
+            this.#note.addNote(d.note, title);
+            setTimeout(() => window.location.href = d.url, 100);
+
+        }).catch(() => this.#viewStatus('error'));
     }
 
     /**

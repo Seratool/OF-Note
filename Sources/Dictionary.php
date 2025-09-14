@@ -31,6 +31,8 @@ class Dictionary
         'Large' => 'Large',
         'Extra large' => 'Extra large',
         'Theme' => 'Theme',
+        'Give the note name' => 'Give the note name',
+        'Note with title "%s" already exists!' => 'Note with title "%s" already exists!',
     ];
     public array $DE = [
         'LanguageIcon' => '🇩🇪',
@@ -59,6 +61,8 @@ class Dictionary
         'Large' => 'Groß',
         'Extra large' => 'Sehr groß',
         'Theme' => 'Theme',
+        'Give the note name' => 'Geben Sie der Notiz einen Namen',
+        'Note "%s" already exists!' => 'Notiz, mit dem Titel "%s" bereits vorhanden ist!',
     ];
     public array $RU = [
         'LanguageIcon' => '🇷🇺',
@@ -87,6 +91,8 @@ class Dictionary
         'Large' => 'Большой',
         'Extra large' => 'Очень большой',
         'Theme' => 'Тема',
+        'Give the note name' => 'Дайте заметке имя',
+        'Note with title "%s" already exists!' => 'Заметка с названием «%s» уже существует!',
     ];
 
     public function get($lang): array

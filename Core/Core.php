@@ -84,15 +84,24 @@ class Core
         $note = $this->route->getParam('note');
 
         if (!$note || strlen($note) > 64 || !preg_match('/^[a-zA-Z0-9_-]+$/', $note)) {
-            do {
-                $note = substr(str_shuffle('234579abcdefghjkmnpqrstwxyz'), -16);
-                $file = $this->path . $note;
-            } while (is_file($file));
-
-            $this->route->setParam('note', $note);
+            $this->route->setParam('note', $this->generateNewNoteKey());
             header("Location: ".$this->route->getUrl());
             die;
         }
+    }
+
+
+    /**
+     * create new unique note key.
+     */
+    public function generateNewNoteKey(): string
+    {
+        do {
+            $note = substr(str_shuffle('234579abcdefghjkmnpqrstwxyz'), -16);
+            $file = $this->path . $note;
+        } while (is_file($file));
+
+        return $note;
     }
 
     /**
@@ -102,26 +111,43 @@ class Core
      */
     public function onDownload(Content $content): void
     {
-        if ($this->route->getParam('download')) {
+        if ($this->route->getParam('event') == 'download') {
             $note = $this->route->getParam('note');
-            $cont = $content->getContent(true);
+            $cont = !is_file($this->path) ? $content->getContent(true) : '';
 
-            if (is_file($this->path)) {
-                header("Content-Type: text/plain");
-                header("Content-Disposition: attachment; filename=".$note."_".date('Y-m-d_H-i').".txt");
-                header("Content-Length: ". mb_strlen($cont));
-                echo $cont;
-                die;
+            header("Content-Type: text/plain");
+            header("Content-Disposition: attachment; filename=".$note."_".date('Y-m-d_H-i').".txt");
+            header("Content-Length: ". mb_strlen($cont));
+            echo $cont;
+            die;
+        }
+    }
 
-            } else {
-                header('HTTP/1.0 404 Not Found');
+    /**
+     * save send content.
+     * @param Content $content
+     */
+    public function onSave(Content $content): void
+    {
+        if ($this->route->getParam('event') == 'save') {
+            $content->setContent();
+            die(json_encode(['status' => 'okay']));
+        }
+    }
 
-                throw new AppException(
-                    'The requested file could not be found!',
-                    '404',
-                    'File not found!',
-                    '404 Not Found!'
-                );
+    public function onAddPage(): void
+    {
+        if ($this->route->getParam('event') == 'add') {
+            $note = $this->generateNewNoteKey();
+
+            if ($note) {
+                $this->route->setParam('event', '');
+                $this->route->setParam('note', $note);
+
+                die(json_encode([
+                    'note' => $note,
+                    'url' => $this->route->getUrl(),
+                ]));
             }
         }
     }

@@ -43,6 +43,24 @@
         <aside class="setting">
             <div class="setting-block">
                 <div class="control-line">
+                    <button class="btn add-btn" type="button" title="{{ $lang('Add') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-add"/></svg>
+                    </button>
+                    <button class="btn print-btn" type="button" title="{{ $lang('Print') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-print"/></svg>
+                    </button>
+                    <a class="btn download-btn" href="{{ $router->getQueryUrl(['event' => 'download']) }}" title="{{ $lang('Download') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-download"/></svg>
+                    </a>
+                    <button class="btn hidden share-btn" type="button" title="{{ $lang('Share') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-share"/></svg>
+                    </button>
+                    <div class="theme-chooser">
+                        <button class="btn theme-btn" type="button" title="{{ $lang('Theme') }}">
+                            <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-moon"/></svg>
+                            <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-sun"/></svg>
+                        </button>
+                    </div>
                     <div class="lang-chooser">
                         <button class="btn lang-btn" type="button" title="{{ $lang('Language') }}">
                             <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-globus"/></svg>
@@ -54,21 +72,6 @@
                             </li>
                             {% endforeach; %}
                         </ul>
-                    </div>
-                    <button class="btn print-btn" type="button" title="{{ $lang('Print') }}">
-                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-print"/></svg>
-                    </button>
-                    <a class="btn download-btn" href="{{ $router->getQueryUrl(['download' => true]) }}" title="{{ $lang('Download') }}">
-                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-download"/></svg>
-                    </a>
-                    <button class="btn hidden share-btn" type="button" title="{{ $lang('Share') }}">
-                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-share"/></svg>
-                    </button>
-                    <div class="theme-chooser">
-                        <button class="btn theme-btn" type="button" title="{{ $lang('Theme') }}">
-                            <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-moon"/></svg>
-                            <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-sun"/></svg>
-                        </button>
                     </div>
                 </div>
                 <h2 class="tab-link">{{ $lang('Setting') }}</h2>

@@ -43,11 +43,6 @@ class Content
         return $this->settings;
     }
 
-    public function isPostRequest(): bool
-    {
-        return $_SERVER['REQUEST_METHOD'] === 'POST';
-    }
-
     public function getContent($raw = false): string
     {
         if ($raw) {

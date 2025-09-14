@@ -17,20 +17,17 @@ use APP\View\Templater;
 $templater = new Templater();
 try {
     $router = new Route();
-
     $core = new Core($router);
-    $content = new Content($core->getPath());
-    $content->loadContent();
 
     $core->defineEnvironment();
     $core->checkVersion();
     $core->checkRequest();
-    $core->onDownload($content);
+    $core->onAddPage();
 
-    if ($content->isPostRequest()) {
-        $content->setContent();
-        die(json_encode(['status' => 'okay']));
-    }
+    $content = new Content($core->getPath());
+    $content->loadContent();
+    $core->onDownload($content);
+    $core->onSave($content);
 
     $response = $templater->view('editor.html', [
         'title' => implode(' - ', [$router->getParam('note'), 'Note']),

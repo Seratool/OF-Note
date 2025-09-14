@@ -19,6 +19,17 @@ class Note
     }
 
     /**
+     * check, is title already exists.
+     * @param {string} title
+     */
+    isTitleExists(title)
+    {
+        const notes = this.#getStoredNote();
+
+        return notes[title] === undefined;
+    }
+
+    /**
      * add note to storage.
      * @param {string} note
      * @param {string} title
@@ -59,7 +70,7 @@ class Note
      * @param {string} key
      * @param {string} title
      */
-    #renameNotes(key, title)
+    renameNotes(key, title)
     {
         let notes = this.#getStoredNote();
 
@@ -116,7 +127,7 @@ class Note
                     title = n.innerText;
 
                     if (title.toLowerCase() !== "") {
-                        this.#renameNotes(key, title);
+                        this.renameNotes(key, title);
                     }
                 }, JSE.q('.edit', node));
 
