@@ -38,4 +38,18 @@ class Assets
     public static string $favicon_ico = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.ico")';
     public static string $favicon_svg = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.svg")';
     public static string $icons_svg = 'SOURCE_REPLACER_CONTENT("APP/Assets/Img/icons.svg")';
+
+
+    public static string $favicon16_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.16.png")';
+    public static string $favicon32_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.32.png")';
+    public static string $favicon48_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.48.png")';
+    public static string $favicon96_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.96.png")';
+    public static string $favicon128_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.128.png")';
+    public static string $favicon180_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.180.png")';
+    public static string $favicon192_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.192.png")';
+    public static string $favicon256_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.256.png")';
+    public static string $favicon512_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.512.png")';
+
+
+
 }
