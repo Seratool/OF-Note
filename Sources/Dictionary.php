@@ -62,7 +62,7 @@ class Dictionary
         'Extra large' => 'Sehr groß',
         'Theme' => 'Theme',
         'Give the note name' => 'Geben Sie der Notiz einen Namen',
-        'Note "%s" already exists!' => 'Notiz, mit dem Titel "%s" bereits vorhanden ist!',
+        'Note with title "%s" already exists!' => 'Notiz, mit dem Titel "%s" bereits vorhanden ist!',
     ];
     public array $RU = [
         'LanguageIcon' => '🇷🇺',
