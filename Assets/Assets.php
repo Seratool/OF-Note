@@ -1,6 +1,6 @@
 <?php
 
-namespace APP\Sources;
+namespace APP\Assets;
 
 class Assets
 {
@@ -49,7 +49,4 @@ class Assets
     public static string $favicon192_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.192.png")';
     public static string $favicon256_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.256.png")';
     public static string $favicon512_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.512.png")';
-
-
-
 }

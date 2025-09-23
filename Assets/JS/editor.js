@@ -18,6 +18,25 @@ class Editor {
             this.#onPaste(ev);
         }, this.#editor);
 
+        JSE.ev('keydown', (ev) => {
+            if (ev.key.toLowerCase() === 'tab' || ev.ctrlKey === 9) { // Tab
+                const selection = document.getSelection();
+
+                if (selection.rangeCount) {
+                    ev.preventDefault();
+
+                    let range= selection.getRangeAt(0),
+                        html = document.createElement('span');
+
+                    html.innerHTML = '    ';
+                    range.collapse(true);
+                    range.insertNode(html);
+
+                    selection.collapseToEnd();
+                }
+            }
+        }, this.#editor);
+
         JSE.ev('input', () => this.#connector.send(), this.#editor);
 
         this.#editor.setAttribute('contenteditable', true);

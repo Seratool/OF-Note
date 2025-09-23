@@ -2,8 +2,8 @@
 
 namespace APP\View;
 
+use APP\Assets\Assets;
 use APP\Exceptions\AppException;
-use APP\Sources\Assets;
 
 class Templater
 {
@@ -11,12 +11,14 @@ class Templater
 
     /**
      * view template content.
+     * @throws AppException
      */
     public function view(string $template, array $values = []): string
     {
         $this->code = $this->includeFiles($template);
 
         $this->compileBlock();
+        $this->compileRemarks();
         $this->compileEscapedEchos();
         $this->compileEchos();
         $this->compilePHP();
@@ -38,7 +40,7 @@ class Templater
     {
         $template = str_replace('.', '_', $template);
 
-        if (!property_exists('\APP\Sources\Assets', $template)) {
+        if (!property_exists('\APP\Assets\Assets', $template)) {
             throw new AppException(
                 "Suurce $template in Assets not found!",
                 '500',
@@ -55,6 +57,9 @@ class Templater
 
         return preg_replace('/{% ?(extends|include) ?\'?(.*?)\'? ?%}/i', '', $code);
     }
+
+
+
 
     /**
      * include compile blocks.
@@ -81,22 +86,44 @@ class Templater
         $this->code = preg_replace('/{% ?yield ?(.*?) ?%}/i', '', $this->code);
     }
 
+
+
+
+
+
+    /**
+     * remove remarks in code.
+     *  Example: {# remark #}
+     */
+    private function compileRemarks(): void
+    {
+        $this->code = preg_replace('~\{#\s*(.+?)\s*\#}~is', '', $this->code);
+    }
+
+    /**
+     * replace variables with escaped output in code.
+     *  Example: {{{ $variable }}}
+     */
     private function compileEscapedEchos():void
     {
-        $this->code = preg_replace(
-            '~\{{{\s*(.+?)\s*\}}}~is',
-            '<?php echo htmlentities($1, ENT_QUOTES, \'UTF-8\') ?>',
-            $this->code
-        );
+        $this->code = preg_replace('~\{{{\s*(.+?)\s*\}}}~is', '<?php echo htmlentities($1, ENT_QUOTES, \'UTF-8\') ?>', $this->code);
     }
 
-    private function compilePHP(): void
-    {
-        $this->code = preg_replace('~\{%\s*(.+?)\s*\%}~is', '<?php $1 ?>', $this->code);
-    }
-
+    /**
+     * replace variables in code.
+     *  Example: {{ $variable }}
+     */
     private function compileEchos(): void
     {
         $this->code = preg_replace('~\{{\s*(.+?)\s*\}}~is', '<?php echo $1 ?>', $this->code);
+    }
+
+    /**
+     * replace php function in code.
+     * Example: {% echo $variable %}
+     */
+    private function compilePHP(): void
+    {
+        $this->code = preg_replace('~\{%\s*(.+?)\s*\%}~is', '<?php $1 ?>', $this->code);
     }
 }

@@ -66,7 +66,7 @@ class Content
 
     public function setContent(): void
     {
-        $text = strip_tags($_POST['text']);
+        $text = $_POST['text'];
 
         if (strlen($text)) {
             $this->extractSetting($_POST);
