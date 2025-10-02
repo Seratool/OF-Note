@@ -14,12 +14,14 @@ class Content
         'font' => 'font-sans',
         'bg' => 'bg-lined',
         'size' => 'size-m',
+        'spellcheck' => false,
     ];
 
     private array $settingsDefault = [
         'font' => ['font-sans', 'font-serif', 'font-monospace'],
         'bg' => ['bg-blank', 'bg-lined'],
         'size' => ['size-xs', 'size-s', 'size-m', 'size-l', 'size-xl'],
+        'spellcheck' => [false, true],
     ];
 
     public function __construct(string $path)
@@ -33,7 +35,7 @@ class Content
         $parts = explode($this->divider, $this->content);
 
         if (sizeof($parts) > 1) {
-            $this->settings = unserialize(trim($parts[0], '/'));
+            $this->settings = array_merge($this->settings, unserialize(trim($parts[0], '/')));
             $this->content = $parts[1];
         }
     }

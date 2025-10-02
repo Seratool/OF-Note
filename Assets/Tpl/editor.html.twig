@@ -36,7 +36,7 @@
             </div>
         </header>
         <div class="doc-wrapper">
-            <div class="doc {{ $settings['font'] }} {{ $settings['bg'] }} {{ $settings['size'] }}">
+            <div class="doc {{ $settings['font'] }} {{ $settings['bg'] }} {{ $settings['size'] }}" spellcheck="{{ $settings['spellcheck'] == 'true' ? 'true' : 'false' }}">
                 {{ $content }}
             </div>
         </div>
@@ -98,6 +98,13 @@
                         <option value="size-m"{{ $settings['size'] == 'size-m' ? ' selected' : ''}}>{{ $lang('Medium') }}</option>
                         <option value="size-l"{{ $settings['size'] == 'size-l' ? ' selected' : ''}}>{{ $lang('Large') }}</option>
                         <option value="size-xl"{{ $settings['size'] == 'size-xl' ? ' selected' : ''}}>{{ $lang('Extra large') }}</option>
+                    </select>
+                </div>
+                <div class="form-line">
+                    <label for="setting-spellcheck">{{ $lang('Spellcheck') }}</label>
+                    <select class="setting-element" name="spellcheck" id="setting-spellcheck">
+                        <option value="true"{{ $settings['spellcheck'] == 'true' ? ' selected' : ''}}>{{ $lang('Yes') }}</option>
+                        <option value="false"{{ $settings['spellcheck'] == 'false' ? ' selected' : ''}}>{{ $lang('No') }}</option>
                     </select>
                 </div>
             </div>

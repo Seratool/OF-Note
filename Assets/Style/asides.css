@@ -23,6 +23,12 @@ aside.setting .control-line button.hidden {
     display: none;
 }
 
+@media (display-mode: standalone) {
+    aside.setting .control-line button.install-btn {
+        display: block;
+    }
+}
+
 nav.docs-navigation {
     left: -400px;
     display: none;

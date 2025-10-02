@@ -36,6 +36,7 @@ class Aside
 
             this.#togglePanel('aside-doc-open','aside-doc-close');
         }, this.#btnAsideDoc);
+
         JSE.ev('click', () => {
             if (this.#body.offsetWidth < 800 && this.#body.classList.contains('aside-doc-open')) {
                 this.#togglePanel('aside-doc-open','aside-doc-close');
@@ -43,6 +44,7 @@ class Aside
 
             this.#togglePanel('aside-setting-open','aside-setting-close');
         }, this.#btnAsideSetting);
+
         JSE.ev('click', () => print(), this.#btnPrint);
 
         if (navigator.canShare) {
@@ -77,7 +79,7 @@ class Aside
     {
         if (navigator.canShare) {
             navigator
-                .share({title:document.title,url:window.location.href})
+                .share({title:document.title, url:window.location.href})
                 .then(() => {} /* console.log('Share was successful.') */ )
                 .catch(() => {} /* (er) => console.log('Sharing failed', er) */ );
         }
@@ -119,13 +121,17 @@ class Aside
         fields.forEach((f) => {
             JSE.ev('change', () => {
                 let cl = doc.classList,
-                    opt = f.options;
+                    opt = f.options,
+                    name = f.name;
 
-                for (let i = 0, c = opt.length; i < c; i++) {
-                    cl.remove(opt[i].value);
+                if (['font', 'bg', 'size'].indexOf(name) > -1) {
+                    for (let i = 0, c = opt.length; i < c; i++) {
+                        cl.remove(opt[i].value);
+                    }
+                    cl.add(f.value);
+                } else if (['spellcheck'].indexOf(name) > -1) {
+                    doc.spellcheck = f.value === 'true';
                 }
-
-                cl.add(f.value);
 
                 // save doc with setting
                 this.#connector.save();

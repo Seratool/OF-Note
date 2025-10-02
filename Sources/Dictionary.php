@@ -34,6 +34,9 @@ class Dictionary
         'Install' => 'Install',
         'Give the note name' => 'Give the note name',
         'Note with title "%s" already exists!' => 'Note with title "%s" already exists!',
+        'Spellcheck' => 'Spellcheck',
+        'Yes' => 'Yes',
+        'No' => 'No',
     ];
     public array $DE = [
         'LanguageIcon' => '🇩🇪',
@@ -65,6 +68,9 @@ class Dictionary
         'Install' => 'Installieren',
         'Give the note name' => 'Geben Sie der Notiz einen Namen',
         'Note with title "%s" already exists!' => 'Notiz, mit dem Titel "%s" bereits vorhanden ist!',
+        'Spellcheck' => 'Rechtschreibprüfung',
+        'Yes' => 'Ja',
+        'No' => 'Nein',
     ];
     public array $RU = [
         'LanguageIcon' => '🇷🇺',
@@ -96,6 +102,9 @@ class Dictionary
         'Install' => 'Установить',
         'Give the note name' => 'Дайте заметке имя',
         'Note with title "%s" already exists!' => 'Заметка с названием «%s» уже существует!',
+        'Spellcheck' => 'Проверка орфографии',
+        'Yes' => 'Да',
+        'No' => 'Нет',
     ];
 
     public function get($lang): array
