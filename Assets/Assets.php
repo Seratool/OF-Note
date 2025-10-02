@@ -31,6 +31,7 @@ class Assets
     public static string $note_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/note.js")';
     public static string $connector_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/connector.js")';
     public static string $main_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/main.js")';
+    public static string $pwa_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/pwa.js")';
 
     /**
      * define media sources.

@@ -101,7 +101,14 @@
                     </select>
                 </div>
             </div>
-            <div class="version">{{ $lang('Version') }}: {{ APP\Core\Core::getVersion() }}</div>
+            <div class="bottom-part">
+                <div class="control-line">
+                    <button class="btn install-btn hidden" type="button" title="{{ $lang('Install') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-install"/></svg>
+                    </button>
+                </div>
+                {{ $lang('Version') }}: {{ APP\Core\Core::getVersion() }}
+            </div>
         </aside>
     </main>
     {% extends 'icons.svg' %}

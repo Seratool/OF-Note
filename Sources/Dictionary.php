@@ -31,6 +31,7 @@ class Dictionary
         'Large' => 'Large',
         'Extra large' => 'Extra large',
         'Theme' => 'Theme',
+        'Install' => 'Install',
         'Give the note name' => 'Give the note name',
         'Note with title "%s" already exists!' => 'Note with title "%s" already exists!',
     ];
@@ -61,6 +62,7 @@ class Dictionary
         'Large' => 'Groß',
         'Extra large' => 'Sehr groß',
         'Theme' => 'Theme',
+        'Install' => 'Installieren',
         'Give the note name' => 'Geben Sie der Notiz einen Namen',
         'Note with title "%s" already exists!' => 'Notiz, mit dem Titel "%s" bereits vorhanden ist!',
     ];
@@ -91,6 +93,7 @@ class Dictionary
         'Large' => 'Большой',
         'Extra large' => 'Очень большой',
         'Theme' => 'Тема',
+        'Install' => 'Установить',
         'Give the note name' => 'Дайте заметке имя',
         'Note with title "%s" already exists!' => 'Заметка с названием «%s» уже существует!',
     ];

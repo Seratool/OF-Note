@@ -12,6 +12,7 @@ JSE.ready(() => {
         connector = new Connector(nStatusIcons, nEditorDoc, note),
         aside = new Aside(connector);
 
+    new Pwa(JSE.q('aside.setting'));
     new Editor(nEditorDoc, connector);
     aside.initialise();
 

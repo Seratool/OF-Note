@@ -18,7 +18,8 @@ aside.setting {
     position: fixed;
 }
 
-aside.setting .control-line .hidden {
+aside.setting .control-line .hidden,
+aside.setting .control-line button.hidden {
     display: none;
 }
 
@@ -223,7 +224,7 @@ aside.setting .control-line .btn:hover,
     fill: var(--color-danger);
 }
 
-aside.setting .version {
+aside.setting .bottom-part {
     font-size: 0.8rem;
     text-align: center;
     color: var(--color-palette-4);
