@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html.twig' %}
 
 {% block content %}
     @parent
@@ -70,7 +70,7 @@
                             <li>
                                 <button {{ $lang->lang == $l ? 'class="current" ' : '' }}type="button" data-lang="{{ $l }}">{{ $title }}</button>
                             </li>
-                            {% endforeach; %}
+                            {% endforeach %}
                         </ul>
                     </div>
                 </div>

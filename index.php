@@ -29,7 +29,7 @@ try {
     $core->onDownload($content);
     $core->onSave($content);
 
-    $response = $templater->view('editor.html', [
+    $response = $templater->view('editor.html.twig', [
         'title' => implode(' - ', [$router->getParam('note'), 'Note']),
         'lang' => new Lang(),
         'router' => $router,
@@ -39,7 +39,7 @@ try {
     ]);
 
 } catch (AppException|\Exception $e) {
-    $response = $templater->view('error.html', [
+    $response = $templater->view('error.html.twig', [
         'title' => is_callable([$e, 'getTitle']) ? $e->getTitle() : 'Error occurred!',
         'headline' => is_callable([$e, 'getHeadline']) ? $e->getHeadline() : 'Warning!',
         'subHeadline' => is_callable([$e, 'getSubHeadline']) ? '<h2>'.$e->getSubHeadline().'</h2>' : '',

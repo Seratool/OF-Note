@@ -66,7 +66,7 @@ class Connector
     addNote(title)
     {
         if (this.#note.isTitleExists(title)) {
-            alert(_['Note with title "%s" already exists!'].replace('%s', title));
+            alert(_dict['Note with title "%s" already exists!'].replace('%s', title));
             return;
         }
 

@@ -42,7 +42,7 @@ class Templater
 
         if (!property_exists('\APP\Assets\Assets', $template)) {
             throw new AppException(
-                "Suurce $template in Assets not found!",
+                "Source $template in Assets not found!",
                 '500',
                 'Internal Server Error',
                 '500 Server Error'
@@ -86,18 +86,13 @@ class Templater
         $this->code = preg_replace('/{% ?yield ?(.*?) ?%}/i', '', $this->code);
     }
 
-
-
-
-
-
     /**
      * remove remarks in code.
      *  Example: {# remark #}
      */
     private function compileRemarks(): void
     {
-        $this->code = preg_replace('~\{#\s*(.+?)\s*\#}~is', '', $this->code);
+        $this->code = preg_replace('~\{#\s*(.+?)\s*#}~is', '', $this->code);
     }
 
     /**
@@ -106,7 +101,7 @@ class Templater
      */
     private function compileEscapedEchos():void
     {
-        $this->code = preg_replace('~\{{{\s*(.+?)\s*\}}}~is', '<?php echo htmlentities($1, ENT_QUOTES, \'UTF-8\') ?>', $this->code);
+        $this->code = preg_replace('~\{{{\s*(.+?)\s*}}}~is', '<?php echo htmlentities($1, ENT_QUOTES, \'UTF-8\') ?>', $this->code);
     }
 
     /**
@@ -115,7 +110,7 @@ class Templater
      */
     private function compileEchos(): void
     {
-        $this->code = preg_replace('~\{{\s*(.+?)\s*\}}~is', '<?php echo $1 ?>', $this->code);
+        $this->code = preg_replace('~\{{\s*(.+?)\s*}}~is', '<?php echo $1 ?>', $this->code);
     }
 
     /**
@@ -124,6 +119,6 @@ class Templater
      */
     private function compilePHP(): void
     {
-        $this->code = preg_replace('~\{%\s*(.+?)\s*\%}~is', '<?php $1 ?>', $this->code);
+        $this->code = preg_replace('~\{%\s*(.+?)\s*%}~is', '<?php $1 ?>', $this->code);
     }
 }

@@ -147,7 +147,7 @@ class Aside
 
     #addPage()
     {
-        let title = window.prompt(_['Give the note name']);
+        let title = window.prompt(_dict['Give the note name']);
 
         if (title) {
             this.#connector.addNote(title);

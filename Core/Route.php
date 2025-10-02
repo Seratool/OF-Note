@@ -45,7 +45,7 @@ class Route
     private function generateUrl(array $query): string
     {
         $url = $this->url;
-        $url['query'] = http_build_query($query);
+        $url['query'] = http_build_query($query, '', '&');
 
         return $url['scheme'].'://'.$url['host'].$url['path'].(!empty($url['query']) ? '?'.$url['query'] : '');
     }

@@ -60,7 +60,7 @@
                   "type": "image/png"
                 }
             ],
-            "start_url":"{{ $router->getBaseUrl() }}"
+            "start_url":"{{ $router->getUrl() }}"
         }'>
         {# WPA end #}
         <style>
@@ -77,7 +77,7 @@
     <script type="text/javascript">
         (function() {
             "use strict";
-            const _ = {
+            const _dict = {
                 'Do you want to delete the link to "%s"?': '{{ $lang('Do you want to delete the link to "%s"?') }}',
                 'Give the note "%s" a new name': '{{ $lang('Give the note "%s" a new name') }}',
                 'Give the note name': '{{ $lang('Give the note name') }}',

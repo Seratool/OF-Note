@@ -7,9 +7,9 @@ class Assets
     /**
      * define template sources.
      */
-    public static string $base_html = 'SOURCE_REPLACER_HTML("APP/Assets/Tpl/base.html")';
-    public static string $editor_html = 'SOURCE_REPLACER_HTML("APP/Assets/Tpl/editor.html")';
-    public static string $error_html = 'SOURCE_REPLACER_HTML("APP/Assets/Tpl/error.html")';
+    public static string $base_html_twig = 'SOURCE_REPLACER_HTML("APP/Assets/Tpl/base.html.twig")';
+    public static string $editor_html_twig = 'SOURCE_REPLACER_HTML("APP/Assets/Tpl/editor.html.twig")';
+    public static string $error_html_twig = 'SOURCE_REPLACER_HTML("APP/Assets/Tpl/error.html.twig")';
 
     /**
      * define style sources.

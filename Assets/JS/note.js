@@ -113,7 +113,7 @@ class Note
                     node.classList.add('active');
                 } else {
                     JSE.ev('click', () => {
-                        if (window.confirm(_['Do you want to delete the link to "%s"?'].replace('%s', note))) {
+                        if (window.confirm(_dict['Do you want to delete the link to "%s"?'].replace('%s', note))) {
                             this.removeNotes(key);
                         }
                     }, JSE.q('.delete', node));
@@ -123,7 +123,7 @@ class Note
                     let n = document.createElement('span'),
                         title;
 
-                    n.innerHTML = window.prompt(_['Give the note "%s" a new name'].replace('%s', note), note);
+                    n.innerHTML = window.prompt(_dict['Give the note "%s" a new name'].replace('%s', note), note);
                     title = n.innerText;
 
                     if (title.toLowerCase() !== "") {
