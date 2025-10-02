@@ -26,7 +26,13 @@ class Note
     {
         const notes = this.#getStoredNote();
 
-        return notes[title] === undefined;
+        for (let key in notes) {
+            if (notes[key] === title) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

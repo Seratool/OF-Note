@@ -20,20 +20,9 @@ class Editor {
 
         JSE.ev('keydown', (ev) => {
             if (ev.key.toLowerCase() === 'tab' || ev.ctrlKey === 9) { // Tab
-                const selection = document.getSelection();
+                ev.preventDefault();
 
-                if (selection.rangeCount) {
-                    ev.preventDefault();
-
-                    let range= selection.getRangeAt(0),
-                        html = document.createElement('span');
-
-                    html.innerHTML = '    ';
-                    range.collapse(true);
-                    range.insertNode(html);
-
-                    selection.collapseToEnd();
-                }
+                this.#addTextToEditor('    ');
             }
         }, this.#editor);
 
@@ -45,34 +34,35 @@ class Editor {
 
     #onPaste(ev)
     {
-        try {
-            const selection = document.getSelection();
-            let range;
+        this.#fromClipboard(ev)
+            .then(text => {
+                text = text
+                    .replaceAll(/</ig, '&lt;')
+                    .replaceAll(/>/ig, '&gt;')
+                    .replaceAll(/\t/ig, '    ')
+                    .replaceAll(/\\n/ig, '<br>');
 
-            if (selection.rangeCount) {
-                selection.deleteFromDocument();
-                range = selection.getRangeAt(0);
-                range.collapse(true);
+                this.#addTextToEditor(text);
+                this.#editor.dispatchEvent(new Event("input"));
+            })
+            .catch(() => {
+                document.execCommand('paste', false, null);
+            });
+    }
 
-                this.#fromClipboard(ev)
-                    .then(text => {
-                        let html = document.createElement('span');
-                        html.innerHTML = text
-                            .replaceAll(/</ig, '&lt;')
-                            .replaceAll(/>/ig, '&gt;')
-                            .replaceAll(/\t/ig, '    ')
-                            .replaceAll(/\\n/ig, '<br>');
-                        range.insertNode(html);
+    #addTextToEditor(text)
+    {
+        const selection = document.getSelection();
 
-                        selection.collapseToEnd();
-                        this.#editor.dispatchEvent(new Event("input"));
-                    })
-                    .catch(() => {
-                        document.execCommand('paste', false, null);
-                    });
-            }
-        } catch {
-            document.execCommand("paste", false, null);
+        if (selection.rangeCount) {
+            let range= selection.getRangeAt(0),
+                html = document.createElement('span');
+
+            html.innerHTML = text;
+            range.collapse(true);
+            range.insertNode(html);
+
+            selection.collapseToEnd();
         }
     }
 
