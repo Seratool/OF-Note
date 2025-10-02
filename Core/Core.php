@@ -2,6 +2,7 @@
 
 namespace APP\Core;
 
+use APP\Assets\Assets;
 use APP\Config;
 use APP\Exceptions\AppException;
 
@@ -76,9 +77,6 @@ class Core
         }
     }
 
-    /**
-     * @throws AppException
-     */
     public function checkRequest(): void
     {
         $note = $this->route->getParam('note');
@@ -89,7 +87,6 @@ class Core
             die;
         }
     }
-
 
     /**
      * create new unique note key.
@@ -102,6 +99,38 @@ class Core
         } while (is_file($file));
 
         return $note;
+    }
+
+    /**
+     * if media file was required, so do download media file.
+     */
+    public function onMediaRequest(): void
+    {
+        if ($this->route->getParam('media')) {
+            try {
+                $file = $this->route->getParam('media');
+                $template = str_replace('.', '_', $file);
+
+                if (empty(Assets::$$template)) {
+                    throw new \Exception('File not found');
+                }
+
+                [$prefix, $code] = explode(';base64,', Assets::$$template);
+                [, $mimeType] = explode(':', $prefix);
+                $cont = base64_decode($code);
+                if (empty($cont)) {
+                    throw new \Exception('File not found');
+                }
+
+                header("Content-Type: ".$mimeType);
+                header("Content-Length: ". mb_strlen($cont));
+                echo $cont;
+                die;
+            } catch (\Exception $e) {
+                header("HTTP/1.0 404 Not Found");
+                die();
+            }
+        }
     }
 
     /**

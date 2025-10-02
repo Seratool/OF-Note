@@ -22,6 +22,7 @@ try {
     $core->defineEnvironment();
     $core->checkVersion();
     $core->checkRequest();
+    $core->onMediaRequest();
     $core->onAddPage();
 
     $content = new Content($core->getPath());
