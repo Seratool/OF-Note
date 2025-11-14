@@ -2,25 +2,21 @@ class Connector
 {
     #sendDelay = 1000;
 
-    #note;
+    #dic;
 
     #icons;
-
-    #editorDoc;
 
     #timer = null;
 
     /**
      * initialise connector.
      * @param {HTMLElement} icons
-     * @param {HTMLElement} editorDoc
-     * @param {Note} note
+     * @param {DIC} dic
      */
-    constructor(icons, editorDoc, note)
+    constructor(icons,  dic)
     {
-        this.#note = note;
+        this.#dic = dic;
         this.#icons = icons;
-        this.#editorDoc = editorDoc;
     }
 
     /**
@@ -38,6 +34,12 @@ class Connector
      */
     save()
     {
+
+
+        // can storage process be proceeded?
+
+
+
         fetch("{{ $router->getQueryUrl(['event' => 'save']) }}", {
             method: "POST",
             headers: {"X-Requested-With": "XMLHttpRequest"},
@@ -45,12 +47,16 @@ class Connector
         }).then(
             (response) => this.#viewStatus(response.status === 200 ? 'sent' : 'error')
         ).catch(() => this.#viewStatus('error'));
+
+
+
+
     }
 
     #getFormData()
     {
         const formData = new FormData();
-        formData.append('text', this.#fetchContent());
+        formData.append('text', this.#dic.editor.fetchContent());
 
         JSE.qs('.setting-block .setting-element').forEach((f) => {
             formData.append(f.name, f.value);
@@ -65,7 +71,7 @@ class Connector
      */
     addNote(title)
     {
-        if (this.#note.isTitleExists(title)) {
+        if (this.#dic.note.isTitleExists(title)) {
             alert(_dict['Note with title "%s" already exists!'].replace('%s', title));
             return;
         }
@@ -80,39 +86,10 @@ class Connector
             }
             return r.json();
         }).then(d => {
-            this.#note.addNote(d.note, title);
+            this.#dic.note.addNote(d.note, title);
             setTimeout(() => window.location.href = d.url, 100);
 
         }).catch(() => this.#viewStatus('error'));
-    }
-
-    /**
-     * return filtered content.
-     */
-    #fetchContent()
-    {
-        let p = document.createElement('p'),
-            text;
-
-        p.innerHTML = this.#editorDoc.innerHTML
-            .replace(/\n/ig, '')
-            .replace(/<div><br><\/div>/ig, '<br>')
-            .replace(/<div[^>]+><br><\/div>/ig, '<br>')
-            .replace(/<div>/ig, '<br>')
-            .replace(/<div[^>]+>/ig, '<br>')
-            .replace(/<\/div>/ig, '')
-
-            .replace(/<p><br><\/p>/ig, '<br>')
-            .replace(/<p[^>]+><br><\/p>/ig, '<br>')
-            .replace(/<p>/ig, '<br>')
-            .replace(/<p[^>]+>/ig, '<br>')
-            .replace(/<\/p>/ig, '')
-
-            .replace(/<br>/ig, "<br>\n");
-
-        text = p.innerText;
-
-        return text === '\n' ? '' : text;
     }
 
     /**

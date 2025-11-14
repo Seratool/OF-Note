@@ -25,6 +25,7 @@ main {
     --line-height: 1.5rem;
     outline: none;
     resize: none;
+    margin-top: 2.85rem;
     padding: 2rem 0.75rem;
     min-height: calc(100dvh - 3rem);
     background: var(--color-bg);

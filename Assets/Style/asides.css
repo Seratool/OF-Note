@@ -18,11 +18,6 @@ aside.setting {
     position: fixed;
 }
 
-aside.setting .control-line .hidden,
-aside.setting .control-line button.hidden {
-    display: none;
-}
-
 @media (display-mode: standalone) {
     aside.setting .control-line button.install-btn {
         display: block;
@@ -143,6 +138,16 @@ aside.setting .lang-chooser button {
 aside.setting .lang-chooser button.current,
 aside.setting .lang-chooser button:hover {
     background-color: var(--color-palette-2);
+}
+
+aside.setting .control-line .lock-btn.unlocked .icon-locked,
+aside.setting .control-line .lock-btn.locked .icon-unlocked {
+    display: none;
+}
+
+aside.setting .control-line .hidden,
+aside.setting .control-line button.hidden {
+    display: none;
 }
 
 .docs-history ul.docs-list {

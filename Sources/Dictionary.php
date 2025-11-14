@@ -37,6 +37,7 @@ class Dictionary
         'Spellcheck' => 'Spellcheck',
         'Yes' => 'Yes',
         'No' => 'No',
+        'PasswordProtection' => 'Password protection',
     ];
     public array $DE = [
         'LanguageIcon' => '🇩🇪',
@@ -71,6 +72,7 @@ class Dictionary
         'Spellcheck' => 'Rechtschreibprüfung',
         'Yes' => 'Ja',
         'No' => 'Nein',
+        'PasswordProtection' => 'Passwortschutz',
     ];
     public array $RU = [
         'LanguageIcon' => '🇷🇺',
@@ -105,6 +107,7 @@ class Dictionary
         'Spellcheck' => 'Проверка орфографии',
         'Yes' => 'Да',
         'No' => 'Нет',
+        'PasswordProtection' => 'Защита паролем',
     ];
 
     public function get($lang): array

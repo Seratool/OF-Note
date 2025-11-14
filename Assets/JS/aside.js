@@ -4,7 +4,7 @@
 
 class Aside
 {
-    #connector;
+    #dic;
     #body = JSE.q('body');
     #btnAsideDoc = JSE.q('button.aside-menu');
     #btnAsideSetting = JSE.q('button.burger-menu');
@@ -14,15 +14,17 @@ class Aside
     #btnShare = JSE.q('button.share-btn', this.#asideMenu);
     #btnTheme = JSE.q('button.theme-btn', this.#asideMenu);
     #btnLang = JSE.q('button.lang-btn', this.#asideMenu);
+    #btnLock = JSE.q('button.lock-btn', this.#asideMenu);
+    #iptLock = JSE.q('input[name="lock"]', this.#asideMenu);
     #cookies = new cookies();
 
     /**
      * initialise.
-     * @param {Connector} connector
+     * @param {DIC} dic
      */
-    constructor(connector)
+    constructor(dic)
     {
-        this.#connector = connector;
+        this.#dic = dic;
     }
 
     initialise()
@@ -54,6 +56,7 @@ class Aside
 
         this.#initLangChooser();
         this.#initThemeChooser();
+        this.#initPasswordLocking();
         this.#initSetting();
     }
 
@@ -134,7 +137,7 @@ class Aside
                 }
 
                 // save doc with setting
-                this.#connector.save();
+                this.#dic.connector.save();
             }, f);
         });
     }
@@ -156,7 +159,51 @@ class Aside
         let title = window.prompt(_dict['Give the note name']);
 
         if (title) {
-            this.#connector.addNote(title);
+            this.#dic.connector.addNote(title);
         }
     }
+
+    #initPasswordLocking()
+    {
+        JSE.ev('click', () => {
+            const cl = this.#btnLock.classList;
+
+            if (cl.contains('unlocked')) {
+
+                // nach password fragen
+
+
+
+
+
+
+
+
+                cl.add('locked');
+                cl.remove('unlocked');
+
+                this.#iptLock.value = 'true';
+                this.#iptLock.dispatchEvent(new Event("change"));
+
+            } else {
+
+                // warnen, dass Password entfernt wird
+
+
+
+
+
+
+
+
+
+                cl.add('unlocked');
+                cl.remove('locked');
+
+                this.#iptLock.value = 'false';
+                this.#iptLock.dispatchEvent(new Event("change"));
+            }
+        }, this.#btnLock);
+    }
+
 }

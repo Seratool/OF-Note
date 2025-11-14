@@ -16,6 +16,8 @@ class Note
     {
         this.#menuDocs = menuDoc;
         this.#currentNote = currentNote;
+
+        this.addNote(currentNote);
     }
 
     /**

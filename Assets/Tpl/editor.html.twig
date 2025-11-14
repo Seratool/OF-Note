@@ -36,15 +36,18 @@
             </div>
         </header>
         <div class="doc-wrapper">
-            <div class="doc {{ $settings['font'] }} {{ $settings['bg'] }} {{ $settings['size'] }}" spellcheck="{{ $settings['spellcheck'] == 'true' ? 'true' : 'false' }}">
-                {{ $content }}
-            </div>
+            <div class="doc {{ $settings['font'] }} {{ $settings['bg'] }} {{ $settings['size'] }}" spellcheck="{{ $settings['spellcheck'] == 'true' ? 'true' : 'false' }}"></div>
+            <div class="shadow-doc hidden">{{ $content }}</div>
         </div>
         <aside class="setting">
             <div class="setting-block">
                 <div class="control-line">
                     <button class="btn add-btn" type="button" title="{{ $lang('Add') }}">
                         <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-add"/></svg>
+                    </button>
+                    <button class="btn lock-btn{{ $settings['lock'] == 'true' ? ' locked' : ' unlocked' }}" type="button" title="{{ $lang('PasswordProtection') }}">
+                        <svg class="icon icon-locked" viewBox="0 0 24 24"><use xlink:href="#ocno-i-lock"/></svg>
+                        <svg class="icon icon-unlocked" viewBox="0 0 24 24"><use xlink:href="#ocno-i-lock-open"/></svg>
                     </button>
                     <button class="btn print-btn" type="button" title="{{ $lang('Print') }}">
                         <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-print"/></svg>
@@ -54,6 +57,11 @@
                     </a>
                     <button class="btn hidden share-btn" type="button" title="{{ $lang('Share') }}">
                         <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-share"/></svg>
+                    </button>
+                </div>
+                <div class="control-line">
+                    <button class="btn hidden install-btn" type="button" title="{{ $lang('Install') }}">
+                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-install"/></svg>
                     </button>
                     <div class="theme-chooser">
                         <button class="btn theme-btn" type="button" title="{{ $lang('Theme') }}">
@@ -75,6 +83,8 @@
                     </div>
                 </div>
                 <h2 class="tab-link">{{ $lang('Setting') }}</h2>
+                <input class="setting-element" type="hidden" name="lock" value="{{ $settings['lock'] == 'true' ? 'true' : 'false' }}">
+                <input class="setting-element" type="hidden" name="passhash" value="{{ $settings['passhash'] }}">
                 <div class="form-line">
                     <label for="setting-font">{{ $lang('Font') }}</label>
                     <select class="setting-element" name="font" id="setting-font">
@@ -109,11 +119,6 @@
                 </div>
             </div>
             <div class="bottom-part">
-                <div class="control-line">
-                    <button class="btn install-btn hidden" type="button" title="{{ $lang('Install') }}">
-                        <svg class="icon" viewBox="0 0 24 24"><use xlink:href="#ocno-i-install"/></svg>
-                    </button>
-                </div>
                 {{ $lang('Version') }}: {{ APP\Core\Core::getVersion() }}
             </div>
         </aside>

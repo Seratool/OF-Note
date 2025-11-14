@@ -3,7 +3,7 @@ class Pwa
     #installPrompt = null;
 
     constructor(aside) {
-        this.instBtn = JSE.q('.bottom-part .install-btn', aside);
+        this.instBtn = JSE.q('.setting-block .install-btn', aside);
 
         window.addEventListener("beforeinstallprompt", async (ev) => {
             const relatedApps = await navigator.getInstalledRelatedApps();
