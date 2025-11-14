@@ -13,7 +13,6 @@ main {
 }
 
 .doc-wrapper {
-    top: 3rem;
     width: 100%;
     bottom: 0;
     overflow: auto;
