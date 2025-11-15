@@ -1,13 +1,17 @@
 class Editor {
+    #dic;
+
     #editorDoc;
 
     #shadowDoc;
 
     #iptLock;
 
-    #dic;
+    #iptPasshash;
 
-    #password = 'salt';
+    #password = '';
+
+    #passHash = '';
 
     /**
      * init editor.
@@ -15,13 +19,13 @@ class Editor {
      * @param {HTMLElement} nMain
      */
     constructor(dic, nMain) {
-        this.#editorDoc = JSE.q('.doc', nMain);
-
-        this.#shadowDoc = JSE.q('.shadow-doc', nMain);
-
-        this.#iptLock = JSE.q('aside.setting input[name="lock"]', nMain);
-
         this.#dic = dic;
+
+        this.#editorDoc = JSE.q('.doc', nMain);
+        this.#shadowDoc = JSE.q('.shadow-doc', nMain);
+        this.#iptLock = JSE.q('aside.setting input[name="lock"]', nMain);
+        this.#iptPasshash = JSE.q('aside.setting input[name="passhash"]', nMain);
+        this.#passHash = this.#iptPasshash.value;
 
         JSE.ev('paste', (ev) => {
             ev.preventDefault();
@@ -44,106 +48,86 @@ class Editor {
     }
 
     /**
+     * set password for note.
+     * @param {string} password
+     */
+    setPassword(password)
+    {
+        this.#password = password;
+
+        this.#iptLock.value = password === '' ? 'false' : 'true';
+        this.#iptPasshash.value = password === '' ? '' : this.#getPasswordHash();
+
+        this.#iptLock.dispatchEvent(new Event("change"));
+    }
+
+    /**
+     * get password.
+     * @returns {string} password
+     */
+    getPassword()
+    {
+        return this.#password;
+    }
+
+    /**
+     * return true if password not set or given password is correct.
+     * @returns {boolean}
+     */
+    isPassCorrect()
+    {
+        return this.#password === '' || this.#getPasswordHash() === this.#passHash;
+    }
+
+    /**
      * return filtered content.
      */
     fetchContent()
     {
         let c = this.#getContent();
 
-
-        // wenn locked, and no password, so connector save inactive!!!
-
-
-
-        // encode, if needed
-
-        c = this.#cipher(c);
-
-
-
+        if (this.#iptPasshash.value === 'true') {
+            c = this.#dic.cryptography.cipher(c);
+        }
 
         return c;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     initialiseContent()
     {
-        let text = this.#shadowDoc.innerHTML;
-
-
-        // nach pass fragen
-
-
-
-        // decode, if needed
-
-
-        text = this.#decipher(text);
-
-
-
+        let c = this.#shadowDoc.innerHTML;
         this.#shadowDoc.innerHTML = '';
-        this.#editorDoc.innerHTML = text;
-    }
+
+        if (this.#iptPasshash.value === 'true') {
 
 
 
+            // nach pass fragen
 
 
-
-
-
-
-
-
-
-
-    async #cipher (text)
-    {
-
-        return text;
-
-
-
-        const algo = {
-            name: 'AES-GCM',
-            length: 256,
-            iv: crypto.getRandomValues(new Uint8Array(12))
-        };
-
-        return {
-            cipherText: await crypto.subtle.encrypt(
-                algo,
-                await this.#deriveKey(this.#password),
-                text /*  new TextEncoder().encode(text)  */
-            ),
-            iv: algo.iv
-        };
-    }
-
-    async #decipher (text) {
-
-
-        return text;
-
-
-
-        if (text === '') {
-            return '';
+            c = this.#dic.cryptography.decipher(c);
         }
 
-        const algo = {
-            name: 'AES-GCM',
-            length: 256,
-            iv: text.iv
-        };
-
-        return new TextDecoder().decode(
-            await crypto.subtle.decrypt(
-                algo,
-                await this.#deriveKey(this.#password),
-                text  /* . cipherText */
-            )
-        );
+        this.#editorDoc.innerHTML = c;
     }
 
 
@@ -155,41 +139,21 @@ class Editor {
 
 
 
+    /**
+     * generate password string.
+     * @returns {number}
+     */
+    #getPasswordHash()
+    {
+        let hash = 0;
 
+        for (const char of this.#password) {
+            hash = (hash << 5) - hash + char.charCodeAt(0);
+            hash |= 0; // Constrain to 32bit integer
+        }
 
-    async #deriveKey(password) {
-        const algo = {
-            name: 'PBKDF2',
-            hash: 'SHA-256',
-            salt: new TextEncoder().encode('a-unique-salt'),
-            iterations: 1000
-        };
-
-        return crypto.subtle.deriveKey(
-            algo,
-            await crypto.subtle.importKey(
-                'raw',
-                new TextEncoder().encode(password),
-                {
-                    name: algo.name
-                },
-                false,
-                ['deriveKey']
-            ),
-            {
-                name: 'AES-GCM',
-                length: 256
-            },
-            false,
-            ['encrypt', 'decrypt']
-        );
+        return hash;
     }
-
-
-
-
-
-
 
     #onPaste(ev)
     {

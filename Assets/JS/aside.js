@@ -169,41 +169,41 @@ class Aside
             const cl = this.#btnLock.classList;
 
             if (cl.contains('unlocked')) {
+                let pass = this.#promptPassword();
 
-                // nach password fragen
+                if (pass) {
+                    this.#dic.editor.setPassword(pass);
 
-
-
-
-
-
-
-
-                cl.add('locked');
-                cl.remove('unlocked');
-
-                this.#iptLock.value = 'true';
-                this.#iptLock.dispatchEvent(new Event("change"));
-
-            } else {
-
-                // warnen, dass Password entfernt wird
-
-
-
-
-
-
-
-
+                    cl.add('locked');
+                    cl.remove('unlocked');
+                }
+            } else if (window.confirm(_dict['Do you want to delete the password?'])) {
+                this.#dic.editor.setPassword('');
 
                 cl.add('unlocked');
                 cl.remove('locked');
-
-                this.#iptLock.value = 'false';
-                this.#iptLock.dispatchEvent(new Event("change"));
             }
         }, this.#btnLock);
     }
 
+    /**
+     * get password for note.
+     * @returns {false|string}
+     */
+    #promptPassword()
+    {
+        let pass = window.prompt(_dict['Give the password']);
+
+        if (pass) {
+            let pass2 = window.prompt(_dict['Repeat the password']);
+
+            if (pass2 && pass === pass2) {
+                return pass2;
+            } else {
+                window.alert(_dict['The passwords do not match!']);
+            }
+        }
+
+        return false;
+    }
 }

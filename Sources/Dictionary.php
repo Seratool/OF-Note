@@ -37,7 +37,12 @@ class Dictionary
         'Spellcheck' => 'Spellcheck',
         'Yes' => 'Yes',
         'No' => 'No',
-        'PasswordProtection' => 'Password protection',
+        'Password protection' => 'Password protection',
+        'Give the password' => 'Give the password',
+        'Repeat the password' => 'Repeat the password',
+        'The passwords do not match!' => 'The passwords do not match!',
+        'Do you want to delete the password?' => 'Do you want to delete the password?',
+        'It is not possible to save, a false password has been entered!' => 'It is not possible to save, a false password has been entered!',
     ];
     public array $DE = [
         'LanguageIcon' => '🇩🇪',
@@ -72,7 +77,12 @@ class Dictionary
         'Spellcheck' => 'Rechtschreibprüfung',
         'Yes' => 'Ja',
         'No' => 'Nein',
-        'PasswordProtection' => 'Passwortschutz',
+        'Password protection' => 'Passwortschutz',
+        'Give the password' => 'Geben Sie das Passwort ein',
+        'Repeat the password' => 'Wiederholen Sie das Passwort',
+        'The passwords do not match!' => 'Passwörter stimmen nicht überein!',
+        'Do you want to delete the password?' => 'Möchten Sie das Passwort löschen?',
+        'It is not possible to save, a false password has been entered!' => 'Kann nicht gespeichert werden, es wurde ein falsches Passwort eingegeben!',
     ];
     public array $RU = [
         'LanguageIcon' => '🇷🇺',
@@ -107,7 +117,12 @@ class Dictionary
         'Spellcheck' => 'Проверка орфографии',
         'Yes' => 'Да',
         'No' => 'Нет',
-        'PasswordProtection' => 'Защита паролем',
+        'Password protection' => 'Защита паролем',
+        'Give the password' => 'Введите пароль',
+        'Repeat the password' => 'Повторите пароль',
+        'The passwords do not match!' => 'Пароли не совпадают!',
+        'Do you want to delete the password?' => 'Вы хотите удалить пароль?',
+        'It is not possible to save, a false password has been entered!' => 'Сохранить невозможно, был указан неверный пароль!',
     ];
 
     public function get($lang): array

@@ -27,6 +27,7 @@ class Assets
     public static string $JSE_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/JSE.js")';
     public static string $dic_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/dic.js")';
     public static string $cookies_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/cookies.js")';
+    public static string $cryptography_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/cryptography.js")';
     public static string $aside_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/aside.js")';
     public static string $editor_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/editor.js")';
     public static string $note_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/note.js")';

@@ -9,11 +9,11 @@ JSE.ready(() => {
     dic.pwa = new Pwa(JSE.q('aside.setting'));
     dic.note = new Note(JSE.q('.docs-list', nBbody), nMain.getAttribute('data-note'));
     dic.aside = new Aside(dic);
-
-    dic.connector = new Connector(JSE.q('.control .sync', nMain), dic);
+    dic.cryptography = new Cryptography(dic);
+    dic.connector = new Connector(dic, JSE.q('.control .sync', nMain));
     dic.editor = new Editor(dic, nMain);
 
-    dic.editor.initialiseContent();
     dic.aside.initialise();
     dic.note.showNotes();
+    dic.editor.initialiseContent();
 })

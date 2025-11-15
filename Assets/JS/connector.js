@@ -13,7 +13,7 @@ class Connector
      * @param {HTMLElement} icons
      * @param {DIC} dic
      */
-    constructor(icons,  dic)
+    constructor(dic, icons)
     {
         this.#dic = dic;
         this.#icons = icons;
@@ -34,23 +34,18 @@ class Connector
      */
     save()
     {
-
-
-        // can storage process be proceeded?
-
-
-
-        fetch("{{ $router->getQueryUrl(['event' => 'save']) }}", {
-            method: "POST",
-            headers: {"X-Requested-With": "XMLHttpRequest"},
-            body: this.#getFormData()
-        }).then(
-            (response) => this.#viewStatus(response.status === 200 ? 'sent' : 'error')
-        ).catch(() => this.#viewStatus('error'));
-
-
-
-
+        if (this.#dic.editor.isPassCorrect()) {
+            fetch("{{ $router->getQueryUrl(['event' => 'save']) }}", {
+                method: "POST",
+                headers: {"X-Requested-With": "XMLHttpRequest"},
+                body: this.#getFormData()
+            }).then(
+                (response) => this.#viewStatus(response.status === 200 ? 'sent' : 'error')
+            ).catch(() => this.#viewStatus('error'));
+        } else {
+            this.#viewStatus('error');
+            window.alert(_dict['It is not possible to save, a false password has been entered!']);
+        }
     }
 
     #getFormData()
@@ -72,7 +67,7 @@ class Connector
     addNote(title)
     {
         if (this.#dic.note.isTitleExists(title)) {
-            alert(_dict['Note with title "%s" already exists!'].replace('%s', title));
+            window.alert(_dict['Note with title "%s" already exists!'].replace('%s', title));
             return;
         }
 

@@ -25,7 +25,7 @@ class Content
         'bg' => ['bg-blank', 'bg-lined'],
         'size' => ['size-xs', 'size-s', 'size-m', 'size-l', 'size-xl'],
         'spellcheck' => [false, true],
-        'passhash' => '',
+        'passhash' => [''],
     ];
 
     public function __construct(string $path)

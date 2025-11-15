@@ -32,6 +32,10 @@ main {
     line-height: var(--line-height);
 }
 
+main .shadow-doc.hidden {
+    display: none;
+}
+
 .doc.font-sans {
     font-family: sans-serif;
 }

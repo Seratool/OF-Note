@@ -102,14 +102,22 @@
     <script type="text/javascript">
         (function() {
             "use strict";
+
             const _dict = {
                 'Do you want to delete the link to "%s"?': '{{ $lang('Do you want to delete the link to "%s"?') }}',
                 'Give the note "%s" a new name': '{{ $lang('Give the note "%s" a new name') }}',
                 'Give the note name': '{{ $lang('Give the note name') }}',
                 'Note with title "%s" already exists!': '{{ $lang('Note with title "%s" already exists!') }}',
+                'Give the password': '{{ $lang('Give the password') }}',
+                'Repeat the password': '{{ $lang('Repeat the password') }}',
+                'The passwords do not match!': '{{ $lang('The passwords do not match!') }}',
+                'Do you want to delete the password?': '{{ $lang('Do you want to delete the password?') }}',
+                'It is not possible to save, a false password has been entered!': '{{ $lang('It is not possible to save, a false password has been entered!') }}',
             };
+
             {% extends 'JSE.js' %}
             {% extends 'dic.js' %}
+            {% extends 'cryptography.js' %}
             {% extends 'cookies.js' %}
             {% extends 'aside.js' %}
             {% extends 'editor.js' %}
