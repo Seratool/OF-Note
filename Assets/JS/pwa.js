@@ -3,12 +3,13 @@ class Pwa
     #installPrompt = null;
 
     constructor(aside) {
+        const appId = JSE.q('body').dataset.id;
+
         this.instBtn = JSE.q('.setting-block .install-btn', aside);
 
         window.addEventListener("beforeinstallprompt", async (ev) => {
-            const relatedApps = await navigator.getInstalledRelatedApps();
-            // Search for a specific installed platform-specific app
-            const psApp = relatedApps.find((app) => app.id === "com.example.myapp");
+            const relatedApps = await navigator.getInstalledRelatedApps(),
+                psApp = relatedApps.find((app) => app.id === appId);
 
             if (psApp) {
                 ev.preventDefault();

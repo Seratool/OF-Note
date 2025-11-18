@@ -43,6 +43,7 @@ class Dictionary
         'The passwords do not match!' => 'The passwords do not match!',
         'Do you want to delete the password?' => 'Do you want to delete the password?',
         'It is not possible to save, a false password has been entered!' => 'It is not possible to save, a false password has been entered!',
+        'The given password seems to be incorrect!' => 'The given password seems to be incorrect!',
     ];
     public array $DE = [
         'LanguageIcon' => '🇩🇪',
@@ -83,6 +84,7 @@ class Dictionary
         'The passwords do not match!' => 'Passwörter stimmen nicht überein!',
         'Do you want to delete the password?' => 'Möchten Sie das Passwort löschen?',
         'It is not possible to save, a false password has been entered!' => 'Kann nicht gespeichert werden, es wurde ein falsches Passwort eingegeben!',
+        'The given password seems to be incorrect!' => 'Das eingegebene Passwort scheint falsch zu sein!',
     ];
     public array $RU = [
         'LanguageIcon' => '🇷🇺',
@@ -123,6 +125,7 @@ class Dictionary
         'The passwords do not match!' => 'Пароли не совпадают!',
         'Do you want to delete the password?' => 'Вы хотите удалить пароль?',
         'It is not possible to save, a false password has been entered!' => 'Сохранить невозможно, был указан неверный пароль!',
+        'The given password seems to be incorrect!' => 'Введенный пароль кажется неправильным!',
     ];
 
     public function get($lang): array

@@ -44,7 +44,7 @@ class Connector
             ).catch(() => this.#viewStatus('error'));
         } else {
             this.#viewStatus('error');
-            window.alert(_dict['It is not possible to save, a false password has been entered!']);
+            window.alert(__('It is not possible to save, a false password has been entered!'));
         }
     }
 
@@ -67,7 +67,7 @@ class Connector
     addNote(title)
     {
         if (this.#dic.note.isTitleExists(title)) {
-            window.alert(_dict['Note with title "%s" already exists!'].replace('%s', title));
+            window.alert(__('Note with title "%s" already exists!').replace('%s', title));
             return;
         }
 

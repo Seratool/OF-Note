@@ -24,7 +24,7 @@ class Editor {
         this.#editorDoc = JSE.q('.doc', nMain);
         this.#shadowDoc = JSE.q('.shadow-doc', nMain);
         this.#iptLock = JSE.q('aside.setting input[name="lock"]', nMain);
-        this.#iptPasshash = JSE.q('aside.setting input[name="passhash"]', nMain);
+        this.#iptPasshash = JSE.q('aside.setting input[name="proof"]', nMain);
         this.#passHash = this.#iptPasshash.value;
 
         JSE.ev('paste', (ev) => {
@@ -54,9 +54,10 @@ class Editor {
     setPassword(password)
     {
         this.#password = password;
+        this.#passHash = password === '' ? '' : this.#dic.cryptography.getHash(this.#password);
 
         this.#iptLock.value = password === '' ? 'false' : 'true';
-        this.#iptPasshash.value = password === '' ? '' : this.#getPasswordHash();
+        this.#iptPasshash.value = this.#passHash;
 
         this.#iptLock.dispatchEvent(new Event("change"));
     }
@@ -74,9 +75,11 @@ class Editor {
      * return true if password not set or given password is correct.
      * @returns {boolean}
      */
-    isPassCorrect()
+    isPassCorrect(pass = null)
     {
-        return this.#password === '' || this.#getPasswordHash() === this.#passHash;
+        pass = pass === null ? this.#password : pass;
+
+        return pass !== '' && this.#dic.cryptography.getHash(pass) === this.#passHash;
     }
 
     /**
@@ -85,74 +88,36 @@ class Editor {
     fetchContent()
     {
         let c = this.#getContent();
-
-        if (this.#iptPasshash.value === 'true') {
+        if (this.#iptLock.value === 'true') {
             c = this.#dic.cryptography.cipher(c);
         }
 
         return c;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     initialiseContent()
     {
         let c = this.#shadowDoc.innerHTML;
         this.#shadowDoc.innerHTML = '';
 
-        if (this.#iptPasshash.value === 'true') {
+        if (this.#iptLock.value === 'true') {
+            let pass = window.prompt(__('Give the password'));
 
+console.log(pass, this.#dic.editor.isPassCorrect(pass));
 
+            if (this.#dic.editor.isPassCorrect(pass)) {
+                this.#password = pass;
 
-            // nach pass fragen
+                c = this.#dic.cryptography.decipher(c);
+            } else {
+                window.confirm(__('The given password seems to be incorrect!'));
 
-
-            c = this.#dic.cryptography.decipher(c);
+                this.#editorDoc.innerHTML = '';
+                return;
+            }
         }
 
         this.#editorDoc.innerHTML = c;
-    }
-
-
-
-
-
-
-
-
-
-
-    /**
-     * generate password string.
-     * @returns {number}
-     */
-    #getPasswordHash()
-    {
-        let hash = 0;
-
-        for (const char of this.#password) {
-            hash = (hash << 5) - hash + char.charCodeAt(0);
-            hash |= 0; // Constrain to 32bit integer
-        }
-
-        return hash;
     }
 
     #onPaste(ev)

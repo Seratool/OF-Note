@@ -10,6 +10,49 @@ class Cryptography
         this.#dic = dic;
     }
 
+    /**
+     * generate string hash.
+     * @returns {string}
+     */
+    getHash(word)
+    {
+        let hash = 0;
+
+        if (!word) {
+            return '';
+        }
+
+        for (const char of word) {
+            hash = (hash << 5) - hash + char.charCodeAt(0);
+            hash |= 0; // Constrain to 32bit integer
+        }
+
+        return hash + '';
+    }
+
+
+
+
+
+
+    cipher (text)
+    {
+
+        return text;
+
+    }
+
+    decipher (text) {
+
+
+        return text;
+
+    }
+
+
+
+
+
 
 
     #arrayBufferToHex(buffer) {
@@ -29,7 +72,11 @@ class Cryptography
     }
 
 
-
+/*
+https://dev.to/eddiegulay/secure-text-encryption-and-decryption-with-vanilla-javascript-1c23
+https://stackoverflow.com/questions/62102034/javascript-how-to-encrypt-string-with-only-password-in-2020
+https://coolaj86.com/articles/webcrypto-encrypt-and-decrypt-with-aes/
+ */
 
 
 
@@ -107,25 +154,6 @@ class Cryptography
 
         const decoder = new TextDecoder();
         return decoder.decode(decrypted);
-    }
-
-
-
-
-
-
-    cipher (text)
-    {
-
-        return text;
-
-    }
-
-    decipher (text) {
-
-
-        return text;
-
     }
 
 

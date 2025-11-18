@@ -156,7 +156,7 @@ class Aside
 
     #addPage()
     {
-        let title = window.prompt(_dict['Give the note name']);
+        let title = window.prompt(__('Give the note name'));
 
         if (title) {
             this.#dic.connector.addNote(title);
@@ -177,11 +177,18 @@ class Aside
                     cl.add('locked');
                     cl.remove('unlocked');
                 }
-            } else if (window.confirm(_dict['Do you want to delete the password?'])) {
-                this.#dic.editor.setPassword('');
+            } else if (window.confirm(__('Do you want to delete the password?'))) {
+                let pass = window.prompt(__('Give the password'));
 
-                cl.add('unlocked');
-                cl.remove('locked');
+                if (this.#dic.editor.isPassCorrect(pass)) {
+                    this.#dic.editor.setPassword('');
+
+                    cl.add('unlocked');
+                    cl.remove('locked');
+
+                } else {
+                    window.confirm(__('The given password seems to be incorrect!'));
+                }
             }
         }, this.#btnLock);
     }
@@ -192,15 +199,15 @@ class Aside
      */
     #promptPassword()
     {
-        let pass = window.prompt(_dict['Give the password']);
+        let pass = window.prompt(__('Give the password'));
 
         if (pass) {
-            let pass2 = window.prompt(_dict['Repeat the password']);
+            let pass2 = window.prompt(__('Repeat the password'));
 
             if (pass2 && pass === pass2) {
                 return pass2;
             } else {
-                window.alert(_dict['The passwords do not match!']);
+                window.alert(__('The passwords do not match!'));
             }
         }
 

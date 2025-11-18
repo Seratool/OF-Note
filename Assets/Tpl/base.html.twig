@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% $appId = $router->getBaseUrl() %}
 <html lang="{{ strtolower($lang->lang) }}">
     <head>
         <meta charset="UTF-8">
@@ -10,7 +11,6 @@
         <link rel="icon" type="image/png" href="{% extends 'favicon48.png' %}">
         <link rel="shortcut icon" type="image/ico" href="{% extends 'favicon.ico' %}">
         <link rel="shortcut icon" type="image/png" href="{% extends 'favicon48.png' %}">
-        <link rel="fav-icon" type="image/png" href="{% extends 'favicon48.png' %}">
         <link rel="apple-touch-icon" type="image/png" href="{% extends 'favicon180.png' %}">
         {# open graph #}
         <meta property="og:title" content="{{ $title }}">
@@ -28,7 +28,7 @@
             "short_name":"Note OF",
             "description":"Simple text note app",
             "display":"standalone",
-            "id":"{{ $router->getBaseUrl() }}",
+            "id":"{{ $appId }}",
             "scope":"{{ $router->getBaseUrl() }}",
             "theme_color":"white",
             "background_color":"white",
@@ -97,23 +97,28 @@
             {% extends 'print.css' %}
         </style>
     </head>
-    <body class="app{{ ($options['t'] ?? '') == 'd' ? ' dark' : '' }}">
+    <body class="app{{ ($options['t'] ?? '') == 'd' ? ' dark' : '' }}" data-id="{{ $appId }}">
     {% yield content %}
     <script type="text/javascript">
         (function() {
             "use strict";
 
-            const _dict = {
-                'Do you want to delete the link to "%s"?': '{{ $lang('Do you want to delete the link to "%s"?') }}',
-                'Give the note "%s" a new name': '{{ $lang('Give the note "%s" a new name') }}',
-                'Give the note name': '{{ $lang('Give the note name') }}',
-                'Note with title "%s" already exists!': '{{ $lang('Note with title "%s" already exists!') }}',
-                'Give the password': '{{ $lang('Give the password') }}',
-                'Repeat the password': '{{ $lang('Repeat the password') }}',
-                'The passwords do not match!': '{{ $lang('The passwords do not match!') }}',
-                'Do you want to delete the password?': '{{ $lang('Do you want to delete the password?') }}',
-                'It is not possible to save, a false password has been entered!': '{{ $lang('It is not possible to save, a false password has been entered!') }}',
-            };
+            function __(key) {
+                const dict = {
+                    'Do you want to delete the link to "%s"?': '{{ $lang('Do you want to delete the link to "%s"?') }}',
+                    'Give the note "%s" a new name': '{{ $lang('Give the note "%s" a new name') }}',
+                    'Give the note name': '{{ $lang('Give the note name') }}',
+                    'Note with title "%s" already exists!': '{{ $lang('Note with title "%s" already exists!') }}',
+                    'Give the password': '{{ $lang('Give the password') }}',
+                    'Repeat the password': '{{ $lang('Repeat the password') }}',
+                    'The passwords do not match!': '{{ $lang('The passwords do not match!') }}',
+                    'Do you want to delete the password?': '{{ $lang('Do you want to delete the password?') }}',
+                    'It is not possible to save, a false password has been entered!': '{{ $lang('It is not possible to save, a false password has been entered!') }}',
+                    'The given password seems to be incorrect!': '{{ $lang('The given password seems to be incorrect!') }}',
+                };
+
+                return dict[key] || key;
+            }
 
             {% extends 'JSE.js' %}
             {% extends 'dic.js' %}
