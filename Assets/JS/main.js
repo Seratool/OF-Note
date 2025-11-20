@@ -16,4 +16,4 @@ JSE.ready(() => {
     dic.aside.initialise();
     dic.note.showNotes();
     dic.editor.initialiseContent();
-})
+});

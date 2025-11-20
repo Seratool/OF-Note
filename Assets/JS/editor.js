@@ -18,7 +18,8 @@ class Editor {
      * @param {DIC} dic
      * @param {HTMLElement} nMain
      */
-    constructor(dic, nMain) {
+    constructor(dic, nMain)
+    {
         this.#dic = dic;
 
         this.#editorDoc = JSE.q('.doc', nMain);
@@ -38,6 +39,7 @@ class Editor {
                 ev.preventDefault();
 
                 this.#addTextToEditor('    ');
+                this.#editorDoc.dispatchEvent(new Event("input"));
             }
         }, this.#editorDoc);
 
@@ -79,20 +81,22 @@ class Editor {
     {
         pass = pass === null ? this.#password : pass;
 
-        return pass !== '' && this.#dic.cryptography.getHash(pass) === this.#passHash;
+        return pass === '' || this.#dic.cryptography.getHash(pass) === this.#passHash;
     }
 
     /**
      * return filtered content.
+     * @returns {Promise<unknown>|string}
      */
     fetchContent()
     {
         let c = this.#getContent();
-        if (this.#iptLock.value === 'true') {
-            c = this.#dic.cryptography.cipher(c);
-        }
 
-        return c;
+        if (this.#iptLock.value === 'true') {
+            return this.#dic.cryptography.encrypt(c, this.#password);
+        } else {
+            return c;
+        }
     }
 
     initialiseContent()
@@ -103,21 +107,27 @@ class Editor {
         if (this.#iptLock.value === 'true') {
             let pass = window.prompt(__('Give the password'));
 
-console.log(pass, this.#dic.editor.isPassCorrect(pass));
-
             if (this.#dic.editor.isPassCorrect(pass)) {
                 this.#password = pass;
 
-                c = this.#dic.cryptography.decipher(c);
+                this.#dic.cryptography.decrypt(c, this.#password)
+                    .then(c => {
+                        this.#setContent(c);
+                    });
             } else {
                 window.confirm(__('The given password seems to be incorrect!'));
-
-                this.#editorDoc.innerHTML = '';
-                return;
+                this.#setContent('');
             }
+        } else {
+            this.#setContent(c);
         }
+    }
 
-        this.#editorDoc.innerHTML = c;
+    #setContent(content)
+    {
+        content = (content + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
+
+        this.#editorDoc.innerHTML = content;
     }
 
     #onPaste(ev)

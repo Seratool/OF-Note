@@ -1,20 +1,15 @@
-class Cryptography
+/**
+ * init cryptography.
+ */
+const Cryptography = function(dic)
 {
-    #dic;
-
-    /**
-     * init editor.
-     * @param {DIC} dic
-     */
-    constructor(dic) {
-        this.#dic = dic;
-    }
+    this._dic = dic;
 
     /**
      * generate string hash.
      * @returns {string}
      */
-    getHash(word)
+    this.getHash = function (word)
     {
         let hash = 0;
 
@@ -28,186 +23,93 @@ class Cryptography
         }
 
         return hash + '';
-    }
+    };
 
+    /**
+     * return encrypted text.
+     * @param {string} text
+     * @param {string} pass
+     * @returns {string}
+     */
+    this.encrypt = async function (text, pass) {
+        const enc = new TextEncoder(),
+            salt = window.crypto.getRandomValues(new Uint8Array(16)),
+            iv = window.crypto.getRandomValues(new Uint8Array(12)),
+            dataBytes = enc.encode(text),
+            key = await this._deriveKey(pass.toString(), salt, ["encrypt"]),
+            encryptedData = await window.crypto.subtle.encrypt({name: "AES-GCM", iv}, key, dataBytes),
+            result = new Uint8Array(salt.length + iv.length + encryptedData.byteLength);
 
+        result.set(salt, 0);
+        result.set(iv, salt.length);
+        result.set(new Uint8Array(encryptedData), salt.length + iv.length);
 
+        return this._arrayBufferToHex(result.buffer);
+    };
 
-
-
-    cipher (text)
-    {
-
-        return text;
-
-    }
-
-    decipher (text) {
-
-
-        return text;
-
-    }
-
-
-
-
-
-
-
-    #arrayBufferToHex(buffer) {
-        return [...new Uint8Array(buffer)]
-            .map(byte => byte.toString(16).padStart(2, '0'))
-            .join('');
-    }
-
-    #hexToArrayBuffer(hex) {
-        const bytes = new Uint8Array(hex.length / 2);
-
-        for (let i = 0; i < hex.length; i += 2) {
-            bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
+    /**
+     * return decrypted text.
+     * @param {string} text
+     * @param {string} pass
+     * @returns {string}
+     */
+    this.decrypt = async function (text, pass) {
+        if (text === '') {
+            return '';
         }
 
-        return bytes.buffer;
-    }
+        const dec = new TextDecoder(),
+            content = this._hexToUint8Array(text),
+            salt = content.slice(0, 16),
+            iv = content.slice(16, 28),
+            data = content.slice(28),
+            key = await this._deriveKey(pass.toString(), salt, ["decrypt"]),
+            decryptedData = await window.crypto.subtle.decrypt({name: "AES-GCM", iv}, key, data);
 
+        return dec.decode(decryptedData);
+    };
 
-/*
-https://dev.to/eddiegulay/secure-text-encryption-and-decryption-with-vanilla-javascript-1c23
-https://stackoverflow.com/questions/62102034/javascript-how-to-encrypt-string-with-only-password-in-2020
-https://coolaj86.com/articles/webcrypto-encrypt-and-decrypt-with-aes/
- */
+    /**
+     * Converts an ArrayBuffer to a hexadecimal string.
+     * @param {ArrayBuffer} buffer - The buffer to convert.
+     * @returns {string} The hexadecimal representation of the buffer.
+     */
+    this._arrayBufferToHex = function (buffer)
+    {
+        return [...new Uint8Array(buffer)].map(byte => byte.toString(16).padStart(2, '0')).join('');
+    };
 
+    /**
+     * Converts a hexadecimal string to a Uint8Array.
+     * @param {string} hexString - The hexadecimal string to convert.
+     * @returns {Uint8Array} The resulting Uint8Array.
+     */
+    this._hexToUint8Array = function (hexString)
+    {
+        return new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+    };
 
-
-
-
-
-
-
-
-    async #getCryptoKey() {
-        const password = this.#dic.editor.getPassword(),
-            encoder = new TextEncoder(),
-            keyMaterial = encoder.encode(password);
-
-        return crypto.subtle.importKey(
-            'raw',
-            keyMaterial,
-            { name: 'PBKDF2' },
-            false,
-            ['deriveKey']
-        );
-    }
-
-    async #deriveKey(salt) {
-        const keyMaterial = await this.#getCryptoKey();
-
-        return crypto.subtle.deriveKey(
-            {
-                name: 'PBKDF2',
-                salt: salt,
-                iterations: 100000,
-                hash: 'SHA-256'
-            },
-            keyMaterial,
-            { name: 'AES-GCM', length: 256 },
-            false,
-            ['encrypt', 'decrypt']
-        );
-    }
-
-
-
-    async encryptText(text) {
-        const encoder = new TextEncoder();
-        const salt = crypto.getRandomValues(new Uint8Array(16));
-        const iv = crypto.getRandomValues(new Uint8Array(12));
-        const key = await this.#deriveKey(salt);
-
-        const encrypted = await crypto.subtle.encrypt(
-            { name: 'AES-GCM', iv: iv },
-            key,
-            encoder.encode(text)
-        );
-
-        return {
-            cipherText: this.#arrayBufferToHex(encrypted),
-            iv: this.#arrayBufferToHex(iv),
-            salt: this.#arrayBufferToHex(salt)
-        };
-    }
-
-
-
-
-
-    async decryptText(encryptedData) {
-        const { cipherText, iv, salt } = encryptedData;
-        const key = await this.#deriveKey(this.#hexToArrayBuffer(salt));
-
-        const decrypted = await crypto.subtle.decrypt(
-            { name: 'AES-GCM', iv: this.#hexToArrayBuffer(iv) },
-            key,
-            this.#hexToArrayBuffer(cipherText)
-        );
-
-        const decoder = new TextDecoder();
-        return decoder.decode(decrypted);
-    }
-
-
-
-
-
-
-/*
-
-    async #deriveKey() {
-        let password = this.#dic.editor.getPassword();
-
-
-
-
-        const algo = {
-            name: 'PBKDF2',
-            hash: 'SHA-256',
-            salt: new TextEncoder().encode('a-unique-salt'),
-            iterations: 1000
-        };
-
-        return crypto.subtle.deriveKey(
-            algo,
-            await crypto.subtle.importKey(
-                'raw',
-                new TextEncoder().encode(password),
-                {
-                    name: algo.name
-                },
+    /**
+     * Derives a cryptographic key from a password using PBKDF2.
+     * @param {string} password - The password to derive the key from.
+     * @param {Uint8Array} salt - The salt for key derivation.
+     * @param {string[]} keyUsage - The intended usage of the key (e.g., ["encrypt"] or ["decrypt"]).
+     * @returns {Promise<CryptoKey>} A promise that resolves to the derived key.
+     */
+    this._deriveKey = async (password, salt, keyUsage) => {
+        const enc = new TextEncoder(),
+            keyMaterial = await window.crypto.subtle.importKey(
+                "raw",
+                enc.encode(password), {name: "PBKDF2"},
                 false,
-                ['deriveKey']
-            ),
-            {
-                name: 'AES-GCM',
-                length: 256
-            },
+                ["deriveBits", "deriveKey"]
+            );
+
+        return window.crypto.subtle.deriveKey(
+            {name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256"},
+            keyMaterial, {name: "AES-GCM", length: 256},
             false,
-            ['encrypt', 'decrypt']
+            keyUsage
         );
-    }
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+    };
+};

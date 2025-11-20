@@ -32,32 +32,23 @@ class Connector
     /**
      * send routine.
      */
-    save()
+    save ()
     {
-        if (this.#dic.editor.isPassCorrect()) {
+        if (!this.#dic.editor.isPassCorrect()) {
+            this.#viewStatus('error');
+            window.alert(__('It is not possible to save, a false password has been entered!'));
+            return;
+        }
+
+        this.#getFormData().then((formData) => {
             fetch("{{ $router->getQueryUrl(['event' => 'save']) }}", {
                 method: "POST",
                 headers: {"X-Requested-With": "XMLHttpRequest"},
-                body: this.#getFormData()
+                body: formData
             }).then(
                 (response) => this.#viewStatus(response.status === 200 ? 'sent' : 'error')
             ).catch(() => this.#viewStatus('error'));
-        } else {
-            this.#viewStatus('error');
-            window.alert(__('It is not possible to save, a false password has been entered!'));
-        }
-    }
-
-    #getFormData()
-    {
-        const formData = new FormData();
-        formData.append('text', this.#dic.editor.fetchContent());
-
-        JSE.qs('.setting-block .setting-element').forEach((f) => {
-            formData.append(f.name, f.value);
         });
-
-        return formData;
     }
 
     /**
@@ -66,25 +57,46 @@ class Connector
      */
     addNote(title)
     {
+        if (!this.#dic.editor.isPassCorrect()) {
+            this.#viewStatus('error');
+            window.alert(__('It is not possible to save, a false password has been entered!'));
+            return;
+        }
+
         if (this.#dic.note.isTitleExists(title)) {
             window.alert(__('Note with title "%s" already exists!').replace('%s', title));
             return;
         }
 
-        fetch("{{ $router->getQueryUrl(['event' => 'add']) }}", {
-            method: "POST",
-            headers: {"X-Requested-With": "XMLHttpRequest"},
-            body: this.#getFormData()
-        }).then((r) => {
-            if (!r.ok) {
-                throw new Error(`Response status: ${r.status}`);
-            }
-            return r.json();
-        }).then(d => {
-            this.#dic.note.addNote(d.note, title);
-            setTimeout(() => window.location.href = d.url, 100);
+        this.#getFormData().then((formData) => {
+            fetch("{{ $router->getQueryUrl(['event' => 'add']) }}", {
+                method: "POST",
+                headers: {"X-Requested-With": "XMLHttpRequest"},
+                body: formData
+            }).then((r) => {
+                if (!r.ok) {
+                    throw new Error(`Response status: ${r.status}`);
+                }
+                return r.json();
+            }).then(d => {
+                this.#dic.note.addNote(d.note, title);
+                setTimeout(() => window.location.href = d.url, 100);
+            }).catch(() => this.#viewStatus('error'));
+        });
+    }
 
-        }).catch(() => this.#viewStatus('error'));
+    #getFormData()
+    {
+        return (async () => {
+            const formData = new FormData();
+
+            formData.append('text', await this.#dic.editor.fetchContent());
+            JSE.qs('.setting-block .setting-element').forEach((f) => {
+                formData.append(f.name, f.value);
+            });
+
+            return formData;
+        })();
     }
 
     /**

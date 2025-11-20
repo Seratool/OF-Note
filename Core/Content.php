@@ -11,20 +11,20 @@ class Content
     private string $content = '';
 
     private array $settings = [
-        'lock' => false,
         'font' => 'font-sans',
         'bg' => 'bg-lined',
         'size' => 'size-m',
         'spellcheck' => false,
+        'lock' => false,
         'proof' => '',
     ];
 
     private array $settingsDefault = [
-        'lock' => [false, true],
         'font' => ['font-sans', 'font-serif', 'font-monospace'],
         'bg' => ['bg-blank', 'bg-lined'],
         'size' => ['size-xs', 'size-s', 'size-m', 'size-l', 'size-xl'],
         'spellcheck' => [false, true],
+        'lock' => [false, true],
     ];
 
     public function __construct(string $path)
