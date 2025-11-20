@@ -13,8 +13,9 @@ main {
 }
 
 .doc-wrapper {
+    top: 3rem;
     width: 100%;
-    padding: 3rem 0 0;
+    padding: 0;
     bottom: 0;
     overflow: auto;
     position: absolute;

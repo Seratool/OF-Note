@@ -125,6 +125,8 @@ class Editor {
 
     #setContent(content)
     {
+        content = (content + '').replace(/</g, '&lt;');
+        content = (content + '').replace(/>/g, '&gt;');
         content = (content + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
 
         this.#editorDoc.innerHTML = content;

@@ -5,5 +5,4 @@ class DIC
     cryptography;
     aside;
     note;
-    pwa;
 }

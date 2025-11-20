@@ -210,7 +210,7 @@ aside.setting .control-line,
     flex: 0 1 5.5rem;
 }
 
-aside.setting .control-line .btn,
+aside.setting .btn,
 .docs-history ul.docs-list li .btn {
     border-radius: 50%;
     cursor: pointer;
@@ -225,7 +225,7 @@ aside.setting .control-line .btn,
     display: inline-block;
 }
 
-aside.setting .control-line .btn:hover,
+aside.setting .btn:hover,
 .docs-history ul.docs-list li .btn:hover {
     background-color: var(--color-palette-3);
     transform: scale(1.2);

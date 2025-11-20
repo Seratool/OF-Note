@@ -54,7 +54,8 @@ class Content
             return $this->content;
         }
 
-        return nl2br(htmlspecialchars($this->content, ENT_QUOTES, 'UTF-8'), false);
+        return $this->content;
+        // return nl2br(htmlspecialchars($this->content, ENT_QUOTES, 'UTF-8'), false);
     }
 
     /**
