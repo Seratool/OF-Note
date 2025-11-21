@@ -47,6 +47,7 @@ class Assets
     public static string $favicon48_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.48.png")';
     public static string $favicon96_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.96.png")';
     public static string $favicon128_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.128.png")';
+    public static string $favicon144_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.144.png")';
     public static string $favicon180_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.180.png")';
     public static string $favicon192_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.192.png")';
     public static string $favicon256_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.256.png")';
