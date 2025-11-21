@@ -15,6 +15,8 @@ class Content
         'bg' => 'bg-lined',
         'size' => 'size-m',
         'spellcheck' => false,
+        'lock' => false,
+        'proof' => '',
     ];
 
     private array $settingsDefault = [
@@ -22,6 +24,7 @@ class Content
         'bg' => ['bg-blank', 'bg-lined'],
         'size' => ['size-xs', 'size-s', 'size-m', 'size-l', 'size-xl'],
         'spellcheck' => [false, true],
+        'lock' => [false, true],
     ];
 
     public function __construct(string $path)
@@ -51,7 +54,8 @@ class Content
             return $this->content;
         }
 
-        return nl2br(htmlspecialchars($this->content, ENT_QUOTES, 'UTF-8'), false);
+        return $this->content;
+        // return nl2br(htmlspecialchars($this->content, ENT_QUOTES, 'UTF-8'), false);
     }
 
     /**
@@ -61,7 +65,11 @@ class Content
     {
         foreach ($this->settings as $key => $value) {
             if (isset($opts[$key])) {
-                $this->settings[$key] = in_array($opts[$key], $this->settingsDefault[$key]) ? $opts[$key] : $value;
+                if (isset($this->settingsDefault[$key])) {
+                    $this->settings[$key] = in_array($opts[$key], $this->settingsDefault[$key]) ? $opts[$key] : $value;
+                } else {
+                    $this->settings[$key] = $opts[$key];
+                }
             }
         }
     }

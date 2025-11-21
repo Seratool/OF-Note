@@ -25,13 +25,14 @@ class Assets
      * define java script sources.
      */
     public static string $JSE_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/JSE.js")';
+    public static string $dic_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/dic.js")';
     public static string $cookies_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/cookies.js")';
+    public static string $cryptography_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/cryptography.js")';
     public static string $aside_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/aside.js")';
     public static string $editor_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/editor.js")';
     public static string $note_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/note.js")';
     public static string $connector_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/connector.js")';
     public static string $main_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/main.js")';
-    public static string $pwa_js = 'SOURCE_REPLACER_JS("APP/Assets/JS/pwa.js")';
 
     /**
      * define media sources.
@@ -46,6 +47,7 @@ class Assets
     public static string $favicon48_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.48.png")';
     public static string $favicon96_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.96.png")';
     public static string $favicon128_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.128.png")';
+    public static string $favicon144_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.144.png")';
     public static string $favicon180_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.180.png")';
     public static string $favicon192_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.192.png")';
     public static string $favicon256_png = 'SOURCE_REPLACER_BASE64("APP/Assets/Img/favicon.256.png")';

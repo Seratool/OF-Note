@@ -15,6 +15,7 @@ main {
 .doc-wrapper {
     top: 3rem;
     width: 100%;
+    padding: 0;
     bottom: 0;
     overflow: auto;
     position: absolute;
@@ -25,11 +26,16 @@ main {
     --line-height: 1.5rem;
     outline: none;
     resize: none;
+    margin: 0;
     padding: 2rem 0.75rem;
     min-height: calc(100dvh - 3rem);
     background: var(--color-bg);
     font-size: var(--font-size);
     line-height: var(--line-height);
+}
+
+main .shadow-doc.hidden {
+    display: none;
 }
 
 .doc.font-sans {

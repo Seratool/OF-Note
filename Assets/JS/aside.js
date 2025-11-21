@@ -4,7 +4,7 @@
 
 class Aside
 {
-    #connector;
+    #dic;
     #body = JSE.q('body');
     #btnAsideDoc = JSE.q('button.aside-menu');
     #btnAsideSetting = JSE.q('button.burger-menu');
@@ -14,15 +14,17 @@ class Aside
     #btnShare = JSE.q('button.share-btn', this.#asideMenu);
     #btnTheme = JSE.q('button.theme-btn', this.#asideMenu);
     #btnLang = JSE.q('button.lang-btn', this.#asideMenu);
+    #btnLock = JSE.q('button.lock-btn', this.#asideMenu);
+    #iptLock = JSE.q('input[name="lock"]', this.#asideMenu);
     #cookies = new cookies();
 
     /**
      * initialise.
-     * @param {Connector} connector
+     * @param {DIC} dic
      */
-    constructor(connector)
+    constructor(dic)
     {
-        this.#connector = connector;
+        this.#dic = dic;
     }
 
     initialise()
@@ -54,6 +56,7 @@ class Aside
 
         this.#initLangChooser();
         this.#initThemeChooser();
+        this.#initPasswordLocking();
         this.#initSetting();
     }
 
@@ -134,7 +137,7 @@ class Aside
                 }
 
                 // save doc with setting
-                this.#connector.save();
+                this.#dic.connector.save();
             }, f);
         });
     }
@@ -153,10 +156,61 @@ class Aside
 
     #addPage()
     {
-        let title = window.prompt(_dict['Give the note name']);
+        let title = window.prompt(__('Give the note name'));
 
         if (title) {
-            this.#connector.addNote(title);
+            this.#dic.connector.addNote(title);
         }
+    }
+
+    #initPasswordLocking()
+    {
+        JSE.ev('click', () => {
+            const cl = this.#btnLock.classList;
+
+            if (cl.contains('unlocked')) {
+                let pass = this.#promptPassword();
+
+                if (pass) {
+                    this.#dic.editor.setPassword(pass);
+
+                    cl.add('locked');
+                    cl.remove('unlocked');
+                }
+            } else if (window.confirm(__('Do you want to delete the password?'))) {
+                let pass = window.prompt(__('Give the password'));
+
+                if (this.#dic.editor.isPassCorrect(pass)) {
+                    this.#dic.editor.setPassword('');
+
+                    cl.add('unlocked');
+                    cl.remove('locked');
+
+                } else {
+                    window.confirm(__('The given password seems to be incorrect!'));
+                }
+            }
+        }, this.#btnLock);
+    }
+
+    /**
+     * get password for note.
+     * @returns {false|string}
+     */
+    #promptPassword()
+    {
+        let pass = window.prompt(__('Give the password'));
+
+        if (pass) {
+            let pass2 = window.prompt(__('Repeat the password'));
+
+            if (pass2 && pass === pass2) {
+                return pass2;
+            } else {
+                window.alert(__('The passwords do not match!'));
+            }
+        }
+
+        return false;
     }
 }

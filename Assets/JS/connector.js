@@ -2,25 +2,21 @@ class Connector
 {
     #sendDelay = 1000;
 
-    #note;
+    #dic;
 
     #icons;
-
-    #editorDoc;
 
     #timer = null;
 
     /**
      * initialise connector.
      * @param {HTMLElement} icons
-     * @param {HTMLElement} editorDoc
-     * @param {Note} note
+     * @param {DIC} dic
      */
-    constructor(icons, editorDoc, note)
+    constructor(dic, icons)
     {
-        this.#note = note;
+        this.#dic = dic;
         this.#icons = icons;
-        this.#editorDoc = editorDoc;
     }
 
     /**
@@ -36,27 +32,23 @@ class Connector
     /**
      * send routine.
      */
-    save()
+    save ()
     {
-        fetch("{{ $router->getQueryUrl(['event' => 'save']) }}", {
-            method: "POST",
-            headers: {"X-Requested-With": "XMLHttpRequest"},
-            body: this.#getFormData()
-        }).then(
-            (response) => this.#viewStatus(response.status === 200 ? 'sent' : 'error')
-        ).catch(() => this.#viewStatus('error'));
-    }
+        if (!this.#dic.editor.isPassCorrect()) {
+            this.#viewStatus('error');
+            window.alert(__('It is not possible to save, a false password has been entered!'));
+            return;
+        }
 
-    #getFormData()
-    {
-        const formData = new FormData();
-        formData.append('text', this.#fetchContent());
-
-        JSE.qs('.setting-block .setting-element').forEach((f) => {
-            formData.append(f.name, f.value);
+        this.#getFormData().then((formData) => {
+            fetch("{{ $router->getQueryUrl(['event' => 'save']) }}", {
+                method: "POST",
+                headers: {"X-Requested-With": "XMLHttpRequest"},
+                body: formData
+            }).then(
+                (response) => this.#viewStatus(response.status === 200 ? 'sent' : 'error')
+            ).catch(() => this.#viewStatus('error'));
         });
-
-        return formData;
     }
 
     /**
@@ -65,54 +57,46 @@ class Connector
      */
     addNote(title)
     {
-        if (this.#note.isTitleExists(title)) {
-            alert(_dict['Note with title "%s" already exists!'].replace('%s', title));
+        if (!this.#dic.editor.isPassCorrect()) {
+            this.#viewStatus('error');
+            window.alert(__('It is not possible to save, a false password has been entered!'));
             return;
         }
 
-        fetch("{{ $router->getQueryUrl(['event' => 'add']) }}", {
-            method: "POST",
-            headers: {"X-Requested-With": "XMLHttpRequest"},
-            body: this.#getFormData()
-        }).then((r) => {
-            if (!r.ok) {
-                throw new Error(`Response status: ${r.status}`);
-            }
-            return r.json();
-        }).then(d => {
-            this.#note.addNote(d.note, title);
-            setTimeout(() => window.location.href = d.url, 100);
+        if (this.#dic.note.isTitleExists(title)) {
+            window.alert(__('Note with title "%s" already exists!').replace('%s', title));
+            return;
+        }
 
-        }).catch(() => this.#viewStatus('error'));
+        this.#getFormData().then((formData) => {
+            fetch("{{ $router->getQueryUrl(['event' => 'add']) }}", {
+                method: "POST",
+                headers: {"X-Requested-With": "XMLHttpRequest"},
+                body: formData
+            }).then((r) => {
+                if (!r.ok) {
+                    throw new Error(`Response status: ${r.status}`);
+                }
+                return r.json();
+            }).then(d => {
+                this.#dic.note.addNote(d.note, title);
+                setTimeout(() => window.location.href = d.url, 100);
+            }).catch(() => this.#viewStatus('error'));
+        });
     }
 
-    /**
-     * return filtered content.
-     */
-    #fetchContent()
+    #getFormData()
     {
-        let p = document.createElement('p'),
-            text;
+        return (async () => {
+            const formData = new FormData();
 
-        p.innerHTML = this.#editorDoc.innerHTML
-            .replace(/\n/ig, '')
-            .replace(/<div><br><\/div>/ig, '<br>')
-            .replace(/<div[^>]+><br><\/div>/ig, '<br>')
-            .replace(/<div>/ig, '<br>')
-            .replace(/<div[^>]+>/ig, '<br>')
-            .replace(/<\/div>/ig, '')
+            formData.append('text', await this.#dic.editor.fetchContent());
+            JSE.qs('.setting-block .setting-element').forEach((f) => {
+                formData.append(f.name, f.value);
+            });
 
-            .replace(/<p><br><\/p>/ig, '<br>')
-            .replace(/<p[^>]+><br><\/p>/ig, '<br>')
-            .replace(/<p>/ig, '<br>')
-            .replace(/<p[^>]+>/ig, '<br>')
-            .replace(/<\/p>/ig, '')
-
-            .replace(/<br>/ig, "<br>\n");
-
-        text = p.innerText;
-
-        return text === '\n' ? '' : text;
+            return formData;
+        })();
     }
 
     /**

@@ -125,7 +125,7 @@ class Core
                 header("Content-Type: ".$mimeType);
                 header("Content-Length: ". mb_strlen($cont));
                 echo $cont;
-                die;
+                die();
             } catch (\Exception $e) {
                 header("HTTP/1.0 404 Not Found");
                 die();
@@ -160,7 +160,7 @@ class Core
     {
         if ($this->route->getParam('event') == 'save') {
             $content->setContent();
-            die(json_encode(['status' => 'okay']));
+            die(json_encode(['success' => true]));
         }
     }
 
@@ -174,6 +174,7 @@ class Core
                 $this->route->setParam('note', $note);
 
                 die(json_encode([
+                    'success' => true,
                     'note' => $note,
                     'url' => $this->route->getUrl(),
                 ]));
