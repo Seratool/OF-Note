@@ -15,7 +15,6 @@ class Aside
     #btnTheme = JSE.q('button.theme-btn', this.#asideMenu);
     #btnLang = JSE.q('button.lang-btn', this.#asideMenu);
     #btnLock = JSE.q('button.lock-btn', this.#asideMenu);
-    #iptLock = JSE.q('input[name="lock"]', this.#asideMenu);
     #cookies = new cookies();
 
     /**
@@ -180,12 +179,12 @@ class Aside
             } else if (window.confirm(__('Do you want to delete the password?'))) {
                 let pass = window.prompt(__('Give the password'));
 
-                if (this.#dic.editor.isPassCorrect(pass)) {
+                if (pass && this.#dic.editor.isPassCorrect(pass)) {
                     this.#dic.editor.setPassword('');
+                    this.#dic.editor.restoreContentIfNeeded(pass);
 
                     cl.add('unlocked');
                     cl.remove('locked');
-
                 } else {
                     window.confirm(__('The given password seems to be incorrect!'));
                 }

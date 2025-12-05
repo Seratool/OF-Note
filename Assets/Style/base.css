@@ -75,13 +75,14 @@ body {
     background: var(--color-bg);
     color: var(--color-text);
     width: 100vw;
-    overflow-x: hidden
+    overflow-x: hidden;
 }
 
 html,
 body,
 main {
-    overflow: hidden
+    overflow: hidden;
+    position: relative;
 }
 
 a,

@@ -9,7 +9,7 @@ header {
     padding: 0;
     top: 0;
     z-index: 2;
-    position: fixed;
+    position: sticky;
 }
 
 .head-line {
@@ -43,6 +43,7 @@ header figure figcaption {
 
 header figure img {
     border: none;
+    border-radius: 5px;
     width: 1.5rem;
     height: 1.5rem
 }

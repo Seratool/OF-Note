@@ -5,6 +5,8 @@ class Editor {
 
     #shadowDoc;
 
+    #content;
+
     #iptLock;
 
     #iptPasshash;
@@ -12,6 +14,8 @@ class Editor {
     #password = '';
 
     #passHash = '';
+
+    #isContentDecoded = false;
 
     /**
      * init editor.
@@ -27,7 +31,10 @@ class Editor {
         this.#iptLock = JSE.q('aside.setting input[name="lock"]', nMain);
         this.#iptPasshash = JSE.q('aside.setting input[name="proof"]', nMain);
         this.#passHash = this.#iptPasshash.value;
+    }
 
+    initEditor()
+    {
         JSE.ev('paste', (ev) => {
             ev.preventDefault();
 
@@ -101,25 +108,38 @@ class Editor {
 
     initialiseContent()
     {
-        let c = this.#shadowDoc.innerHTML;
+        this.#content = this.#shadowDoc.innerHTML;
         this.#shadowDoc.innerHTML = '';
 
         if (this.#iptLock.value === 'true') {
             let pass = window.prompt(__('Give the password'));
 
-            if (this.#dic.editor.isPassCorrect(pass)) {
+            if (pass && this.#dic.editor.isPassCorrect(pass)) {
                 this.#password = pass;
 
-                this.#dic.cryptography.decrypt(c, this.#password)
-                    .then(c => {
-                        this.#setContent(c);
-                    });
+                this.#dic.cryptography.decrypt(this.#content, this.#password)
+                    .then(c => this.#setContent(c));
+                this.initEditor();
+                this.#isContentDecoded = true;
             } else {
                 window.confirm(__('The given password seems to be incorrect!'));
                 this.#setContent('');
             }
         } else {
-            this.#setContent(c);
+            this.#setContent(this.#content);
+            this.initEditor();
+        }
+    }
+
+    restoreContentIfNeeded(pass)
+    {
+        if (!this.#isContentDecoded) {
+            this.#dic.cryptography.decrypt(this.#content, pass)
+                .then(c => {
+                    this.#setContent(c);
+                    this.initEditor();
+                    this.#editorDoc.dispatchEvent(new Event("input"));
+                });
         }
     }
 
@@ -153,17 +173,24 @@ class Editor {
     #addTextToEditor(text)
     {
         const selection = document.getSelection();
+        let range,
+            html = document.createElement('span');
 
         if (selection.rangeCount) {
-            let range= selection.getRangeAt(0),
-                html = document.createElement('span');
-
-            html.innerHTML = text;
-            range.collapse(true);
-            range.insertNode(html);
-
-            selection.collapseToEnd();
+            range = selection.getRangeAt(0);
+            range.deleteContents();
+        } else {
+            range = new Range();
+            range.setStart(this.#editorDoc, 0);
+            range.setEnd(this.#editorDoc, 0);
+            selection.addRange(range);
         }
+
+        html.innerHTML = text;
+        range.collapse(true);
+        range.insertNode(html);
+
+        selection.collapseToEnd();
     }
 
     #fromClipboard(ev)
